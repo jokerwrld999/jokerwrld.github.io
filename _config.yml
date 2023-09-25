@@ -78,7 +78,7 @@ theme_mode: # [light|dark]
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: assets/png/logo.png
+avatar: assets/img/favicons/logo.png
 
 # boolean type, the global switch for TOC in posts.
 toc: true
@@ -195,3 +195,27 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
+
+jekyll_compose:
+  default_front_matter:
+    drafts:
+      image:
+        path: /assets/img/thumbs/2023-thumbs/default.jpg
+      categories:
+        - homelab
+        - linux
+        - hardware
+      tags:
+        - servers
+        - ubuntu
+    posts:
+      image:
+        path: /assets/img/thumbs/2023-thumbs/default.jpg
+      categories:
+        - homelab
+        - linux
+        - hardware
+      tags:
+        - servers
+        - ubuntu
+      published: false
