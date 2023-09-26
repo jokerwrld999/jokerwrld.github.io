@@ -192,3 +192,45 @@ Building your site in production mode
 ```bash
 JEKYLL_ENV=production bundle exec jekyll b
 ```
+## Creating a Post
+
+### Naming Conventions
+
+Jekyll uses a naming [convention for pages and posts](https://jekyllrb.com/docs/posts/)
+
+Create a file in `_posts` with the format
+
+```file
+YEAR-MONTH-DAY-title.md
+```
+
+For example:
+
+```file
+2023-05-23-homelab-docs.md
+2023-07-09-hardware-specs.md
+```
+
+> Jekyll can delay posts which have the date/time set for a point in the future determined by the "front matter" section at the top of your post file. Check the date & time as well as time zone if you don't see a post appear shortly after re-build.
+{: .prompt-tip }
+
+### Local Linking of Files
+
+Image from asset:
+
+```markdown
+... which is shown in the screenshot below:
+![A screenshot](/assets/screenshot.webp)
+```
+
+Linking to a file
+
+```markdown
+... you can [download the PDF](/assets/diagram.pdf) here.
+```
+
+See more post formatting rules on the [Jekyll site](https://jekyllrb.com/docs/posts/)
+
+### Markdown Examples
+
+If you need some help with markdown, check out the [markdown cheat sheet](https://www.markdownguide.org/cheat-sheet/)
