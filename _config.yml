@@ -93,9 +93,9 @@ comments:
   # Giscus options › https://giscus.app
   giscus:
     repo: jokerwrld999/jokerwrld.github.io # <gh-username>/<repo>
-    repo_id:
+    repo_id: R_kgDOKXtJ7g
     category: Comments
-    category_id:
+    category_id: DIC_kwDOKXtJ7s4CZn4b
     mapping: pathname # optional, default to 'pathname'
     input_position: bottom # optional, default to 'bottom'
     lang: en # optional, default to the value of `site.lang`
