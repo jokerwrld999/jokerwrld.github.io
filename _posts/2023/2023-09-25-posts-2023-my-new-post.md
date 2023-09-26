@@ -123,6 +123,50 @@ Templates <https://pinglestudio.peopleforce.io/knowledge_base/articles/46782>
 
 After selecting a Jekyll template, you can fork it and follow the setup instructions in the `README.md` file.
 
+## Site Configuration
+
+### Comments Section /W Giscus
+
+Choose the repository giscus will connect to. Make sure that:
+
+1. The repository is `public`, otherwise visitors will not be able to view the discussion.
+2. The [Giscus app](https://giscus.app/) is installed, otherwise visitors will not be able to comment and react.
+3. The Discussions feature is turned on by [enabling it for your repository](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/enabling-or-disabling-github-discussions-for-a-repository).
+4. Create dedicated section for `Comments`.
+
+Get repository info:
+
+1. `Repository ID` && `Comments Category ID`
+```bash
+gh api graphql -f query='
+{
+  repository(owner: "jokerwrld999", name: "jokerwrld.github.io") {
+    id # RepositoryID
+    name
+    discussionCategories(first: 10) {
+      nodes {
+        id # CategoryID
+        name
+      }
+    }
+  }
+}'
+```
+
+Finally, complete your data in `_config.yml` file:
+
+```yml
+giscus:
+    repo: jokerwrld999/jokerwrld.github.io # <gh-username>/<repo>
+    repo_id:
+    category: Comments
+    category_id:
+    mapping: pathname # optional, default to 'pathname'
+    input_position: bottom # optional, default to 'bottom'
+    lang: en # optional, default to the value of `site.lang`
+    reactions_enabled: 1 # optional, default to the value of `1`
+```
+
 ## Jekyll Commands
 
 ### Recommended Plugin For Extending Jekyll Commands

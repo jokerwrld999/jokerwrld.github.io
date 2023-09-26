@@ -3,9 +3,11 @@
 # Import the theme
 theme: jekyll-theme-chirpy
 
+# fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
+url: "https://jokerwrld999.github.io"
 # Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
 # and doesn't have a custom domain.
-baseurl: "/jokerwrld.github.io"
+baseurl: "/jokerwrld.github.io/"
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
 # otherwise, the layout language will use the default value of 'en'.
@@ -25,9 +27,6 @@ description: >- # used by seo meta and the atom feed
   Explore 'HomeLab Horizons: Journey into DevOps,' a voyage into automation, deployments, and the art of DevOps.
   Delve into my portfolio showcasing innovative projects, offering insights into streamlining processes and optimizing infrastructures.
   Join me in this transformative journey through the evolving landscape of technology, where efficiency meets innovation.
-
-# fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: "https://jokerwrld999.github.io"
 
 github:
   username: jokerwrld999 # change to your github username
@@ -95,12 +94,12 @@ comments:
   giscus:
     repo: jokerwrld999/jokerwrld.github.io # <gh-username>/<repo>
     repo_id:
-    category:
+    category: Comments
     category_id:
-    mapping: # optional, default to 'pathname'
-    input_position: # optional, default to 'bottom'
-    lang: # optional, default to the value of `site.lang`
-    reactions_enabled: # optional, default to the value of `1`
+    mapping: pathname # optional, default to 'pathname'
+    input_position: bottom # optional, default to 'bottom'
+    lang: en # optional, default to the value of `site.lang`
+    reactions_enabled: 1 # optional, default to the value of `1`
 
 # Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
 assets:
