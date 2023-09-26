@@ -3,10 +3,10 @@
 # Import the theme
 theme: jekyll-theme-chirpy
 
-url: "https://jokerwrld999.github.io"
+url: "https://docs.jokerwrld.win"
 # Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
 # and doesn't have a custom domain.
-baseurl: "/jokerwrld.github.io/"
+baseurl: ""
 lang: en
 
 # Change to your timezone › https://kevinnovak.github.io/Time-Zone-Picker
@@ -20,8 +20,6 @@ description: >- # used by seo meta and the atom feed
   Explore 'HomeLab Horizons: Journey into DevOps,' a voyage into automation, deployments, and the art of DevOps.
   Delve into my portfolio showcasing innovative projects, offering insights into streamlining processes and optimizing infrastructures.
   Join me in this transformative journey through the evolving landscape of technology, where efficiency meets innovation.
-
-meta: Powered by Open Source CMS
 
 github:
   username: jokerwrld999 # change to your github username
