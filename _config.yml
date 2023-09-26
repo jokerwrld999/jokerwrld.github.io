@@ -3,21 +3,14 @@
 # Import the theme
 theme: jekyll-theme-chirpy
 
-# fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: "https://jokerwrld999.github.io"
 # Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
 # and doesn't have a custom domain.
 baseurl: "/jokerwrld.github.io/"
-# The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
-# If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
-# otherwise, the layout language will use the default value of 'en'.
 lang: en
 
 # Change to your timezone › https://kevinnovak.github.io/Time-Zone-Picker
 timezone: Europe/Kiev
-
-# jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
-# ↓ --------------------------
 
 title: Homelab Horizons # the main title
 
@@ -28,14 +21,12 @@ description: >- # used by seo meta and the atom feed
   Delve into my portfolio showcasing innovative projects, offering insights into streamlining processes and optimizing infrastructures.
   Join me in this transformative journey through the evolving landscape of technology, where efficiency meets innovation.
 
+meta: Powered by Open Source CMS
+
 github:
   username: jokerwrld999 # change to your github username
 
-#twitter:
-#  username: twitter_username # change to your twitter username
-
 social:
-  # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Joker Wrld
   email: ifalaleev49@gmail.com # change to your email address

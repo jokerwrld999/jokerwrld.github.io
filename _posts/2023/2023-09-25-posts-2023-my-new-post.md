@@ -134,9 +134,8 @@ Choose the repository giscus will connect to. Make sure that:
 3. The Discussions feature is turned on by [enabling it for your repository](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/enabling-or-disabling-github-discussions-for-a-repository).
 4. Create dedicated section for `Comments`.
 
-Get repository info:
+Get info from GitHub `Repository ID` && `Comments Category ID`:
 
-1. `Repository ID` && `Comments Category ID`
 ```bash
 gh api graphql -f query='
 {
