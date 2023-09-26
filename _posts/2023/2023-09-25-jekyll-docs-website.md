@@ -3,7 +3,7 @@ layout: post
 title: Personal Docs Website /W Jekyll
 date: 2023-09-25 14:57 +0300
 image:
-  path: /assets/img/thumbs/2023-thumbs/default.jpg
+  path: /assets/img/2023/thumbs/default.webp
 categories:
 - homelab
 - linux
@@ -179,7 +179,7 @@ jekyll_compose:
   default_front_matter:
     drafts:
       image:
-        path: /assets/img/thumbs/2023-thumbs/default.jpg
+        path: /assets/img/2023/thumbs/default.webp
       categories:
         - homelab
         - linux
@@ -189,7 +189,7 @@ jekyll_compose:
         - ubuntu
     posts:
       image:
-        path: /assets/img/thumbs/2023-thumbs/default.jpg
+        path: /assets/img/2023/thumbs/default.webp
       categories:
         - homelab
         - linux
@@ -235,6 +235,29 @@ Building your site in production mode
 ```bash
 JEKYLL_ENV=production bundle exec jekyll b
 ```
+
+## Deploy on GitHub Actions
+
+### Configure the `Pages` service
+
+1. Browse to your repository on GitHub. Select the tab `Settings`, then click `Pages` in the left navigation bar. Then, in the `Source` section (under Build and deployment), select [GitHub Actions](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow) from the dropdown menu.
+![Github Pages](/assets/img/2023/posts/jekyll-pages-source.webp)
+
+2. Push any commits to GitHub to trigger the `Actions workflow`. In the `Actions` tab of your repository, you should see the workflow `Build and Deploy` running. Once the build is complete and successful, the site will be deployed automatically.
+
+### Set Custom Domain
+
+1. Update DNS Records:
+![Cloudflare DNS Records](/assets/img/2023/posts/jekyll-dns-records.webp)
+
+2. Enable HTTPS on Cloudflare:
+- In Cloudflare, go to the SSL/TLS section and configure SSL to your liking.
+- Ensure the SSL mode is set to `Full` or `Full (strict)`.
+
+3. Cofigure GitHub Pages:
+- Navigate to the repository's settings.
+- Under the `GitHub Pages` section, add your custom domain (e.g., example.com).
+
 ## Creating a Post
 
 ### Naming Conventions
@@ -263,7 +286,7 @@ Image from asset:
 
 ```markdown
 ... which is shown in the screenshot below:
-![A screenshot](/assets/screenshot.webp)
+![A screenshot](/assets/img/2023/posts/*.webp)
 ```
 
 Linking to a file

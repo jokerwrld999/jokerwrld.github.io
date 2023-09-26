@@ -187,7 +187,7 @@ jekyll_compose:
   default_front_matter:
     drafts:
       image:
-        path: /assets/img/thumbs/2023-thumbs/default.jpg
+        path: /assets/img/2023/thumbs/default.webp
       categories:
         - homelab
         - linux
@@ -197,7 +197,7 @@ jekyll_compose:
         - ubuntu
     posts:
       image:
-        path: /assets/img/thumbs/2023-thumbs/default.jpg
+        path: /assets/img/2023/thumbs/default.webp
       categories:
         - homelab
         - linux
