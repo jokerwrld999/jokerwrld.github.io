@@ -1,56 +1,46 @@
-# Chirpy Starter
+# Documentation Website /W Jekyll
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+This repository hosts the source code for my personal documentation website. The website is built using Jekyll, a static site generator, making it easy to create and maintain documentation in a structured and organized manner.
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+## Features
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+  - **Jekyll-Powered:** Utilizes the power of Jekyll to transform plain text into static websites and blogs.
+  - **Responsive Design:** The website is designed to be accessible and usable across various devices and screen sizes.
+  - **Easy to Navigate:** Intuitive navigation to help users quickly find the information they need.
+  - **Secure and Trustworthy:** HTTPS and SSL configured via Cloudflare to ensure a secure and encrypted connection.
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+### Usage
 
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
+Create your new post using:
+
+```bash
+bundle exec jekyll post "My New Post"
+# or
+bundle exec jekyll post "My New Post" --timestamp-format "%Y-%m-%d %H:%M:%S %z"
 ```
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+Covenient quick Bash `function` to create a post in a desired subdirectory
 
-## Prerequisites
+```bash
+new_post() {
+    if [ ! -d "_posts/$1" ]; then
+        mkdir -p "_posts/$1"
+    fi
+    bundle exec jekyll post "$2" | grep -oP '_.*?\.md' | xargs basename | read filename
+    mv "_posts/$filename" "_posts/$1/$filename"
+}
 
-Follow the instructions in the [Jekyll Docs](https://jekyllrb.com/docs/installation/) to complete the installation of
-the basic environment. [Git](https://git-scm.com/) also needs to be installed.
-
-## Installation
-
-Sign in to GitHub and [**use this template**][use-template] to generate a brand new repository and name it
-`USERNAME.github.io`, where `USERNAME` represents your GitHub username.
-
-Then clone it to your local machine and run:
-
-```console
-$ bundle
+new_post "<YOUR-SUBFOLDER>" "<POST-NAME>"
 ```
 
-## Usage
+Serving your site
 
-Please see the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy#documentation).
+```bash
+bundle exec jekyll s
+```
 
-## License
+Building your site in production mode
 
-This work is published under [MIT][mit] License.
-
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[use-template]: https://github.com/cotes2020/chirpy-starter/generate
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+```bash
+JEKYLL_ENV=production bundle exec jekyll b
+```
