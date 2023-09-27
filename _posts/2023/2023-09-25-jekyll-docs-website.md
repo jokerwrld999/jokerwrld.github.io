@@ -3,7 +3,7 @@ layout: post
 title: Personal Docs Website /W Jekyll
 date: 2023-09-25 14:57 +0300
 image:
-  path: /assets/img/2023/thumbs/default.webp
+  path: /assets/img/2023/thumbs/jekyll.webp
 categories:
 - homelab
 - linux

@@ -3,7 +3,7 @@ layout: post
 title: My New Post
 date: 2023-09-25 13:23 +0300
 image:
-  path: "/assets/img/thumbs/2023-thumbs/default.jpg"
+  path: "/assets/img/2023/thumbs/default.webp"
 categories:
   - homelab
   - linux
@@ -13,5 +13,5 @@ tags:
   - ubuntu
 ---
 
-![Img ALT](/assets/img/posts/2023-posts/default.jpg)
+![Img ALT](/assets/img/2023/posts/default.webp)
 _Some Image Description_
