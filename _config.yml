@@ -189,20 +189,54 @@ jekyll_compose:
       image:
         path: /assets/img/2023/thumbs/default.webp
       categories:
-        - homelab
-        - linux
-        - hardware
+        - Self-hosted
+        - Automation
+        - CI/CD
+        - Configuration Management
+        - Infrastructure as Code (IaC)
+        - Networking
+        - Monitoring
+        - Project
+        - Guide
       tags:
-        - servers
-        - ubuntu
+        - Git
+        - Linux
+        - Bash
+        - Nginx
+        - Docker
+        - Kubernetes
+        - Ansible
+        - AWS
+        - Terraform
+        - Jenkins
+        - Python
+        - Prometheus
+        - Grafana
     posts:
       image:
         path: /assets/img/2023/thumbs/default.webp
       categories:
-        - homelab
-        - linux
-        - hardware
+        - Self-hosted
+        - Automation
+        - CI/CD
+        - Configuration Management
+        - Infrastructure as Code (IaC)
+        - Networking
+        - Monitoring
+        - Project
+        - Guide
       tags:
-        - servers
-        - ubuntu
+        - Git
+        - Linux
+        - Bash
+        - Nginx
+        - Docker
+        - Kubernetes
+        - Ansible
+        - AWS
+        - Terraform
+        - Jenkins
+        - Python
+        - Prometheus
+        - Grafana
       published: false

@@ -5,12 +5,16 @@ date: 2023-09-25 14:57 +0300
 image:
   path: /assets/img/2023/thumbs/jekyll.webp
 categories:
-- homelab
-- linux
-- hardware
+- Self-hosted
+- CI/CD
+- Project
 tags:
-- servers
-- ubuntu
+- Linux
+- Git
+- Jekyll
+- Ruby
+- Bash
+- Markdown
 published: true
 ---
 
