@@ -3,7 +3,7 @@ layout: post
 title: 'CI/CD Mastery: Jenkins, Docker, Terraform, Ansible, and More...'
 date: 2023-09-28 12:56 +0300
 image:
-  path: "/assets/img/2023/thumbs/default.webp"
+  path: "/assets/img/2023/thumbs/jenkins-mastery.webp"
 categories:
 - Self-hosted
 - Automation
@@ -33,10 +33,15 @@ The Continuous Integration and Continuous Deployment (CI/CD) pipeline described 
 ### **Purpose and Objectives**
 
 1. **Efficient Development:** Enable developers to work collaboratively on the Spring Boot application while ensuring code quality and consistency.
+
 2. **Automated Builds:** Automate the build process using Maven, ensuring that the application is always built from the latest source code.
+
 3. **Containerization:** Containerize the application using Docker and apply best practices for efficient image creation.
+
 4. **Version Control:** Manage versioning by incrementing the application version from the `pom.xml` file and pushing changes to GitHub Packages.
+
 5. **Infrastructure as Code (IaC):** Use Terraform to provision the necessary infrastructure, including Virtual Private Cloud (VPC), subnets, EC2 instances, and SSH keys, in a repeatable and consistent manner.
+
 6. **Provisioning and Deployment:** Utilize Ansible for provisioning EC2 instances with Docker and development tools and for deploying Docker containers onto those instances.
 
 By implementing this CI/CD pipeline, the project aims to enhance development agility, maintain code quality, and ensure the reliable and automated deployment of the web application.
