@@ -129,7 +129,7 @@ To set up Nginx as a reverse proxy, follow this guide: [How To Configure Nginx a
 
 #### Nginx Configuration File: /etc/nginx/sites-available/spring-music
 
-```bash
+```nginx
 server {
     listen 80;
     listen [::]:80;
@@ -159,13 +159,11 @@ These elements play a crucial role in configuring Nginx as a reverse proxy, allo
 
 ## Create Self-Signed Certificates
 
-To create a self-signed SSL certificate for Nginx, follow this guide:
-
-- [How To Create a Self-Signed SSL Certificate for Nginx in Ubuntu 22.04 | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-ngi  nx-in-ubuntu-22-04#step-2-configuring-nginx-to-use-ssl)
+To create a self-signed SSL certificate for Nginx, follow this guide: [How To Create a Self-Signed SSL Certificate for Nginx in Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-ngi  nx-in-ubuntu-22-04#step-2-configuring-nginx-to-use-ssl)
 
 #### Nginx Configuration File: /etc/nginx/sites-available/spring-music
 
-```bash
+```nginx
 upstream spring-music.com {
   server 192.168.100.89:8090;
   server 192.168.100.89:8091;
@@ -235,6 +233,6 @@ rm ./pid1.file
 rm ./pid2.file
 ```
 
-These scripts automate the startup and shutdown processes for the Spring Music application. Feel free to customize them as needed for your environment.
+These scripts automate the startup and shutdown processes for the Spring Music application.
 
 ## CI/CD
