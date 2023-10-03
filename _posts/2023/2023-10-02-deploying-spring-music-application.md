@@ -37,7 +37,7 @@ However, instead of utilizing Cloud Foundry initially, we will begin by hosting 
 2. **Building the Spring Music Application**
    - We'll delve into the manual steps of building the Spring Music application on your local machine, utilizing essential build tools and frameworks.
 
-3. **Deploying Locally on an On-Premises Server**
+3. **Running the Spring Music Application Locally**
    - Explore deploying the Spring Music app on a local on-premises server, providing insights into traditional deployment practices.
 
 4. **Configuring Nginx Reverse Proxy and Adding Self-Signed Certificates**
@@ -52,27 +52,22 @@ However, instead of utilizing Cloud Foundry initially, we will begin by hosting 
 7. **Optional: Deploying on AWS**
    - Extend your deployment knowledge to the cloud by setting up the Spring Music app on Amazon Web Services (AWS), allowing for scalable and resilient deployments.
 
-## Setting up Ubuntu 22.04 Server
+## Local Development Environment Setup
 
 Begin by setting up your Ubuntu 22.04 server. Ensure you have a clean installation and SSH access to the server.
 
-### Installing Java, Tomcat, Gradle, and MongoDB
+**Install Java and Tomcat**
+- Follow this guide to install Java and Tomcat: [How to Install Tomcat 10 on Ubuntu 22.04](https://linuxize.com/post/how-to-install-tomcat-10-on-ubuntu-22-04/){:target="_blank"}
 
-#### Install Java and Tomcat
-Follow this guide to install Java and Tomcat: [How to Install Tomcat 10 on Ubuntu 22.04](https://linuxize.com/post/how-to-install-tomcat-10-on-ubuntu-22-04/)
+**Install Gradle**
+- To install Gradle, use the following guide: [How to Install Gradle on Ubuntu 22.04](https://linuxhint.com/installing_gradle_ubuntu/){:target="_blank"}
 
-#### Install Gradle
-To install Gradle, use the following guide: [How to Install Gradle on Ubuntu 22.04](https://linuxhint.com/installing_gradle_ubuntu/)
+**Install MongoDB**
+- For MongoDB installation, follow this guide: [Install MongoDB Community Edition on Ubuntu](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/){:target="_blank"}
 
-#### Install MongoDB
-For MongoDB installation, follow this guide: [Install MongoDB Community Edition on Ubuntu](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
+## Building the Spring Music Application
 
-## Getting the Source Code
-Clone the Spring Music application's source code from the repository: [Spring Music GitHub Repository](https://github.com/jokerwrld999/spring-music)
-
-## Building the Spring Music Application with Gradle
-
-[Gradle](https://gradle.org/) is a powerful build automation tool that supports multiple programming languages and platforms. It uses a Groovy-based domain-specific language (DSL) to describe the build logic.
+[Gradle](https://gradle.org/){:target="_blank"} is a powerful build automation tool that supports multiple programming languages and platforms. It uses a Groovy-based domain-specific language (DSL) to describe the build logic.
 
 To build the Spring Music application, we'll utilize Gradle and its wrapper script, which ensures that you use a consistent version of Gradle across different environments.
 
@@ -89,6 +84,8 @@ Gradle offers several advantages for building and managing projects:
 - **Incremental Builds**: Gradle builds only the parts of the project that have changed since the last build, speeding up the build process.
 
 ### Build Command
+
+Clone the Spring Music application's source code from the repository: [Spring Music GitHub Repository](https://github.com/jokerwrld999/spring-music){:target="_blank"}
 
 To build the Spring Music application using Gradle, run the following command in the project directory:
 
@@ -107,14 +104,14 @@ To run the Spring Music application locally, you'll use the `java` command to ex
     java -jar -Dserver.port=8090 -Dspring.profiles.active=mongodb build/libs/spring-music-1.0.jar
     ```
 
-    This command runs the application on port 8090. You can access the application by visiting [http://localhost:8090](http://localhost:8090).
+    This command runs the application on port 8090. You can access the application by visiting `http://localhost:8090`.
 
 2. Run another instance of the application on port 8091:
     ```bash
     java -jar -Dserver.port=8091 -Dspring.profiles.active=mongodb build/libs/spring-music-1.0.jar
     ```
 
-    This command runs another instance of the application on port 8091. Access this instance using [http://localhost:8091](http://localhost:8091).
+    This command runs another instance of the application on port 8091. Access this instance using `http://localhost:8091`.
 
 Feel free to adjust the port numbers as needed for your setup.
     
@@ -125,7 +122,7 @@ A reverse proxy is a server that sits in front of your web servers and forwards 
 
 ### Setup Nginx Reverse Proxy
 
-To set up Nginx as a reverse proxy, follow this guide: [How To Configure Nginx as a Reverse Proxy on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-as-a-reverse-proxy-on-ubuntu-22-04)
+To set up Nginx as a reverse proxy, follow this guide: [How To Configure Nginx as a Reverse Proxy on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-as-a-reverse-proxy-on-ubuntu-22-04){:target="_blank"}
 
 #### Nginx Configuration File: /etc/nginx/sites-available/spring-music
 
@@ -159,7 +156,7 @@ These elements play a crucial role in configuring Nginx as a reverse proxy, allo
 
 ## Create Self-Signed Certificates
 
-To create a self-signed SSL certificate for Nginx, follow this guide: [How To Create a Self-Signed SSL Certificate for Nginx in Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-ngi  nx-in-ubuntu-22-04#step-2-configuring-nginx-to-use-ssl)
+To create a self-signed SSL certificate for Nginx, follow this guide: [How To Create a Self-Signed SSL Certificate for Nginx in Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-22-04#step-2-configuring-nginx-to-use-ssl){:target="_blank"}
 
 #### Nginx Configuration File: /etc/nginx/sites-available/spring-music
 

@@ -54,9 +54,9 @@ By implementing this CI/CD pipeline, the project aims to enhance development agi
     - Internet connectivity for accessing external resources and repositories.
     - Software and Tools: Docker, Git, OpenSSH.
     - Recommended installation links:
-        - Ansible provisioning playbook: [Linux Automation With Ansible](https://github.com/jokerwrld999/ansible-linux)
-        - Official Jenkins installation guide: [Installing Jenkins](https://www.jenkins.io/doc/book/installing/)
-        - Install Jenkins as Docker container: [Homelab Containers](https://github.com/jokerwrld999/homelab-containers)
+        - Ansible provisioning playbook: [Linux Automation With Ansible](https://github.com/jokerwrld999/ansible-linux){:target="_blank"}
+        - Official Jenkins installation guide: [Installing Jenkins](https://www.jenkins.io/doc/book/installing/){:target="_blank"}
+        - Install Jenkins as Docker container: [Homelab Containers](https://github.com/jokerwrld999/homelab-containers){:target="_blank"}
 
 2. **Ansible Server:**
     - Recommended OS: Stable Linux Distro [Debian, Ubuntu LTS, CentOS, Red Hat].
@@ -64,9 +64,9 @@ By implementing this CI/CD pipeline, the project aims to enhance development agi
     - Internet connectivity for downloading Ansible roles and modules.
     - Software and Tools: Ansible, AWS CLI with appropriate AWS credentials configured, Terraform, Git, OpenSSH.
     - Recommended installation links:
-        - Ansible provisioning playbook: [Linux Automation With Ansible](https://github.com/jokerwrld999/ansible-linux)
-        - Official Ansible installation guide: [Installing Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-        - Official Terraform installation guide: [Install Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+        - Ansible provisioning playbook: [Linux Automation With Ansible](https://github.com/jokerwrld999/ansible-linux){:target="_blank"}
+        - Official Ansible installation guide: [Installing Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html){:target="_blank"}
+        - Official Terraform installation guide: [Install Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli){:target="_blank"}
 
 ## **Pipeline Overview**
 
@@ -88,7 +88,7 @@ In the first stage of the CI/CD pipeline, the team initiates the development of 
 
 1. **Spring Initializer:**
 
-    - The team begins by creating a new Spring Boot project using the [Spring Initializer tool](https://start.spring.io/), a resource that enables developers to quickly bootstrap Spring Boot projects with pre-configured dependencies and settings.
+    - The team begins by creating a new Spring Boot project using the [Spring Initializer tool](https://start.spring.io/){:target="_blank"}, a resource that enables developers to quickly bootstrap Spring Boot projects with pre-configured dependencies and settings.
 
 2. **Configuring `pom.xml`:**
 
@@ -318,7 +318,7 @@ Providing both approaches, allows flexibility in choosing the containerization m
 
 4. **Image Push to Registry:**
 
-    - After a successful build, push the Docker image to a container registry, such as [GitHub Packages Registry](https://github.com/features/packages). This makes the image accessible for deployment and distribution to various environments.
+    - After a successful build, push the Docker image to a container registry, such as [GitHub Packages Registry](https://github.com/features/packages){:target="_blank"}. This makes the image accessible for deployment and distribution to various environments.
 
 5. **Commit and Tag:**
 
@@ -344,9 +344,9 @@ Providing both approaches, allows flexibility in choosing the containerization m
 
 **Docker Best Practices:**
 
-1. [https://docs.docker.com/develop/dev-best-practices/](https://docs.docker.com/develop/dev-best-practices/)
-2. [https://docs.docker.com/develop/develop-images/dockerfile_best-practices/](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
-3. [https://docs.docker.com/develop/security-best-practices/](https://docs.docker.com/develop/security-best-practices/)
+1. [https://docs.docker.com/develop/dev-best-practices/](https://docs.docker.com/develop/dev-best-practices/){:target="_blank"}
+2. [https://docs.docker.com/develop/develop-images/dockerfile_best-practices/](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/){:target="_blank"}
+3. [https://docs.docker.com/develop/security-best-practices/](https://docs.docker.com/develop/security-best-practices/){:target="_blank"}
 
 #### **Stage 2: Deploying Infrastructure with Terraform**
 
@@ -390,13 +390,13 @@ In this stage of the CI/CD pipeline, the objective is to provision the necessary
 
 **AWS Best Practices:**
 
-1. [https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
-2. [https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html)
-3. [https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-best-practices.html](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-best-practices.html)
+1. [https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html){:target="_blank"}
+2. [https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html){:target="_blank"}
+3. [https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-best-practices.html](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-best-practices.html){:target="_blank"}
 
 **Execution and Validation with Terraform**
 
-**Project Link:** [https://github.com/jokerwrld999/terraform-ec2.git](https://github.com/jokerwrld999/terraform-ec2.git)
+**Project Link:** [https://github.com/jokerwrld999/terraform-ec2.git](https://github.com/jokerwrld999/terraform-ec2.git){:target="_blank"}
 
 1. **Initialize Terraform:**
 
@@ -467,7 +467,7 @@ In this stage of the CI/CD pipeline, the objective is to provision the necessary
 
 **Terraform Best Practices:**
 
-1. [Comprehensive Guide To Terraform](https://blog.gruntwork.io/a-comprehensive-guide-to-terraform-b3d32832baca)
+1. [Comprehensive Guide To Terraform](https://blog.gruntwork.io/a-comprehensive-guide-to-terraform-b3d32832baca){:target="_blank"}
 
 #### **Stage 3: Provisioning EC2 Instance with Ansible**
 
@@ -475,7 +475,7 @@ In this stage of the CI/CD pipeline, Ansible is utilized to configure and provis
 
 **Implementation**
 
-**Project Link:** [https://github.com/jokerwrld999/ansible-ec2](https://github.com/jokerwrld999/ansible-ec2)
+**Project Link:** [https://github.com/jokerwrld999/ansible-ec2](https://github.com/jokerwrld999/ansible-ec2){:target="_blank"}
 
 1. **Dynamic Inventory:**
 
@@ -556,9 +556,9 @@ Here is the Ansible playbook snippet that encapsulates the Docker container depl
 
 **Ansible Best Practices:**
 
-1. [Ansible Best Practices](https://aap2.demoredhat.com/decks/ansible_best_practices.pdf)
-2. [https://docs.ansible.com/ansible/latest/tips_tricks/ansible_tips_tricks.html](https://docs.ansible.com/ansible/latest/tips_tricks/ansible_tips_tricks.html)
-3. [https://www.ansible.com/blog/ansible-best-practices-essentials](https://www.ansible.com/blog/ansible-best-practices-essentials)
+1. [Ansible Best Practices](https://aap2.demoredhat.com/decks/ansible_best_practices.pdf){:target="_blank"}
+2. [https://docs.ansible.com/ansible/latest/tips_tricks/ansible_tips_tricks.html](https://docs.ansible.com/ansible/latest/tips_tricks/ansible_tips_tricks.html){:target="_blank"}
+3. [https://www.ansible.com/blog/ansible-best-practices-essentials](https://www.ansible.com/blog/ansible-best-practices-essentials){:target="_blank"}
 
 ## **Jenkins Configuration**
 
@@ -584,7 +584,7 @@ Jenkins is deployed as a Docker container, providing a flexible and scalable env
 
 #### **GitHub Project:**
 
-- Jenkins configuration includes a GitHub project link pointing to [Spring Boot App](https://github.com/jokerwrld999/java-maven-app.git/). This link establishes the connection between the Jenkins pipeline and the source code repository.
+- Jenkins configuration includes a GitHub project link pointing to [Spring Boot App](https://github.com/jokerwrld999/java-maven-app.git/){:target="_blank"}. This link establishes the connection between the Jenkins pipeline and the source code repository.
 
 **Parameterization:**
 
@@ -608,7 +608,7 @@ Jenkins is deployed as a Docker container, providing a flexible and scalable env
 
 ### **Jenkins Shared Library**
 
-**Project Link:** [https://github.com/jokerwrld999/jenkins-shared-library](https://github.com/jokerwrld999/jenkins-shared-library)
+**Project Link:** [https://github.com/jokerwrld999/jenkins-shared-library](https://github.com/jokerwrld999/jenkins-shared-library){:target="_blank"}
 
 In the Jenkins shared library, critical CI/CD operations were encapsulated, promoting code reusability and maintainability. This section highlights the key functionalities implemented:
 
@@ -652,13 +652,13 @@ Implemented a mechanism to destroy the entire infrastructure using the "destroy"
 
 **Jenkins Best Practices:**
 
-1. [https://www.jenkins.io/doc/book/using/best-practices/](https://www.jenkins.io/doc/book/using/best-practices/)
+1. [https://www.jenkins.io/doc/book/using/best-practices/](https://www.jenkins.io/doc/book/using/best-practices/){:target="_blank"}
 
 # **Troubleshooting and Debugging**
 
 1. **Issue:** Special characters like `[1;32m` and `[0m` appearing in Jenkins logs can be due to ANSI escape codes used for colorizing the output. These codes are not properly interpreted by Jenkins.
 
-    - **Solution:** To install the [AnsiColor](https://plugins.jenkins.io/ansicolor/) plugin and enable it in the job configuration.
+    - **Solution:** To install the [AnsiColor](https://plugins.jenkins.io/ansicolor/){:target="_blank"} plugin and enable it in the job configuration.
 
         ```xml
         pipeline {
@@ -695,7 +695,7 @@ Implemented a mechanism to destroy the entire infrastructure using the "destroy"
             - Consider self-hosting a version control system (e.g., Git, GitLab, or Bitbucket) within the network. This allows for easier integration and communication with a Jenkins instance, even without a public IP.
 
         - **Use Webhook Relay**
-            - [Webhook relay](http://webhookrelay.com/) serves as a bridge between external services and a self-hosted Jenkins instance, even if it's behind a firewall or lacks a public IP address. Configure webhooks to be forwarded to the Jenkins server within the local network enabling automated build triggers.
+            - [Webhook relay](http://webhookrelay.com/){:target="_blank"} serves as a bridge between external services and a self-hosted Jenkins instance, even if it's behind a firewall or lacks a public IP address. Configure webhooks to be forwarded to the Jenkins server within the local network enabling automated build triggers.
 
 ## **Conclusion**
 
@@ -731,18 +731,18 @@ In conclusion, this CI/CD pipeline project gains valuable skills and insights in
 
 ## **References**
 
-1. **Jenkins:** [https://www.jenkins.io/doc/](https://www.jenkins.io/doc/).
+1. **Jenkins:** [https://www.jenkins.io/doc/](https://www.jenkins.io/doc/){:target="_blank"}.
 
-2. **Spring Boot:** [https://docs.spring.io/spring-boot/docs/current/reference/html/](https://docs.spring.io/spring-boot/docs/current/reference/html/).
+2. **Spring Boot:** [https://docs.spring.io/spring-boot/docs/current/reference/html/](https://docs.spring.io/spring-boot/docs/current/reference/html/){:target="_blank"}.
 
-3. **Terraform:** [https://www.terraform.io/docs/index.html](https://www.terraform.io/docs/index.html).
+3. **Terraform:** [https://www.terraform.io/docs/index.html](https://www.terraform.io/docs/index.html){:target="_blank"}.
 
-4. **Docker:** [https://docs.docker.com/](https://docs.docker.com/).
+4. **Docker:** [https://docs.docker.com/](https://docs.docker.com/){:target="_blank"}.
 
-5. **Ansible:** [https://docs.ansible.com/ansible/latest/index.html](https://docs.ansible.com/ansible/latest/index.html).
+5. **Ansible:** [https://docs.ansible.com/ansible/latest/index.html](https://docs.ansible.com/ansible/latest/index.html){:target="_blank"}.
 
-6. **Maven:** [https://maven.apache.org/guides/index.html](https://maven.apache.org/guides/index.html).
+6. **Maven:** [https://maven.apache.org/guides/index.html](https://maven.apache.org/guides/index.html){:target="_blank"}.
 
-7. **GitHub:** [https://docs.github.com/](https://docs.github.com/).
+7. **GitHub:** [https://docs.github.com/](https://docs.github.com/){:target="_blank"}.
 
-8. **Semantic Versioning (SemVer):** [https://semver.org/](https://semver.org/).
+8. **Semantic Versioning (SemVer):** [https://semver.org/](https://semver.org/){:target="_blank"}.

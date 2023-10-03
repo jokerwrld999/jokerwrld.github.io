@@ -20,7 +20,7 @@ published: true
 
 ## Introduction to Jekyll
 
-[Jekyll](https://jekyllrb.com/) is a popular static site generator that simplifies the process of building and maintaining websites. It's designed for creating simple, fast, and secure websites or blogs with minimal setup and maintenance.
+[Jekyll](https://jekyllrb.com/){:target="_blank"} is a popular static site generator that simplifies the process of building and maintaining websites. It's designed for creating simple, fast, and secure websites or blogs with minimal setup and maintenance.
 
 ### Key Features
 
@@ -123,7 +123,7 @@ gem install jekyll bundle --user-install
 
 ## Creating a site based on Starter Template
 
-Templates <https://pinglestudio.peopleforce.io/knowledge_base/articles/46782>
+Templates <https://pinglestudio.peopleforce.io/knowledge_base/articles/46782>{:target="_blank"}
 
 After selecting a Jekyll template, you can fork it and follow the setup instructions in the `README.md` file.
 
@@ -134,8 +134,8 @@ After selecting a Jekyll template, you can fork it and follow the setup instruct
 Choose the repository giscus will connect to. Make sure that:
 
 1. The repository is `public`, otherwise visitors will not be able to view the discussion.
-2. The [Giscus app](https://giscus.app/) is installed, otherwise visitors will not be able to comment and react.
-3. The Discussions feature is turned on by [enabling it for your repository](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/enabling-or-disabling-github-discussions-for-a-repository).
+2. The [Giscus app](https://giscus.app/){:target="_blank"} is installed, otherwise visitors will not be able to comment and react.
+3. The Discussions feature is turned on by [enabling it for your repository](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/enabling-or-disabling-github-discussions-for-a-repository){:target="_blank"}.
 4. Create dedicated section for `Comments`.
 
 Get info from GitHub `Repository ID` && `Comments Category ID`:
@@ -174,7 +174,7 @@ giscus:
 
 ### Recommended Plugin For Extending Jekyll Commands
 
-Jekyll Compose <https://github.com/jekyll/jekyll-compose>
+Jekyll Compose <https://github.com/jekyll/jekyll-compose>{:target="_blank"}
 
 Set default front matter for drafts and posts in `_config.yml` file in site root directory
 
@@ -244,7 +244,7 @@ JEKYLL_ENV=production bundle exec jekyll b
 
 ### Configure the `Pages` service
 
-1. Browse to your repository on GitHub. Select the tab `Settings`, then click `Pages` in the left navigation bar. Then, in the `Source` section (under Build and deployment), select [GitHub Actions](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow) from the dropdown menu.
+1. Browse to your repository on GitHub. Select the tab `Settings`, then click `Pages` in the left navigation bar. Then, in the `Source` section (under Build and deployment), select [GitHub Actions](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow){:target="_blank"} from the dropdown menu.
 ![Github Pages](/assets/img/2023/posts/jekyll-pages-source.webp)
 
 2. Push any commits to GitHub to trigger the `Actions workflow`. In the `Actions` tab of your repository, you should see the workflow `Build and Deploy` running. Once the build is complete and successful, the site will be deployed automatically.
@@ -266,7 +266,7 @@ JEKYLL_ENV=production bundle exec jekyll b
 
 ### Naming Conventions
 
-Jekyll uses a naming [convention for pages and posts](https://jekyllrb.com/docs/posts/)
+Jekyll uses a naming [convention for pages and posts](https://jekyllrb.com/docs/posts/){:target="_blank"}
 
 Create a file in `_posts` with the format
 
@@ -299,8 +299,8 @@ Linking to a file
 ... you can [download the PDF](/assets/diagram.pdf) here.
 ```
 
-See more post formatting rules on the [Jekyll site](https://jekyllrb.com/docs/posts/)
+See more post formatting rules on the [Jekyll site](https://jekyllrb.com/docs/posts/){:target="_blank"}
 
 ### Markdown Examples
 
-If you need some help with markdown, check out the [markdown cheat sheet](https://www.markdownguide.org/cheat-sheet/)
+If you need some help with markdown, check out the [markdown cheat sheet](https://www.markdownguide.org/cheat-sheet/){:target="_blank"}
