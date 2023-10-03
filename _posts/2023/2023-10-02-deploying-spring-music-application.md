@@ -3,7 +3,7 @@ layout: post
 title: Deploying Spring Music Application
 date: 2023-10-02 16:27 +0300
 image:
-  path: "/assets/img/2023/thumbs/default.webp"
+  path: "/assets/img/2023/thumbs/spring-music.webp"
 categories:
   - Self-hosted
   - Automation
@@ -526,4 +526,4 @@ pipeline {
 
 ## Summary
 
-This guide provides a comprehensive exploration of the Software Development Lifecycle (SDLC) for a Java Spring application, using the popular Spring Music sample record album collection application as a demonstration. We initiate the journey by deploying the Spring Music app on a local server, offering insights into traditional deployment methods. Subsequently, we delve into containerization using Docker, enabling a flexible deployment approach. Lastly, we automate the deployment process with Jenkins, ensuring seamless and efficient development cycles.
+This guide provided a comprehensive exploration of the Software Development Lifecycle (SDLC) for a Java Spring application, using the popular Spring Music sample record album collection application as a demonstration. We initiated the journey by deploying the Spring Music app on a local server, offering insights into traditional deployment methods. Subsequently, we dived into containerization using Docker, enabling a flexible deployment approach. Lastly, we automated the deployment process with Jenkins, ensuring seamless and efficient development cycles.
