@@ -1,4 +1,4 @@
-####################---
+---
 layout: post
 title: Deploying Spring Music Application
 date: 2023-10-02 16:27 +0300
