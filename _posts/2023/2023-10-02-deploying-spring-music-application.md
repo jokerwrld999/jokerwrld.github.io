@@ -20,7 +20,7 @@ tags:
   - Docker
   - Ansible
   - Jenkins
-published: false
+published: true
 ---
 
 ## Intoduction
@@ -40,7 +40,7 @@ However, instead of utilizing Cloud Foundry initially, we will begin by hosting 
 3. **Running the Spring Music Application Locally**
    - Explore deploying the Spring Music app on a local on-premises server, providing insights into traditional deployment practices.
 
-4. **Configuring Nginx Reverse Proxy and Adding Self-Signed Certificates**
+4. **Setting up Nginx Reverse Proxy and Adding Self-Signed Certificates**
    - Learn how to set up Nginx as a reverse proxy to forward requests to the Spring Music app, enhancing security and performance. Additionally, we'll cover adding self-signed SSL/TLS certificates to ensure secure communication.
 
 5. **Creating a Docker Image**
@@ -114,9 +114,8 @@ To run the Spring Music application locally, you'll use the `java` command to ex
     This command runs another instance of the application on port 8091. Access this instance using `http://localhost:8091`.
 
 Feel free to adjust the port numbers as needed for your setup.
-    
 
-## Setting up Nginx Reverse Proxy
+## Setting up Nginx Reverse Proxy and Adding Self-Signed Certificates
 
 A reverse proxy is a server that sits in front of your web servers and forwards client requests to those servers. It acts as an intermediary for requests from clients, forwarding them to the appropriate server and then returning the server's response to the clients.
 
@@ -124,7 +123,30 @@ A reverse proxy is a server that sits in front of your web servers and forwards 
 
 To set up Nginx as a reverse proxy, follow this guide: [How To Configure Nginx as a Reverse Proxy on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-as-a-reverse-proxy-on-ubuntu-22-04){:target="_blank"}
 
-#### Nginx Configuration File: /etc/nginx/sites-available/spring-music
+When configuring a reverse proxy with Nginx, we typically organize our server block configurations using the `sites-available` and `sites-enabled` directories.
+
+- **`sites-available`**: This directory holds individual configuration files for various server blocks (virtual hosts) that define how Nginx should handle requests for different websites or applications.
+
+- **`sites-enabled`**: This directory contains symbolic links to configuration files from `sites-available`. Only the configuration files (server blocks) that are symlinked here are actively used by Nginx.
+
+#### Workflow Overview:
+
+1. **Create Configuration in `sites-available`**: Begin by creating a new configuration file (e.g., `example.com`) for your website or application in the `sites-available` directory.
+
+2. **Enable the Configuration**: Create a symbolic link from the `sites-available` directory to the `sites-enabled` directory using a command like `ln -s`. This links the configuration to the enabled sites.
+
+3. **Restart Nginx**: After enabling the site, restart Nginx for the changes to take effect using a command like `sudo systemctl restart nginx`.
+
+By organizing configurations in this manner, it's easy to manage multiple sites or applications on a single Nginx server.
+
+Here's an example of how you might enable a site:
+
+```bash
+sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
+sudo systemctl restart nginx
+```
+
+### Add Nginx Configuration File
 
 ```nginx
 server {
@@ -139,6 +161,7 @@ server {
     }
 }
 ```
+{: file="/etc/nginx/sites-available/spring-music" }
 
 In the provided Nginx configuration, we have the following key elements explained:
 
@@ -158,7 +181,7 @@ These elements play a crucial role in configuring Nginx as a reverse proxy, allo
 
 To create a self-signed SSL certificate for Nginx, follow this guide: [How To Create a Self-Signed SSL Certificate for Nginx in Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-22-04#step-2-configuring-nginx-to-use-ssl){:target="_blank"}
 
-#### Nginx Configuration File: /etc/nginx/sites-available/spring-music
+#### Modify Nginx Configuration
 
 ```nginx
 upstream spring-music.com {
@@ -189,6 +212,7 @@ server {
     return 301 https://$server_name$request_uri;
 }
 ```
+{: file="/etc/nginx/sites-available/spring-music" }
 
 In this configuration:
 
@@ -202,6 +226,8 @@ In this configuration:
 
 ## Automation Scripts
 
+In order to streamline the deployment and management of the Spring Music application, we utilize the following automation scripts.
+
 ### Startup Script:
 
 ```bash
@@ -213,6 +239,7 @@ java -jar -Dserver.port=8090 -Dspring.profiles.active=mongodb ../build/libs/spri
 # Start another instance of the Spring Music application on port 8091
 java -jar -Dserver.port=8091 -Dspring.profiles.active=mongodb ../build/libs/spring-music-1.0.jar & echo $! > ./pid2.file &
 ```
+{: file="start.sh" }
 
 ### Shutdown Script:
 
@@ -229,7 +256,7 @@ kill $(cat ./pid2.file)
 rm ./pid1.file
 rm ./pid2.file
 ```
+{: file="shutdown.sh" }
 
-These scripts automate the startup and shutdown processes for the Spring Music application.
 
 ## CI/CD
