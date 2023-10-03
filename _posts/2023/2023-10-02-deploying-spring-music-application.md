@@ -258,5 +258,139 @@ rm ./pid2.file
 ```
 {: file="shutdown.sh" }
 
+## CI/CD with Jenkins
 
-## CI/CD
+In this section, we'll walk through the setup and configuration for CI/CD using Jenkins.
+
+### Deploy Jenkins Container
+
+To deploy Jenkins as a container, follow the instructions in the linked guide: [Homelab Containers](https://github.com/jokerwrld999/homelab-containers){:target="_blank"}
+
+### Setup Jenkins Agent/Slave
+
+Follow this instruction to setup Jenkins Slave: [How To Setup Jenkins Agent/Slave Using SSH](https://devopscube.com/setup-slaves-on-jenkins-2/){: target="_blank"}
+
+### Receive Github Webhooks on Jenkins without Public IP
+
+To receive Github webhooks on Jenkins without a public IP, use the following command:
+
+```bash
+relay forward --bucket github-jenkins http://localhost:8080/github-webhook/
+```
+
+More details can be found in the guide: [Receive Github webhooks on Jenkins without public IP — Web Relay](https://webhookrelay.com/blog/2017/11/23/github-jenkins-guide/){: target="_blank"}
+
+### Create systemd Service for Running the Application in the Background
+
+To run the Spring Music application as a background service using systemd, follow these steps:
+
+1. Create a service file named `spring-music.service`:
+
+```ini
+[Unit]
+Description=Spring-music Application
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/java -jar -Dserver.port=8090 -Dspring.profiles.active=mongodb /home/jokerwrld/spring-music-app/spring-music-1.0.jar
+User=jokerwrld
+Restart=always
+
+# Note: Sending a SIGINT (as in CTRL-C) results in an exit code of 130 (which is normal)
+KillMode=process
+KillSignal=SIGINT
+SuccessExitStatus=130
+TimeoutStopSec=10
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+```
+{: file="/etc/systemd/system/spring-music.service"}
+
+2. Move the file to `/etc/systemd/system/`:
+
+    ```bash
+    sudo mv spring-music.service /etc/systemd/system/
+    ```
+
+3. Reload the systemd manager configuration:
+
+    ```bash
+    sudo systemctl daemon-reload
+    ```
+
+5. Start and enable the service to start on boot:
+
+    ```bash
+    sudo systemctl enable --now spring-music.service
+    ```
+
+Now, the Spring Music application will run as a background service.
+
+### Test Web UI
+
+To test the Spring Music application's web UI, use the following script:
+
+```bash
+#!/bin/bash
+
+RESPONSE=$(wget --server-response https://spring-music.com/ --no-check-certificate 2>&1 | awk '/HTTP\// {print $2}')
+
+if [ $RESPONSE = 200 ]; then
+    echo "Spring-music Application is UP"
+else
+    echo "Got error $RESPONSE. Spring-music Application is DOWN :("
+    exit 1
+fi
+```
+{: file="test.sh"}
+
+### Combine it in Jenkinsfile
+
+To define the entire pipeline in a Jenkinsfile, follow these steps:
+
+1. Create a file named `Jenkinsfile` in your project repository.
+
+2. Add the following content to the `Jenkinsfile`:
+
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Checkout Project') {
+            steps {
+                git branch: 'master',
+                credentialsId: 'github_cred',
+                url: 'git@github.com:jokerwrld999/spring-music.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo "Building.."
+                sh './gradlew clean assemble'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deploying.."
+                sh '''
+                export SRC=$(pwd)
+                ./custom-configs/deployment/deploy.sh
+                sleep 10
+                '''
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing.."
+                sh './custom-configs/test/test.sh'
+            }
+        }
+    }
+}
+```
+{: file="Jenkinsfile"}
