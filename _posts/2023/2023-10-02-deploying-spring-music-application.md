@@ -1,4 +1,4 @@
----
+####################---
 layout: post
 title: Deploying Spring Music Application
 date: 2023-10-02 16:27 +0300
@@ -9,7 +9,6 @@ categories:
   - Automation
   - CI/CD
   - Configuration Management
-  - Infrastructure as Code (IaC)
   - Networking
   - Project
 tags:
@@ -32,25 +31,23 @@ However, instead of utilizing Cloud Foundry initially, we will begin by hosting 
 ### Overview of the SDLC Steps
 
 1. **Local Development Environment Setup**
-   - Preparing your local development environment is the initial step, ensuring you have all the necessary tools and configurations in place.
+    - Preparing your local development environment is the initial step, ensuring you have all the necessary tools and configurations in place.
 
 2. **Building the Spring Music Application**
-   - We'll delve into the manual steps of building the Spring Music application on your local machine, utilizing essential build tools and frameworks.
+    - We'll delve into the manual steps of building the Spring Music application on your local machine, utilizing essential build tools and frameworks.
 
 3. **Running the Spring Music Application Locally**
-   - Explore deploying the Spring Music app on a local on-premises server, providing insights into traditional deployment practices.
+    - Explore deploying the Spring Music app on a local on-premises server, providing insights into traditional deployment practices.
 
 4. **Setting up Nginx Reverse Proxy and Adding Self-Signed Certificates**
-   - Learn how to set up Nginx as a reverse proxy to forward requests to the Spring Music app, enhancing security and performance. Additionally, we'll cover adding self-signed SSL/TLS certificates to ensure secure communication.
+    - Learn how to set up Nginx as a reverse proxy to forward requests to the Spring Music app, enhancing security and performance. Additionally, we'll cover adding self-signed SSL/TLS certificates to ensure secure communication.
 
-5. **Creating a Docker Image**
-   - Learn how to containerize the application by creating a Docker image, making it portable and easily deployable across various environments.
+5. **CI/CD with Jenkins**
+    - Learn how to implement continuous integration and continuous deployment (CI/CD) for the Spring Music app using Jenkins. Set up Jenkins pipelines to automate build, test, and deployment processes, streamlining the development lifecycle.
 
-6. **Running the Application Locally via Docker**
-   - Experience deploying the Spring Music app locally using Docker, providing a controlled environment for testing and development.
+6. **Conteinerization**
+    - Learn how to containerize the application by creating a Docker image, making it portable and easily deployable across various environments.
 
-7. **Optional: Deploying on AWS**
-   - Extend your deployment knowledge to the cloud by setting up the Spring Music app on Amazon Web Services (AWS), allowing for scalable and resilient deployments.
 
 ## Local Development Environment Setup
 
@@ -146,7 +143,7 @@ sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
 sudo systemctl restart nginx
 ```
 
-### Add Nginx Configuration File
+#### Add Nginx Configuration File
 
 ```nginx
 server {
@@ -177,7 +174,7 @@ In the provided Nginx configuration, we have the following key elements explaine
 
 These elements play a crucial role in configuring Nginx as a reverse proxy, allowing it to effectively route and manage incoming requests.
 
-## Create Self-Signed Certificates
+### Create Self-Signed Certificates
 
 To create a self-signed SSL certificate for Nginx, follow this guide: [How To Create a Self-Signed SSL Certificate for Nginx in Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-22-04#step-2-configuring-nginx-to-use-ssl){:target="_blank"}
 
@@ -224,11 +221,11 @@ In this configuration:
 
 - **include**: Pulls in configurations from external files for SSL settings.
 
-## Automation Scripts
+### Automation Scripts
 
 In order to streamline the deployment and management of the Spring Music application, we utilize the following automation scripts.
 
-### Startup Script:
+#### Startup Script:
 
 ```bash
 #!/bin/bash
@@ -241,7 +238,7 @@ java -jar -Dserver.port=8091 -Dspring.profiles.active=mongodb ../build/libs/spri
 ```
 {: file="start.sh" }
 
-### Shutdown Script:
+#### Shutdown Script:
 
 ```bash
 #!/bin/bash
@@ -286,30 +283,30 @@ To run the Spring Music application as a background service using systemd, follo
 
 1. Create a service file named `spring-music.service`:
 
-```ini
-[Unit]
-Description=Spring-music Application
-After=network.target
+    ```ini
+    [Unit]
+    Description=Spring-music Application
+    After=network.target
 
-[Service]
-Type=simple
-ExecStart=/usr/bin/java -jar -Dserver.port=8090 -Dspring.profiles.active=mongodb /home/jokerwrld/spring-music-app/spring-music-1.0.jar
-User=jokerwrld
-Restart=always
+    [Service]
+    Type=simple
+    ExecStart=/usr/bin/java -jar -Dserver.port=8090 -Dspring.profiles.active=mongodb /home/jokerwrld/spring-music-app/spring-music-1.0.jar
+    User=jokerwrld
+    Restart=always
 
-# Note: Sending a SIGINT (as in CTRL-C) results in an exit code of 130 (which is normal)
-KillMode=process
-KillSignal=SIGINT
-SuccessExitStatus=130
-TimeoutStopSec=10
+    # Note: Sending a SIGINT (as in CTRL-C) results in an exit code of 130 (which is normal)
+    KillMode=process
+    KillSignal=SIGINT
+    SuccessExitStatus=130
+    TimeoutStopSec=10
 
-StandardOutput=journal
-StandardError=journal
+    StandardOutput=journal
+    StandardError=journal
 
-[Install]
-WantedBy=multi-user.target
-```
-{: file="/etc/systemd/system/spring-music.service"}
+    [Install]
+    WantedBy=multi-user.target
+    ```
+    {: file="/etc/systemd/system/spring-music.service"}
 
 2. Move the file to `/etc/systemd/system/`:
 
@@ -466,9 +463,9 @@ tail -f /dev/null
 ```
 {: file="start_mongo.sh"}
 
-### Modify Jenkins to Use Containers
+### Modify Jenkinsfile to Use Containers
 
-To optimize the CI/CD pipeline, we can configure Jenkins to utilize Docker containers. This approach enhances flexibility, resource utilization, and scalability.
+To optimize the CI/CD pipeline, we can update Jenkinsfile to utilize Docker containers. This approach enhances flexibility, resource utilization, and scalability.
 
 ```groovy
 pipeline {
@@ -526,3 +523,7 @@ pipeline {
 }
 ```
 {: file="Jenkinsfile"}
+
+## Summary
+
+This guide provides a comprehensive exploration of the Software Development Lifecycle (SDLC) for a Java Spring application, using the popular Spring Music sample record album collection application as a demonstration. We initiate the journey by deploying the Spring Music app on a local server, offering insights into traditional deployment methods. Subsequently, we delve into containerization using Docker, enabling a flexible deployment approach. Lastly, we automate the deployment process with Jenkins, ensuring seamless and efficient development cycles.
