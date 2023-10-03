@@ -394,3 +394,135 @@ pipeline {
 }
 ```
 {: file="Jenkinsfile"}
+
+## Containerization
+
+### Dockerfile
+
+A Dockerfile is used to create a Docker image for the Spring Music application. Below is the content of the Dockerfile:
+
+```Dockerfile
+FROM alpine:3.14 as base
+
+RUN  apk update \
+    && apk upgrade \
+    && apk add ca-certificates \
+    && update-ca-certificates \
+    && echo http://dl-cdn.alpinelinux.org/alpine/v3.6/main >> /etc/apk/repositories \
+    && echo http://dl-cdn.alpinelinux.org/alpine/v3.6/community >> /etc/apk/repositories \
+    && apk add --update coreutils && rm -rf /var/cache/apk/*   \ 
+    && apk add --update openjdk11 mongodb mongodb-tools tzdata curl unzip bash openrc \
+    && apk add --no-cache nss \
+    && rm -rf /var/cache/apk/*
+
+RUN openrc \
+    && touch /run/openrc/softlevel \
+    && mkdir -p /data/db/ \
+    && chown -R root /data/db
+
+FROM base as build
+WORKDIR /opt/app
+ADD . .
+RUN ./gradlew clean assemble
+
+FROM base
+WORKDIR /opt/app
+
+ADD ./custom-configs/deployment/start_mongo.sh ./
+
+COPY --from=build /opt/app/build/libs/ ./
+RUN chmod +x ./start_mongo.sh
+
+ENTRYPOINT ["/opt/app/start_mongo.sh"]
+EXPOSE 8080
+```
+{: file="Dockerfile"}
+
+#### Dockerfile Optimizations
+
+- **Multi-Stage Builds**: Use multi-stage builds to reduce image size.
+
+- **Minimize Layers**: Combine related commands in a single `RUN` instruction.
+
+- **Lightweight Base Image**: Choose Alpine Linux for a smaller base image.
+
+- **Clean Up**: Remove unnecessary files and artifacts.
+
+- **Use .dockerignore**: Exclude unnecessary files.
+
+- **Install Only Necessary Packages**: Minimize installed packages.
+
+#### Entrypoint Script
+
+The entry point script `start_mongo.sh` serves as the starting point for the Docker container. It's executed each time the container is started, performing necessary setup actions for the application.
+
+```bash
+#!/bin/sh
+
+nohup sh -c 'mongod &'
+sleep 4
+nohup sh -c 'java -jar -Dserver.port=8080 -Dspring.profiles.active=mongodb ./spring-music-1.0.jar &'
+tail -f /dev/null
+```
+{: file="start_mongo.sh"}
+
+### Modify Jenkins to Use Containers
+
+To optimize the CI/CD pipeline, we can configure Jenkins to utilize Docker containers. This approach enhances flexibility, resource utilization, and scalability.
+
+```groovy
+pipeline {
+    agent {
+        node {
+            label 'ubuntu-slave1'
+            }
+      }
+    stages {
+        stage('Checkout Project..') {
+            steps {
+                git branch: 'master',
+                    credentialsId: 'github_cred',
+                    url: 'git@github.com:jokerwrld999/spring-music.git'
+
+                sh "ls -lat"
+            }
+    }
+        stage('Clean') {
+            steps {
+                echo "Cleaning up.."
+                sh '''
+                docker stop $(docker ps -a -q) || true
+                docker rm $(docker ps -a -q) || true
+                docker rmi -f $(docker images -aq) || true
+                '''
+            }
+        }
+        stage('Build') {
+            steps {
+                echo "Building.."
+                sh '''
+                docker build -t spring-music .
+                '''
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deploying.."
+                sh '''
+                docker run -d -p 8080:8080 --name spring-music spring-music:latest
+                sleep 30
+                '''
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing.."
+                sh '''
+                ./custom-configs/test/test.sh
+                '''
+            }
+        }
+    }
+}
+```
+{: file="Jenkinsfile"}
