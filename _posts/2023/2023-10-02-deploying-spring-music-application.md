@@ -24,7 +24,7 @@ published: true
 
 ## Intoduction
 
-In this post, we will walk through the Software Development Lifecycle (SDLC) of a Java Spring application. Our demonstration will be based on the popular Spring Music sample record album collection application, originally designed to showcase database services on Cloud Foundry and the Spring Framework.
+In this post, we will walk through the manual and automated deployment of a Java Spring application. Our demonstration will be based on the popular Spring Music sample record album collection application, originally designed to showcase database services on Cloud Foundry and the Spring Framework.
 
 However, instead of utilizing Cloud Foundry initially, we will begin by hosting the Spring Music application on a local on-premises server, providing insights into traditional deployment methods. Later in the guide, we will explore containerization using Docker, enabling a more flexible and versatile deployment approach.
 
@@ -526,4 +526,4 @@ pipeline {
 
 ## Summary
 
-This guide provided a comprehensive exploration of the Software Development Lifecycle (SDLC) for a Java Spring application, using the popular Spring Music sample record album collection application as a demonstration. We initiated the journey by deploying the Spring Music app on a local server, offering insights into traditional deployment methods. Subsequently, we dived into containerization using Docker, enabling a flexible deployment approach. Lastly, we automated the deployment process with Jenkins, ensuring seamless and efficient development cycles.
+This guide provided a comprehensive exploration of the manual and automated deployment for a Java Spring application, using the popular Spring Music sample record album collection application as a demonstration. We initiated the journey by deploying the Spring Music app on a local server, offering insights into traditional deployment methods. Subsequently, we dived into containerization using Docker, enabling a flexible deployment approach. Lastly, we automated the deployment process with Jenkins, ensuring seamless and efficient development cycles.
