@@ -21,7 +21,7 @@ tags:
 - Kubernetes
 - Helm
 - Python
-
+published: true
 ---
 
 ## Introduction
@@ -59,7 +59,6 @@ RUN  apk update \
     && apk add --update python3 py3-pip \
     && apk add --no-cache nss \
     && rm -rf /var/cache/apk/*
-
 
 FROM base
 
@@ -102,7 +101,7 @@ CMD ["./gunicorn.sh"]
 
 The resulting Docker image is optimized, effectively reducing the image size while maintaining application functionality.
 
-## Helm and Its Features
+## Helm Charts
 
 [Helm](https://helm.sh/){: target="_blank"} is a widely used package manager for Kubernetes, designed to simplify and automate the deployment, scaling, and management of applications. It provides an efficient way to define, install, and upgrade even complex Kubernetes applications.
 
@@ -128,17 +127,118 @@ The resulting Docker image is optimized, effectively reducing the image size whi
 
 With these features, Helm significantly simplifies Kubernetes application management, making it a vital tool in the Kubernetes ecosystem.
 
+### Helm Chart Folder Structure
 
-## Minikube installation
-Installation: https://minikube.sigs.k8s.io/docs/start/
+The Helm chart folder structure looks like this:
+
+```bash
+[4.0K]  charts/
+├── [4.0K]  app/
+│   ├── [4.0K]  templates/
+│   │   ├── [ 647]  certmanager.yaml
+│   │   ├── [ 180]  configmap.yaml
+│   │   ├── [1.4K]  deployment.yaml
+│   │   ├── [ 296]  _helpers.tpl
+│   │   ├── [ 406]  hpa.yaml
+│   │   ├── [ 856]  ingress.yaml
+│   │   ├── [ 680]  NOTES.txt
+│   │   ├── [ 216]  secret.yaml
+│   │   └── [ 332]  service.yaml
+│   ├── [4.0K]  values/
+│   │   ├── [4.0K]  dev/
+│   │   │   ├── [1.6K]  secrets.yaml
+│   │   │   └── [  68]  values.yaml
+│   │   ├── [4.0K]  prod/
+│   │   │   ├── [1.6K]  secrets.yaml
+│   │   │   └── [ 167]  values.yaml
+│   │   └── [4.0K]  stage/
+│   │       ├── [1.6K]  secrets.yaml
+│   │       └── [ 179]  values.yaml
+│   ├── [ 130]  Chart.yaml
+│   └── [ 306]  values.yaml
+├── [4.0K]  config/
+│   ├── [ 334]  cleanup.sh*
+│   └── [ 353]  pre-install.sh*
+└── [ 491]  helmfile.yaml
+```
+
+#### `certmanager.yaml`
+
+This file defines the configuration for Cert-Manager, a Kubernetes add-on for managing TLS certificates.
+
+#### `configmap.yaml`
+
+This file defines a Kubernetes ConfigMap, which holds configuration data for the application.
+
+#### `deployment.yaml`
+
+This file defines the Kubernetes Deployment resource, specifying how the application should be deployed and managed.
+
+#### `_helpers.tpl`
+
+This is a Helm template helper file, containing reusable template snippets.
+
+#### `hpa.yaml`
+
+This file defines the Horizontal Pod Autoscaler (HPA) for automatically scaling the application based on resource usage.
+
+#### `ingress.yaml`
+
+This file defines the Kubernetes Ingress resource, configuring how external access to the application is managed.
+
+#### `NOTES.txt`
+
+This file contains optional post-installation notes and information for users.
+
+#### `secret.yaml`
+
+This file defines a Kubernetes Secret, holding sensitive configuration data.
+
+#### `service.yaml`
+
+This file defines the Kubernetes Service resource, managing access to the application.
+
+#### `values.yaml`
+
+This file contains default configuration values for the Helm chart.
+
+#### `secrets.yaml` (in `values/dev/`, `values/prod/`, `values/stage/`)
+
+These files define environment-specific secrets that the application uses.
+
+#### `Chart.yaml`
+
+This file contains metadata and information about the Helm chart.
+
+#### `cleanup.sh` (in `config/`)
+
+A shell script for cleanup operations before installation.
+
+#### `pre-install.sh` (in `config/`)
+
+A shell script for pre-installation operations.
+
+#### `helmfile.yaml`
+
+This file is used for Helmfile, which is a declarative configuration for deploying Helm charts. It defines the Helm releases and their configurations.
+
+## Setup Deployment Environment
+
+### Minikube Installation
+
+Minikube is a tool that allows you to run a single-node Kubernetes cluster locally on your computer. It's designed to enable developers to set up and experiment with Kubernetes applications in a local environment before deploying to a larger Kubernetes cluster.
+
+Installation: <https://minikube.sigs.k8s.io/docs/start/>{:target="_blank"}
+
 ```bash
 minikube config set driver docker
 minikube start // stop
 minikube status
 ```
 
-## Kubectl Insallation/Configuration
-Installation: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+### Kubectl Installation
+
+Installation: <https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/>{:target="_blank"}
 
 ```bash
 curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
@@ -148,33 +248,39 @@ cat ~/.kube/config  // kubectl config view
 alias k='kubectl'
 ```
 
-## Helm Insallation/Configuration
-Installation: https://helm.sh/docs/intro/install/
-Cheat Sheet: https://helm.sh/docs/intro/cheatsheet/
+### Helm Installation
+
+Installation: <https://helm.sh/docs/intro/install/>{:target="_blank"}
+
+Cheat Sheet: <https://helm.sh/docs/intro/cheatsheet/>{:target="_blank"}
 
 ```bash
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 ```
 
-## Plugins Installation
+### Plugins Installation
+
 ```bash
 helm plugin install https://github.com/databus23/helm-diff
 helm plugin install https://github.com/aslafy-z/helm-git
 helm plugin install https://github.com/jkroepke/helm-secrets
 ```
 
-## Secrets Encryption
+### Secrets Encryption
+
 ```bash
 helm secrets encrypt prod/secrets.yaml
 ```
-## Namespace Creation
+### Namespace Creation
+
 ```bash
 kubectl create namespace dev
 kubectl create namespace stage
 kubectl create namespace prod
 ```
 
-## Github Registry Login
+### Github Registry Login
+
 ```bash
 export CR_PAT=
 
@@ -184,9 +290,13 @@ kubectl create secret docker-registry ghcr-login-secret --docker-server=https://
 ```
 
 ## Helmfile Deployment
+
+Helmfile is a declarative configuration management tool for deploying Helm charts to Kubernetes clusters. It simplifies the process of managing complex Helm deployments by allowing you to define your desired state in a structured YAML file.
+
 Installation: https://github.com/helmfile/helmfile/releases
 
 ### Development Environment
+
 ```bash
 helmfile --file helmfile.yaml -e dev apply --interactive
 helmfile --file helmfile.yaml -e dev destroy
@@ -204,14 +314,20 @@ helmfile --file helmfile.yaml -e prod apply --interactive
 helmfile --file helmfile.yaml -e prod destroy
 ```
 
-## Debug/Healthcheck
+### Debug/Healthcheck
+
 Service_IP/openapi.json
 Service_IP/secret
 Service_IP/healthcheck
 
-## Access Commands
+## Accessing the Application
+
 ```bash
 curl -H "Host: dev.jokerwrld.com" http://$(minikube ip)/
 curl -H "Host: stage.jokerwrld.com" -k https://$(minikube ip)/
 curl -H "Host: prod.jokerwrld.com" -k https://$(minikube ip)/
 ```
+
+## Summary
+
+We've taken a close look at making our applications work smoothly on Kubernetes. With Docker helping us pack our apps neatly, and Helm helping us manage and deploy them, we've simplified the process. Remember, mastering this art opens up exciting possibilities for seamless deployments and happy users. Keep practicing and enjoy the journey into the world of containers and Helm!
