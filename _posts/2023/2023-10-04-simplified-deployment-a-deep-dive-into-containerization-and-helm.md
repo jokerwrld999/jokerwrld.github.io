@@ -3,7 +3,7 @@ layout: post
 title: 'Simplified Deployment: A Deep Dive into Containerization and Helm'
 date: 2023-10-04 11:21 +0300
 image:
-  path: "/assets/img/2023/thumbs/default.webp"
+  path: "/assets/img/2023/thumbs/helm.webp"
 categories:
 - Self-hosted
 - Automation
@@ -31,6 +31,8 @@ In this post, we embark on a journey through the fundamental concepts of contain
 Let's navigate through the essence of containerization and Helm charts, understanding how they contribute to modern software development and deployment. Join us as we unravel the mechanics of these essential tools.
 
 ## Dockerizing the Application
+
+**Project Link:** [https://github.com/jokerwrld999/devops_assignments.git](https://github.com/jokerwrld999/devops_assignments.git){:target="_blank"}
 
 Package the FastAPI application into a Docker container for portability and easier deployment.
 
@@ -328,6 +330,6 @@ curl -H "Host: stage.jokerwrld.com" -k https://$(minikube ip)/
 curl -H "Host: prod.jokerwrld.com" -k https://$(minikube ip)/
 ```
 
-## Summary
+## Conclusion
 
 We've taken a close look at making our applications work smoothly on Kubernetes. With Docker helping us pack our apps neatly, and Helm helping us manage and deploy them, we've simplified the process. Remember, mastering this art opens up exciting possibilities for seamless deployments and happy users. Keep practicing and enjoy the journey into the world of containers and Helm!
