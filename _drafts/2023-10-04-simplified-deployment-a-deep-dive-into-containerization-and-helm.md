@@ -102,6 +102,33 @@ CMD ["./gunicorn.sh"]
 
 The resulting Docker image is optimized, effectively reducing the image size while maintaining application functionality.
 
+## Helm and Its Features
+
+[Helm](https://helm.sh/){: target="_blank"} is a widely used package manager for Kubernetes, designed to simplify and automate the deployment, scaling, and management of applications. It provides an efficient way to define, install, and upgrade even complex Kubernetes applications.
+
+### Key Features of Helm:
+
+1. **Package Management**:
+   - Helm packages applications as "charts," making it easy to share and install applications on Kubernetes clusters.
+
+2. **Templating and Parameterization**:
+   - Helm allows users to use templates to define Kubernetes manifests, enabling parameterization and customization of these manifests during installation.
+
+3. **Reusability**:
+   - Helm charts promote the reuse of predefined configurations and deployment strategies across multiple applications, streamlining the development process.
+
+4. **Dependency Management**:
+   - Helm handles dependencies between Kubernetes resources, ensuring the correct order of installation and removal for complex applications.
+
+5. **Rollbacks and Upgrades**:
+   - Helm supports rollbacks to previous versions and facilitates seamless upgrades of applications to newer versions, improving the overall deployment process.
+
+6. **Community Contributions**:
+   - Helm has a thriving community contributing to a vast collection of prebuilt charts, covering a wide array of applications and services.
+
+With these features, Helm significantly simplifies Kubernetes application management, making it a vital tool in the Kubernetes ecosystem.
+
+
 ## Minikube installation
 Installation: https://minikube.sigs.k8s.io/docs/start/
 ```bash
