@@ -8,7 +8,7 @@ categories:
 - Guide
 tags:
 - Git
-published: false
+published: true
 ---
 
 ## Overview:
@@ -99,7 +99,7 @@ Git flow is a complex strategy with a development branch, feature branches, rele
 
 #### Workflow
 
-![Git Flow](/assets/img/2023/posts/git-workflow-trunk-based.webp)
+![Git Flow](/assets/img/2023/posts/git-workflow-git-flow.webp)
 
 Typically when using Git Flow, we would create a development branch and from that branch we would create feature branches, like feature one, feature two, and so on and so forth. And then we would create release branches also from the dev branch. Those release branches need to be merged to dev branch as well, so that it's more or less sometimes eventually up to date.
 
@@ -113,7 +113,7 @@ Environment branching is the most complicated strategy, involving branches for e
 
 #### Workflow
 
-![Environment Branching](/assets/img/2023/posts/git-workflow-trunk-based.webp)
+![Environment Branching](/assets/img/2023/posts/git-workflow-environment-branching.webp)
 
 We have a development branch and then we have a branch for every environment, like staging, integrattion, produciton.
 
