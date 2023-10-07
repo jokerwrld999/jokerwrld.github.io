@@ -3,7 +3,7 @@ layout: post
 title: "Optimizing Your Git Workflow: A Comprehensive Guide to Tagging, Branching, and Pull Request Strategies"
 date: 2023-10-06 10:23 +0300
 image:
-  path: "/assets/img/2023/thumbs/default.webp"
+  path: "/assets/img/2023/thumbs/git-strategies.webp"
 categories:
 - Guide
 tags:
