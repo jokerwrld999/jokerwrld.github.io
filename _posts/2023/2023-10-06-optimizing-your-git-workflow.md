@@ -181,19 +181,127 @@ Choosing SSH during login offers a more secure and efficient authentication meth
 ### Basic Commands
 
 - **List Repositories:**
+
   ```bash
   gh repo list
   ```
+
   Lists repositories associated with your GitHub account.
 
 - **Clone Repository:**
+
   ```bash
   gh repo clone <repository_url>
   ```
+
   Clones a GitHub repository to your local machine.
 
 - **Create Repository:**
+
   ```bash
   gh repo create <repository_name>
   ```
+
   Creates a new GitHub repository with the specified name.
+
+## GitHub Workflow
+
+### Commit Often and Push Regularly
+
+Make frequent commits to capture changes and progress in your codebase. Push your commits to the repository regularly, especially at the end of the day or when reaching a significant milestone. This ensures your work is backed up and available to collaborators.
+
+### Utilize Branches
+
+Use branches to isolate work and develop new features or fixes without affecting the main codebase.
+
+- **Create a New Branch:**
+
+  ```bash
+  git branch <branch_name>
+  ```
+
+  Create a new branch at the current commit.
+
+- **Switch to a Branch:**
+
+  ```bash
+  git checkout <branch_name>
+  ```
+
+  Switch to an existing branch.
+
+- **Create a New Branch and Switch:**
+
+  ```bash
+  git checkout -b <branch_name>
+  ```
+
+  Create a new branch and switch to it in one command.
+
+- **Merge a Branch:**
+
+  ```bash
+  git merge <branch_name>
+  ```
+
+  Merge the specified branch into the current branch.
+
+- **Delete a Branch:**
+
+  ```bash
+  git branch -d <branch_name>
+  ```
+
+  Delete a local branch.
+
+- **Delete a Remote Branch:**
+
+  ```bash
+  git push origin --delete <branch_name>
+  ```
+
+  Delete a remote branch.
+
+### Tagging
+
+Use tags to mark significant points in your repository's history, such as releases or major updates.
+
+- **Create a Tag:**
+
+  ```bash
+  git tag <tag_name>
+  ```
+
+  Create a new lightweight tag at the current commit.
+
+- **Create an Annotated Tag:**
+
+  ```bash
+  git tag -a <tag_name> -m "Tag description"
+  ```
+
+  Create an annotated tag with a message.
+
+- **Push Tags to Remote:**
+
+  ```bash
+  git push origin <tag_name>
+  ```
+
+  Push a specific tag to the remote repository.
+
+- **Semantic Versioning:**
+
+  Consider using semantic versioning when tagging releases to convey meaningful information about the changes in each release (e.g., `v1.0.0`, `v1.1.0`).
+
+### Collaborative Development
+
+- **Pull Requests:**
+
+  Open a pull request to propose changes, allowing for discussion, review, and collaboration before merging into the main branch.
+
+- **Review and Merge:**
+
+  Ensure that code changes go through a review process, and only merge into the main branch after necessary approvals and successful automated tests.
+
+Following this GitHub workflow promotes a structured and collaborative approach to development, enabling efficient version control and seamless integration of new features or bug fixes into your project.
