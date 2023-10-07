@@ -145,3 +145,55 @@ In summary, choosing the appropriate development strategy depends on several fac
    - Alternatively, leaving the existing approach and opting for a different strategy might be a valid choice.
 
 Ultimately, the choice should align with your team's structure, project scale, and goals, ensuring efficient development while managing code stability and quality.
+
+## GitHub Cli
+
+GitHub CLI (gh) is a command-line interface for GitHub, providing an easy way to work with GitHub repositories, issues, pull requests, and more directly from the command line. It allows you to perform various GitHub actions without needing to use the GitHub web interface.
+
+### Installation
+
+#### Debian Linux
+
+```bash
+sudo apt install gh
+```
+
+#### Windows
+
+```bash
+winget install -e GitHub.cli
+```
+
+#### Mac
+
+```bash
+brew install gh
+```
+
+### First Login
+
+```bash
+gh auth login
+```
+
+Choosing SSH during login offers a more secure and efficient authentication method by utilizing cryptographic keys instead of passwords. It enhances security, simplifies the authentication process, and facilitates automated workflows, making it a preferred option for GitHub access.
+
+### Basic Commands
+
+- **List Repositories:**
+  ```bash
+  gh repo list
+  ```
+  Lists repositories associated with your GitHub account.
+
+- **Clone Repository:**
+  ```bash
+  gh repo clone <repository_url>
+  ```
+  Clones a GitHub repository to your local machine.
+
+- **Create Repository:**
+  ```bash
+  gh repo create <repository_name>
+  ```
+  Creates a new GitHub repository with the specified name.
