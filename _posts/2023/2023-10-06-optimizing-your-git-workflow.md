@@ -344,3 +344,15 @@ ghclone() {
 	cd $repo_name
 }
 ```
+
+```bash
+gh issue create --title "I found a bug" --body "Nothing works"
+
+gh issue develop <number> | <url>
+
+# Create a branch for issue 123 based on the my-feature branch
+gh issue develop 123 --base my-feature
+
+# Create a branch for issue 123 and checkout it out
+gh issue develop 123 --checkout
+```
