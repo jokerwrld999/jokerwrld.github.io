@@ -5,9 +5,9 @@ date: 2023-10-06 10:23 +0300
 image:
   path: "/assets/img/2023/thumbs/git-strategies.webp"
 categories:
-- Guide
+  - Guide
 tags:
-- Git
+  - Git
 published: true
 ---
 
@@ -124,19 +124,23 @@ And then everything needs to be merged everywhere and everything needs to pull e
 In summary, choosing the appropriate development strategy depends on several factors. Here's a simplified breakdown:
 
 1. **Trunk-Based Development:**
+
    - For those with robust testing automation and high test coverage.
    - Suitable for "superheroes" who trust their tests and can push directly to the mainline.
    - Also for those who prioritize speed over quality and are okay with deploying rapidly.
 
 2. **Feature Branches:**
+
    - Ideal for small, self-sufficient teams working on small, fast-to-complete tasks.
    - Well-suited for managing potentially small applications effectively.
 
 3. **Forking (Open Source):**
+
    - A common strategy in open source projects where contributors fork the repository.
    - Simplifies permissions and access management, allowing a more decentralized contribution process.
 
 4. **Release Branches:**
+
    - Used when maintaining backwards compatibility and applying hotfixes to older releases is crucial.
    - Appropriate for scenarios that don't align with the above strategies.
 
@@ -348,35 +352,51 @@ ghclone() {
 ## Full Git Workflow
 
 1. **Create a GitHub Issue:**
-   Use `gh issue create` to create a new GitHub issue, specifying the title and description of the issue.
 
-2. **Link an Issue to a Branch:**
-   Use `gh issue develop` to link an issue (specified by its number or URL) to a branch.
+```bash
+gh issue create --title "I found a bug" --body "Nothing works"
+```
 
-3. **Create a Branch for an Issue:**
-   Use `gh issue develop <issue_number> --base <base_branch>` to create a new branch based on a specified base branch (e.g., `my-feature`).
+2. **Create a Branch for an Issue:**
 
-4. **Create a Branch and Checkout:**
-   Use `gh issue develop <issue_number> --checkout` to create a new branch for the specified issue and switch to it.
+```bash
+gh issue develop 123 --base my-feature --checkout
+```
 
 5. **Make Changes and Commit:**
-   Make changes to the code, stage them using `git add`, and then commit with a meaningful message using `git commit`.
+
+```bash
+git add .
+git commit -m "#1 Commit Message"
+```
 
 6. **Tag the Commit:**
-   Tag the current commit to assign a version number using `git tag`.
+
+```bash
+git tag 0.1.0
+```
 
 7. **Push Changes:**
-   Push the changes to the remote repository using `git push`.
+
+```bash
+git push
+```
 
 8. **Push Tags:**
-   Push the tags to the remote repository using `git push --tags`.
+
+```bash
+git push --tags
+```
 
 9. **Create a Pull Request:**
-   Use `gh pr create` to create a pull request on GitHub, allowing for code review and integration into the main branch.
+
+```bash
+gh create pr
+```
 
 10. **Review, Approve, and Merge:**
-  If working in a team, wait for other team members to review the pull request, provide feedback, and approve the changes. Once approved, merge the pull request.
+    If working in a team, wait for other team members to review the pull request, provide feedback, and approve the changes. Once approved, merge the pull request.
 
-  If working alone, review the changes yourself, ensure they meet the project requirements, and proceed to merge the pull request.
+    If working alone, review the changes yourself, ensure they meet the project requirements, and proceed to merge the pull request.
 
 This Git workflow helps in managing tasks, versioning, and collaboration efficiently within a Git-based project.
