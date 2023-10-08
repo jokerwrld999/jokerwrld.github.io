@@ -305,3 +305,42 @@ Use tags to mark significant points in your repository's history, such as releas
   Ensure that code changes go through a review process, and only merge into the main branch after necessary approvals and successful automated tests.
 
 Following this GitHub workflow promotes a structured and collaborative approach to development, enabling efficient version control and seamless integration of new features or bug fixes into your project.
+
+## Quick Aliases
+
+You can create aliases for Git commands to simplify and customize your Git workflow. Aliases can be set up in shell profiles on different OSs.
+
+```bash
+alias gpush='git push'
+alias gst='git status'
+alias greset="git fetch --all && git reset --hard origin/main"
+alias gfixup="GIT_SEQUENCE_EDITOR=\"curl -s https://raw.githubusercontent.com/jokerwrld999/py-automation/main/scripts/fixup/main.py | python -\" git rebase -i --root"
+
+# >>>> Functions
+# Git commit
+gcom() {
+    git add .
+    git commit -m "$1"
+}
+
+# Lazy git push
+lazyg() {
+	git add .
+	git commit -m "$1"
+	git push
+}
+
+# Git clone repo and go to the directory
+gclone() {
+	repo_name=$(basename "$1" ".git")
+	git clone "$1"
+	cd $repo_name
+}
+
+# Gh clone repo and go to the directory
+ghclone() {
+	repo_name=$(basename "$1" ".git")
+	gh repo clone "$1"
+	cd $repo_name
+}
+```
