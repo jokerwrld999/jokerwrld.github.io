@@ -353,51 +353,44 @@ ghclone() {
 ## Full Git Workflow
 
 1. **Create a GitHub Issue:**
-
   ```bash
   gh issue create --title "I found a bug" --body "Nothing works"
   ```
 
 2. **Create a Branch for an Issue:**
-
   ```bash
   gh issue develop 123 --base my-feature --checkout
   ```
 
-5. **Make Changes and Commit:**
-
+3. **Make Changes and Commit:**
   ```bash
   git add .
   git commit -m "#1 Commit Message"
   ```
-
-6. **Tag the Commit:**
-
+4. **Tag the Commit:**
   ```bash
   git tag 0.1.0
   ```
 
-7. **Push Changes:**
-
+5. **Push Changes:**
   ```bash
   git push
   ```
 
-8. **Push Tags:**
-
+6. **Push Tags:**
   ```bash
   git push --tags
   ```
 
-9. **Create a Pull Request:**
-
+7. **Create a Pull Request:**
   ```bash
   gh create pr
   ```
 
-10. **Review, Approve, and Merge:**
-  If working in a team, wait for other team members to review the pull request, provide feedback, and approve the changes. Once approved, merge the pull request.
+8. **Review, Approve, and Merge:**
 
-  If working alone, review the changes yourself, ensure they meet the project requirements, and proceed to merge the pull request.
+    If working in a team, wait for other team members to review the pull request, provide feedback, and approve the changes. Once approved, merge the pull request.
+    
+    If working alone, review the changes yourself, ensure they meet the project requirements, and proceed to merge the pull request.
 
 This Git workflow helps in managing tasks, versioning, and collaboration efficiently within a Git-based project.
