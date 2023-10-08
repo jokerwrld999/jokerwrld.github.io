@@ -345,14 +345,38 @@ ghclone() {
 }
 ```
 
-```bash
-gh issue create --title "I found a bug" --body "Nothing works"
+## Full Git Workflow
 
-gh issue develop <number> | <url>
+1. **Create a GitHub Issue:**
+   Use `gh issue create` to create a new GitHub issue, specifying the title and description of the issue.
 
-# Create a branch for issue 123 based on the my-feature branch
-gh issue develop 123 --base my-feature
+2. **Link an Issue to a Branch:**
+   Use `gh issue develop` to link an issue (specified by its number or URL) to a branch.
 
-# Create a branch for issue 123 and checkout it out
-gh issue develop 123 --checkout
-```
+3. **Create a Branch for an Issue:**
+   Use `gh issue develop <issue_number> --base <base_branch>` to create a new branch based on a specified base branch (e.g., `my-feature`).
+
+4. **Create a Branch and Checkout:**
+   Use `gh issue develop <issue_number> --checkout` to create a new branch for the specified issue and switch to it.
+
+5. **Make Changes and Commit:**
+   Make changes to the code, stage them using `git add`, and then commit with a meaningful message using `git commit`.
+
+6. **Tag the Commit:**
+   Tag the current commit to assign a version number using `git tag`.
+
+7. **Push Changes:**
+   Push the changes to the remote repository using `git push`.
+
+8. **Push Tags:**
+   Push the tags to the remote repository using `git push --tags`.
+
+9. **Create a Pull Request:**
+   Use `gh pr create` to create a pull request on GitHub, allowing for code review and integration into the main branch.
+
+10. **Review, Approve, and Merge:**
+  If working in a team, wait for other team members to review the pull request, provide feedback, and approve the changes. Once approved, merge the pull request.
+
+  If working alone, review the changes yourself, ensure they meet the project requirements, and proceed to merge the pull request.
+
+This Git workflow helps in managing tasks, versioning, and collaboration efficiently within a Git-based project.
