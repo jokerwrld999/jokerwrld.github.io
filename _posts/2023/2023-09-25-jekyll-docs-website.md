@@ -90,7 +90,7 @@ source ~/.zshrc
 ### Arch
 
 ```shell
-sudp pacman -Syu
+sudo pacman -Syu
 sudo pacman -S ruby ruby-rdoc gcc make --noconfirm
 ```
 
@@ -214,7 +214,7 @@ bundle exec jekyll post "My New Post"
 bundle exec jekyll post "My New Post" --timestamp-format "%Y-%m-%d %H:%M:%S %z"
 ```
 
-Covenient quick Bash `function` to create a post in a desired subdirectory
+Convenient quick Bash `function` to create a post in a desired subdirectory
 
 ```bash
 new_post() {
@@ -258,7 +258,7 @@ JEKYLL_ENV=production bundle exec jekyll b
 - In Cloudflare, go to the SSL/TLS section and configure SSL to your liking.
 - Ensure the SSL mode is set to `Full` or `Full (strict)`.
 
-3. Cofigure GitHub Pages:
+3. Configure GitHub Pages:
 - Navigate to the repository's settings.
 - Under the `GitHub Pages` section, add your custom domain (e.g., example.com).
 

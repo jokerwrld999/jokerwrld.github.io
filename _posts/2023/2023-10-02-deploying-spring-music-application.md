@@ -22,13 +22,13 @@ tags:
 published: true
 ---
 
-## Intoduction
+## Introduction
 
 In this post, we will walk through the manual and automated deployments of a Java Spring application. Our demonstration will be based on the popular Spring Music sample record album collection application, originally designed to showcase database services on Cloud Foundry and the Spring Framework.
 
 However, instead of utilizing Cloud Foundry initially, we will begin by hosting the Spring Music application on a local on-premises server, providing insights into traditional deployment methods. Later in the guide, we will explore containerization using Docker, enabling a more flexible and versatile deployment approach.
 
-### Overview of the SDLC Steps
+### Overview 
 
 1. **Local Development Environment Setup**
     - Preparing your local development environment is the initial step, ensuring you have all the necessary tools and configurations in place.
@@ -45,7 +45,7 @@ However, instead of utilizing Cloud Foundry initially, we will begin by hosting 
 5. **CI/CD with Jenkins**
     - Learn how to implement continuous integration and continuous deployment (CI/CD) for the Spring Music app using Jenkins. Set up Jenkins pipelines to automate build, test, and deployment processes, streamlining the development lifecycle.
 
-6. **Conteinerization**
+6. **Containerization**
     - Learn how to containerize the application by creating a Docker image, making it portable and easily deployable across various environments.
 
 
@@ -407,7 +407,7 @@ RUN  apk update \
     && update-ca-certificates \
     && echo http://dl-cdn.alpinelinux.org/alpine/v3.6/main >> /etc/apk/repositories \
     && echo http://dl-cdn.alpinelinux.org/alpine/v3.6/community >> /etc/apk/repositories \
-    && apk add --update coreutils && rm -rf /var/cache/apk/*   \ 
+    && apk add --update coreutils && rm -rf /var/cache/apk/*   \
     && apk add --update openjdk11 mongodb mongodb-tools tzdata curl unzip bash openrc \
     && apk add --no-cache nss \
     && rm -rf /var/cache/apk/*

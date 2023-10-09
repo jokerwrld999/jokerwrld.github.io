@@ -499,7 +499,7 @@ In this stage of the CI/CD pipeline, Ansible is utilized to configure and provis
 
 1. **Dynamic Inventory:**
     - Ansible's dynamic inventory keeps track of infrastructure changes, ensuring accurate targeting of EC2 instances.
-2. **Idempotency:**
+2. **Idempotent:**
     - Ansible helps maintain consistent configurations across all servers, ensuring that each environment is set up correctly for application deployment.
 3. **Customized Deployment Pipelines:**
     - Ansible playbooks can be tailored to the project's specific deployment requirements, making it easy to integrate with the CI/CD pipeline.
@@ -546,7 +546,7 @@ Here is the Ansible playbook snippet that encapsulates the Docker container depl
 
     - Ansible automates the deployment process, reducing manual steps and potential human errors. The playbook allows for the customization of deployment parameters, making it adaptable to different containerized applications.
 
-2. **Idempotency:**
+2. **Idempotent:**
 
     - Ansible ensures that the deployment remains idempotent, preventing unintended changes to the container state.
 

@@ -115,7 +115,7 @@ Environment branching is the most complicated strategy, involving branches for e
 
 ![Environment Branching](/assets/img/2023/posts/git-workflow-environment-branching.webp)
 
-We have a development branch and then we have a branch for every environment, like staging, integrattion, produciton.
+We have a development branch and then we have a branch for every environment, like staging, integration, production.
 
 And then everything needs to be merged everywhere and everything needs to pull everything. Everything is multiplied by the number of releases we have in parallel. And that's not all. We have hot fixes as well.
 
@@ -390,7 +390,7 @@ ghclone() {
 8. **Review, Approve, and Merge:**
 
     If working in a team, wait for other team members to review the pull request, provide feedback, and approve the changes. Once approved, merge the pull request.
-    
+
     If working alone, review the changes yourself, ensure they meet the project requirements, and proceed to merge the pull request.
 
 This Git workflow helps in managing tasks, versioning, and collaboration efficiently within a Git-based project.
