@@ -352,6 +352,8 @@ ghclone() {
 
 ## Full Git Workflow
 
+![Full Git Workflow](/assets/img/2023/posts/git-workflow-full.webp)
+
 1. **Open New Issue:**
   ```bash
   gh issue create --title "I found a bug" --body "Nothing works" --label [bug | documentation | enhancement | invalid | question]
