@@ -22,6 +22,7 @@ tags:
 ## Static Website
 
 Download Css Template
+
 ```bash
 wget https://www.tooplate.com/zip-templates/2137_barista_cafe.zip && unzip *.zip -d . && rm -rf *.zip
 ```
@@ -47,8 +48,21 @@ Architecture Diagram
 
 Load Backend into Terraform Cloud
 
+```terraform
+terraform {
+  cloud {
+    organization = "jokerwrld"
+
+    workspaces {
+      name = "terraform-bootcamp"
+    }
+  }
+}
+```
+
 ### S3
 
+Create S3 bucket &
 Load files to S3
 
 
