@@ -187,6 +187,8 @@ terraform {
 
 ### Cloudfront
 
+In this section we will be using CloudFront to serve content from S3 bucket as origin.
+
 Create Distribution
 
 Configure Origin Access
