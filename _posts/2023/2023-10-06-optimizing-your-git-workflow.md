@@ -355,30 +355,44 @@ ghclone() {
 ![Full Git Workflow](/assets/img/2023/posts/git-workflow-full.webp)
 
 1. **Open New Issue:**
-  ```bash
-  gh issue create --title "I found a bug" --body "Nothing works" --label [bug | documentation | enhancement | invalid | question]
-  ```
+
+    ```bash
+    gh issue create --title "I found a bug" --body "Nothing works" \
+    --label [bug | documentation | enhancement | invalid | question]
+    ```
 
 2. **Create New Branch on Issue:**
-  ```bash
-  gh issue develop 123 --base my-feature --checkout
-  ```
+
+    ```bash
+    gh issue develop 123 --base my-feature --checkout
+    gh issue develop 123 -c # shorter version
+    ```
+
+    Modify newly created issue if needed:
+
+    ```bash
+    gh issue view 123
+    gh issue edit 123 --add-label enhancement # add label
+    ```
 
 3. **Make Changes and Commit:**
-  ```bash
-  git add .
-  git commit -m "#1 Commit Message"
-  ```
+
+    ```bash
+    git add .
+    git commit -m "#1 Commit Message"
+    ```
 
 4. **Push Changes:**
-  ```bash
-  git push
-  ```
+
+    ```bash
+    git push
+    ```
 
 5. **Create a Pull Request:**
-  ```bash
-  gh create pr
-  ```
+
+    ```bash
+    gh pr create
+    ```
 
 6. **Review, Approve, and Merge:**
 
@@ -388,21 +402,25 @@ ghclone() {
 
     ```bash
     gh pr list
-    gh pr merge
+    gh pr merge --admin -s -d # merge pr that doesn't meet reqs e.g. no one is approved pr, squash and delete branch
      ```
 
 7. **Verify and Tag:**
-  ```bash
-  git checkout main
-  git pull
-  git tag 0.1.0
-  git push --tags
-  ```
+
+    ```bash
+    git checkout main
+    git pull
+    git tag -l
+    git tag 0.1.0
+    git push --tags
+    ```
 
 8. **Delete Branch (If Needed):**
-  ```bash
-  git branch -d old-branch
-  git push origin --delete old-branch
-  ```
+
+    ```bash
+    git branch -d old-branch
+    git push origin --delete old-branch
+    git fetch -p # synchronize your branch list
+    ```
 
 This Git workflow helps in managing tasks, versioning, and collaboration efficiently within a Git-based project.
