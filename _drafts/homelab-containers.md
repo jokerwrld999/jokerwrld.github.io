@@ -478,6 +478,18 @@ This documentation aims to guide you through the process of deploying Jenkins wi
   docker-compose up -d
   ```
 
+- **Access Jenkins Web Interface**
+
+  Once the containers are running, access Jenkins in your web browser at `http://localhost:8080`.
+
+- **Unlock Jenkins**
+
+  Retrieve the initial admin password:
+
+  ```bash
+  docker exec -it jenkins_server bash -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+  ```
+  
 ## Cloudflare Tunnel
 
 ## TrueNAS Scale
