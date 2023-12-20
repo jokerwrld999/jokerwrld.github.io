@@ -350,11 +350,6 @@ Now we can open the URL. And there you go! A local service running in your home 
 > This method relies on the Internet connection to resolve the domains. So if you want your services to work independently of the Internet connection, that's where you might want to run your own DNS server like [Pi-Hole](https://pi-hole.net/){: target="_blank"} or [AdGuard](https://github.com/AdguardTeam/AdGuardHome#getting-started){: target="_blank"}.
 {: .prompt-info}
 
-
-
-## Dashy
-
-
 ## Jenkins
 
 [Jenkins](https://www.jenkins.io/){: target="_blank"} is an open-source automation server widely used for building, testing, and deploying software. Developed in Java and launched in 2011, Jenkins has become a key tool in the DevOps toolchain, enabling continuous integration and continuous delivery (CI/CD) practices.
@@ -544,6 +539,10 @@ After running the pipeline we can view our results in Blue Ocean interface:
 ## Cloudflare Tunnel
 
 ## TrueNAS Scale
+
+## Pi-Hole, Bind9, AdGuard
+
+## Rancher
 
 ## MediaFile hosting Next Cloud
 
