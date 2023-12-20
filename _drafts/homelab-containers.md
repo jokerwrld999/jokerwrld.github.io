@@ -489,7 +489,58 @@ This documentation aims to guide you through the process of deploying Jenkins wi
   ```bash
   docker exec -it jenkins_server bash -c "cat /var/jenkins_home/secrets/initialAdminPassword"
   ```
-  
+
+### Creating First Jenkins Pipeline
+
+Let's configure our first Jenkins pipeline by inserting the contents of our `Jenkinsfile` into the script area of the `Pipeline` job type.
+
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Check Docker installation') {
+            steps {
+                echo 'Checking for Docker...'
+                sh '''
+                docker ps
+                '''
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                sh '''
+                echo "Doing build stuff..."
+                '''
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                sh '''
+                echo "Doing test stuff..."
+                '''
+            }
+        }
+        stage('Deliver') {
+            steps {
+                echo 'Deliver...'
+                sh '''
+                echo "Doing delivery stuff..."
+                '''
+            }
+        }
+    }
+}
+
+```
+{: file="Jenkinsfile"}
+
+After running the pipeline we can view our results in Blue Ocean interface:
+
+![Homelab Containers Jenkins First Pipeline](/assets/img/2023/posts/homelab-containers-jenkins-first-pipeline.webp)
+
+
 ## Cloudflare Tunnel
 
 ## TrueNAS Scale
