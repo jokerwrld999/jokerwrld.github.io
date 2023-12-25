@@ -344,6 +344,169 @@ In this section we will be using CloudFront to serve content from S3 bucket as o
 
   ![CloudFront Static Website](/assets/img/2023/posts/terraform-bootcamp-cloudfront-website.webp)
 
-<!---
-TODO: Custom Domain /W Cloudflare provider
->
+#### Setup Custom Cloudflare Domain
+
+Let's setup custom domain name instead of CloudFront's random one.
+
+- **Add Cloudflare provider section**
+
+  In order to use Cloudflare API we need to modify `providers.tf` file.
+
+  ```terraform
+  terraform {
+    cloud {
+      organization = "jokerwrld"
+
+      workspaces {
+        name = "terraform-bootcamp"
+      }
+    }
+
+    required_providers {
+      aws = {
+        source  = "hashicorp/aws"
+        version = "~> 5.0"
+      }
+
+      cloudflare = {
+        source = "cloudflare/cloudflare"
+        version = "4.20.0"
+      }
+    }
+
+    required_version = ">= 1.5.0"
+  }
+
+  # AWS provider block
+
+  provider "aws" {
+    region     = var.region
+    # access_key = var.AWS_ACCESS_KEY_ID
+    # secret_key = var.AWS_SECRET_ACCESS_KEY
+  }
+
+  provider "cloudflare" {
+    api_token = var.cloudflare_api_token
+  }
+  ```
+  {: file="providers.tf"}
+
+  Also we need to create some variables for Cloudflare in Terraform Cloud.
+
+  ![Cloudflare Creds](/assets/img/2023/posts/terraform-bootcamp-cloudflare-creds.webp)
+
+- **Generate SSL Certificate**
+
+  AWS Certificate Manager (ACM) resource helps with generating SSL Cert for our domain `jokerwrld.win` and subdomains.
+
+  ```terraform
+  # Use the AWS Certificate Manager to create an SSL cert for our domain.
+  resource "aws_acm_certificate" "certificate" {
+    domain_name       = "*.${var.root_domain_name}"
+    validation_method = "DNS"
+
+    subject_alternative_names = ["${var.root_domain_name}"]
+
+    lifecycle {
+      create_before_destroy = true
+    }
+  }
+  ```
+
+  For DNS validation, we need to add some records to our domain's DNS configuration.
+
+  ```terraform
+  # Create Validation Record on Cloudflare
+  resource "cloudflare_record" "cloudflare_validation_record" {
+    zone_id = var.cloudflare_zone_id
+    name    = "${tolist(aws_acm_certificate.certificate.domain_validation_options)[0].resource_record_name}"
+    value   = "${tolist(aws_acm_certificate.certificate.domain_validation_options)[0].resource_record_value}"
+    type    = "CNAME"
+    proxied = false
+
+    depends_on = [ aws_acm_certificate.certificate ]
+  }
+  ```
+
+- **Modify CloudFront Distribution**
+
+  In order to be able to access our website through our custom domain, we need to modify some CloudFront distribution options like `origin_id`, `aliases`, `target_origin_id`.
+
+  ```terraform
+  # CloudFront
+  resource "aws_cloudfront_origin_access_control" "cloudfront_s3_oac" {
+    name                              = "CloudFront S3 OAC"
+    description                       = "Cloud Front S3 OAC"
+    origin_access_control_origin_type = "s3"
+    signing_behavior                  = "always"
+    signing_protocol                  = "sigv4"
+  }
+
+  resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
+    comment = "${aws_s3_bucket.bootcamp_bucket.id}"
+  }
+
+  resource "aws_cloudfront_distribution" "cloudfront_distribution" {
+    origin {
+      domain_name = aws_s3_bucket.bootcamp_bucket.bucket_regional_domain_name
+      origin_id   = "${var.sub_domain_name}"
+
+      origin_access_control_id = aws_cloudfront_origin_access_control.cloudfront_s3_oac.id
+    }
+
+    aliases = ["${var.sub_domain_name}"]
+    enabled = true
+    default_root_object = "index.html"
+
+    default_cache_behavior {
+      allowed_methods  = ["GET", "HEAD"]
+      cached_methods   = ["GET", "HEAD"]
+      target_origin_id = "${var.sub_domain_name}"
+
+      forwarded_values {
+        query_string = false
+
+        cookies {
+          forward = "none"
+        }
+      }
+
+      viewer_protocol_policy = "allow-all"
+      min_ttl                = 0
+      default_ttl            = 3600
+      max_ttl                = 86400
+    }
+
+    viewer_certificate {
+      acm_certificate_arn = "${aws_acm_certificate.certificate.arn}"
+      ssl_support_method = "sni-only"
+    }
+
+    restrictions {
+      geo_restriction {
+        restriction_type = "none"
+        locations        = []
+      }
+    }
+  }
+  ```
+
+- **Update DNS Records**
+
+  Once the CloudFront distribution is created, we can update our Cloudflare records to point to the Cloudfront domain.
+
+  ```terraform
+  resource "cloudflare_record" "cloudflare_record" {
+    zone_id = var.cloudflare_zone_id
+    name    = "barista"
+    value   = aws_cloudfront_distribution.cloudfront_distribution.domain_name
+    type    = "CNAME"
+    proxied = true
+  }
+  ```
+
+- **Access Website**
+
+  Now, let's access or content using the custom domain e.g., `https://barista.jokerwrld.win`.
+
+  ![Static Website on Custom DNS](/assets/img/2023/posts/terraform-bootcamp-static-website-custom-dns.webp)
