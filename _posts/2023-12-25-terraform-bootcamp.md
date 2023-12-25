@@ -1,21 +1,58 @@
 ---
 layout: post
-title: Terraform Bootcamp
+title: 'Terraform: CLOUD PROJECT BOOTCAMP'
 image:
-  path: "/assets/img/2023/thumbs/default.webp"
+  path: "/assets/img/2023/thumbs/terraform-bootcamp.webp"
 categories:
-- Self-hosted
 - Infrastructure as Code (IaC)
+- Content Delivery Network (CDN)
 - Networking
 - Project
 tags:
+- Cloudflare
 - Git
 - Linux
-- Bash
-- Ansible
 - AWS
 - Terraform
+date: 2023-12-25 17:52 +0200
 ---
+## Why to use Terraform as IAC
+
+Explore a comprehensive article on the topic: [Why we use Terraform and not Chef, Puppet, Ansible, Pulumi, or CloudFormation](https://blog.gruntwork.io/why-we-use-terraform-and-not-chef-puppet-ansible-saltstack-or-cloudformation-7989dad2865c#.63ls7fpkq){: target="_blank"}.
+
+Choosing the right Infrastructure as Code (IAC) tool is a critical decision for organizations looking to efficiently manage and scale their infrastructure. While there are various tools available, including Pulumi, Ansible, Chef, and Puppet, Terraform stands out for several compelling reasons:
+
+1. **Declarative Syntax:**
+   - Terraform utilizes a declarative syntax, allowing users to define the desired end state of their infrastructure. This makes it easy to understand and maintain configurations without specifying explicit step-by-step procedures.
+
+2. **Multi-Cloud Support:**
+   - Terraform is cloud-agnostic, providing support for multiple cloud providers such as AWS, Azure, Google Cloud, and more. This flexibility enables organizations to adopt a multi-cloud strategy seamlessly.
+
+3. **Immutable Infrastructure:**
+   - Terraform promotes the concept of immutable infrastructure, where infrastructure components are treated as disposable entities. This approach ensures consistency and repeatability in deployments, reducing the risk of configuration drift.
+
+4. **Resource Graph:**
+   - Terraform's resource graph allows for efficient dependency resolution. It understands the relationships between resources, optimizing the order of provisioning and avoiding unnecessary delays.
+
+5. **Large and Active Community:**
+   - Terraform boasts a large and vibrant community of users and contributors. This means extensive documentation, a plethora of modules, and a wealth of knowledge-sharing, making it easier to find solutions and best practices.
+
+6. **Modular Architecture:**
+   - Terraform's modular architecture enables the creation of reusable and shareable modules. This promotes consistency across projects, accelerates development, and simplifies collaboration among teams.
+
+7. **Built-In State Management:**
+   - Terraform includes a built-in state management system, which tracks the current state of the infrastructure. This facilitates collaboration among team members and helps prevent conflicts in concurrent deployments.
+
+8. **Ease of Adoption:**
+   - Terraform's learning curve is often considered gentler compared to some other IAC tools. Its simple and expressive syntax, coupled with comprehensive documentation, makes it accessible to both beginners and experienced users.
+
+9. **Extensive Provider Ecosystem:**
+   - Terraform's extensive provider ecosystem covers a wide range of services and resources for various cloud providers, as well as on-premises infrastructure. This diversity ensures that users can model and manage almost any type of infrastructure.
+
+10. **Community Modules and Registry:**
+    - The Terraform Module Registry provides a centralized repository of community-contributed modules, allowing users to leverage pre-built solutions for common infrastructure patterns. This accelerates development and ensures adherence to best practices.
+
+While other IAC tools may excel in specific use cases or cater to different preferences, Terraform's broad compatibility, ease of use, and strong community support make it a popular choice for organizations seeking a robust and flexible solution for managing their infrastructure.
 
 ## Terraform Root Module Structure
 
@@ -36,7 +73,7 @@ PROJECT_ROOT
 
 ## Terraform Variables
 
-### [Terraform Cloud Variables](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/variables){:target="_blank"}
+### [Terraform Cloud Variables](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/variables){: target="_blank"}
 
 In Terraform Cloud we can set two kind of variables:
 
@@ -70,7 +107,7 @@ In Terraform Cloud we can set two kind of variables:
 
 ## IAC
 
-Architecture Diagram
+![Architectural Diagram](/assets/img/2023/posts/terraform-bootcamp-architecture.webp)
 
 ### Terraform Backend
 
@@ -510,3 +547,185 @@ Let's setup custom domain name instead of CloudFront's random one.
   Now, let's access or content using the custom domain e.g., `https://barista.jokerwrld.win`.
 
   ![Static Website on Custom DNS](/assets/img/2023/posts/terraform-bootcamp-static-website-custom-dns.webp)
+
+### Creating Reusable Infrastructure /W Terraform Modules
+
+Why we need Terraform modules? Well, with Terraform we can put our code inside of Terraform module and reuse that module in multiple places throughout your code. Instead of having the same code copied and pasted in the  staging and production environments.
+
+More comprehensive guide you can check in great article - [How to create reusable infrastructure with Terraform modules](https://blog.gruntwork.io/how-to-create-reusable-infrastructure-with-terraform-modules-25526d65f73d){: target="_blank"}
+
+#### Terraform module structure
+
+> A Terraform module is very simple: any set of Terraform configuration files in a folder is a module.
+
+Module structure can be as follows:
+
+```console
+| PROJECT_ROOT
+├── modules/
+│   ├── cdn/
+│   │   ├── main.tf
+│   │   ├── outputs.tf
+│   │   ├── providers.tf
+│   │   └── variables.tf
+│   └── storage/
+│       ├── static-website/
+│       ├── main.tf
+│       ├── outputs.tf
+│       ├── providers.tf
+│       └── variables.tf
+├── LICENSE
+├── main.tf
+├── outputs.tf
+├── providers.tf
+├── README.md
+├── terraform.tfvars
+└── variables.tf
+```
+
+#### Module Composition
+
+When you create modules it's essential to have input parameters, so that your modules stay as flexible as possible.
+
+- **Input Variables**
+
+  Input variables as variables like in Root module represent the same mechanism and can be accessed as usual using `var.variable_name` syntax.
+
+  For example, in our project we are using global variable `root_domain_name` let's see how this variable is declared:
+
+  1. Declare the variable in the `PROJECT_ROOT`
+
+      ```terraform
+      variable "root_domain_name" {
+        description = "Root Domain Name"
+        type        = string
+      }
+      ```
+      {: file="PROJECT_ROOT/variables.tf"}
+
+  2. Set the variable in the `terraform.tfvars` file or Terraform Cloud as the `terraform`` variable
+
+      ```terraform
+      root_domain_name = "jokerwrld.win"
+      ```
+      {: file="PROJECT_ROOT/terraform.tfvars"}
+
+  3. Pass the variable into the module using `main.tf` file in the `PROJECT_ROOT`. Preferred format is `VARIABLE_NAME =  var.VARIABLE_NAME`
+
+      ```terraform
+      module "storage" {
+        source = "./modules/storage"
+
+        region               = var.region
+        root_domain_name     = var.root_domain_name
+
+        ...
+      }
+      ```
+      {: file="PROJECT_ROOT/main.tf"}
+
+  4. Declare the variable in a `modules/module_name` folder in the `variables.tf` file
+
+      ```terraform
+      variable "root_domain_name" {
+        description = "Root Domain Name"
+        type        = string
+      }
+      ```
+      {: file="PROJECT_ROOT/modules/storage/variables.tf"}
+
+  5. Use the declared variable in the `main.tf` file in the module folder
+
+      ```terraform
+      # S3 static website bucket
+      resource "aws_s3_bucket" "bootcamp_bucket" {
+        bucket = var.root_domain_name
+      }
+      ```
+      {: file="PROJECT_ROOT/modules/storage/main.tf"}
+
+
+- **Output Variables**
+
+  Additionally, there is a feature that allows you to utilize output variables from one module as input variables for another module.
+
+  To access module output variables, use the following syntax:
+
+  ```
+  module.<MODULE_NAME>.<OUTPUT_NAME>
+  ```
+
+  For example, let's export `bootcamp_bucket_id` variable from `storage` module into `cdn` module:
+
+  1. Create the output variable in the `PROJECT_ROOT/modules/storage/outputs.tf` file
+
+      ```terraform
+      output "bootcamp_bucket_id" {
+        value       = aws_s3_bucket.bootcamp_bucket.id
+        description = "AWS S3 Bucket ID"
+      }
+      ```
+      {: file="PROJECT_ROOT/modules/storage/outputs.tf"}
+
+  2. Set the variable in the `terraform.tfvars` file or Terraform Cloud as the `terraform`` variable
+
+      ```terraform
+      root_domain_name = "jokerwrld.win"
+      ```
+      {: file="PROJECT_ROOT/terraform.tfvars"}
+
+  3. Pass the `bootcamp_bucket_id` output variable into the `cdn` module using `main.tf` file in the `PROJECT_ROOT`.
+
+      Format is: `INPUT_VARIABLE_NAME =  module.<MODULE_NAME>.<OUTPUT_VARIABLE_NAME>`
+
+      ```terraform
+      module "cdn" {
+        source = "./modules/cdn"
+
+        region                      = var.region
+        root_domain_name            = var.root_domain_name
+        subdomain_name              = var.subdomain_name
+        cloudflare_api_token        = var.cloudflare_api_token
+        cloudflare_zone_id          = var.cloudflare_zone_id
+        bootcamp_bucket_id          = module.storage.bootcamp_bucket_id
+        bucket_regional_domain_name = module.storage.bootcamp_bucket_bucket_regional_domain_name
+      }
+      ```
+      {: file="PROJECT_ROOT/main.tf"}
+
+  4. Declare the `bootcamp_bucket_id` as input variable in the `modules/cdn` folder in the `variables.tf` file
+
+      ```terraform
+      variable "bootcamp_bucket_id" {
+        description = "AWS S3 Bucket ID"
+        type        = string
+      }
+      ```
+      {: file="PROJECT_ROOT/modules/cdn/variables.tf"}
+
+  5. Use the exported output variable as the input variable in the `main.tf` file in the `cdn` module folder
+
+      ```terraform
+      resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
+        comment = var.bootcamp_bucket_id
+      }
+      ```
+      {: file="PROJECT_ROOT/modules/cdn/main.tf"}
+
+By defining your IAC in modules, you increase scalability, reliability and your ability to build infrastructure quickly, because developers now are able to reuse entire pieces of proven, tested and documented infrastructure.
+
+## Summary
+
+Throughout our Terraform bootcamp, we explored the fundamentals and practical aspects of Infrastructure as Code (IAC) using Terraform. We initiated our journey by investigating why Terraform stands out as a preferred choice for IAC.
+
+In the early stages, we grasped the foundational concept of Terraform's root module structure, gaining insights into its components and their contribution to the overall configuration. This knowledge set the stage for our subsequent exploration of Terraform variables, where we learned to declare, utilize, and manage variables within our Terraform configurations.
+
+Our practical experience extended to the creation of IAC for a static website, a crucial exercise exposing us to the configuration settings necessary for efficiently hosting static content. Expanding our deployment capabilities, we delved into Terraform backends, comprehending their role in storing Terraform state and streamlining collaboration.
+
+Our journey then transitioned to real-world applications with the setup of a static website hosted on Amazon S3. We navigated the intricacies of configuring the S3 bucket for website hosting and effectively linking our content. To optimize performance further, we explored the integration of Amazon CloudFront as a content delivery network (CDN) to enhance the website's reach and accessibility.
+
+A pivotal point in our bootcamp involved the exploration of custom domain setup using Cloudflare, where we gained hands-on experience in configuring a custom domain and seamlessly integrating it into our Terraform configurations.
+
+Understanding the principles behind modularizing our infrastructure code, we discovered the benefits of reusability across diverse projects. This modular approach not only enhances efficiency but also encourages best practices in code organization and maintainability.
+
+As we conclude our bootcamp, we emerge with a comprehensive understanding of Terraform's capabilities. We have successfully built and optimized a static website, configured CloudFront for content delivery, and effectively managed our infrastructure as code. Importantly, the modularized infrastructure positions us for scalable and maintainable deployments across various projects, showcasing the robust power and flexibility inherent in Terraform as a top-tier IAC tool.
