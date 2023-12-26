@@ -718,6 +718,93 @@ address=/home.jokerwrld.win/192.168.1.20
 5. Run the command: ```service pihole-FTL restart```
 
 ## TrueNAS Scale
+
+zfs, xfs, raid, iscisi
+
+[How fast are your disks? Find out the open source way, with fio](https://arstechnica.com/gadgets/2020/02/how-fast-are-your-disks-find-out-the-open-source-way-with-fio/){:target="_blank"}
+
+### ZFS
+
+[ZFS 101—Understanding ZFS storage and performance](https://arstechnica.com/information-technology/2020/05/zfs-101-understanding-zfs-storage-and-performance/){:target="_blank"}
+
+#### Zpools, vdevs, and devices
+
+The ZFS (Zettabyte File System) architecture consists of several key components, each playing a crucial role in the organization and management of storage. Here's an overview of the terms and concepts related to ZFS:
+
+1. **Zpool:**
+   - A Zpool is the highest-level construct in ZFS, representing a storage pool that can contain one or more vdevs. Zpools are independent units, and each may consist of various vdevs.
+
+2. **Vdev (Virtual Device):**
+   - A vdev is a virtual device within a Zpool and is composed of one or more physical devices. Vdevs can have different topologies, including single-device, RAIDz1, RAIDz2, RAIDz3, or mirror. Each vdev is responsible for redundancy at its level, and the loss of a vdev can result in data loss for the entire Zpool.
+
+3. **RAIDz:**
+   - RAIDz1, RAIDz2, and RAIDz3 are specific types of vdevs in ZFS, implementing diagonal parity RAID. These RAIDz levels determine how many parity blocks are allocated to each data stripe, providing fault tolerance up to a certain number of disk failures.
+
+4. **Mirror Vdev:**
+   - A mirror vdev stores each block on every device within the vdev. It provides redundancy by duplicating data across multiple disks. A mirror vdev can withstand the failure of multiple devices, as long as at least one device remains healthy.
+
+5. **Single-Device Vdev:**
+   - A single-device vdev is composed of a single physical device. It is inherently risky, as it cannot survive any failures. If a single-device vdev fails, it can bring down the entire Zpool.
+
+6. **CACHE, LOG, and SPECIAL Vdevs:**
+   - These are special types of vdevs that serve specific purposes:
+      - **CACHE Vdev:** Used for read and write caching.
+      - **LOG Vdev:** Used for synchronous transaction logging to improve write performance.
+      - **SPECIAL Vdev:** Used for devices that require dedicated storage, and their failure can result in the loss of the entire Zpool.
+
+7. **Device:**
+   - A device in ZFS is a random-access block device, typically a disk (HDD or SSD). Devices can be organized into vdevs, which, in turn, form Zpools. ZFS also supports the use of entire hardware RAID arrays as individual devices.
+
+8. **Raw File:**
+   - A simple raw file is an alternative block device that can be used to create vdevs in ZFS. This allows users to practice ZFS commands and test pool configurations using sparse files.
+
+Understanding these ZFS terms is crucial for effectively managing storage with ZFS and making informed decisions about pool and vdev configurations based on redundancy and performance requirements.
+
+#### Datasets, blocks, and sectors
+
+In the context of storage systems and file systems, "datasets," "blocks," and "sectors" are terms that refer to different levels of data organization and storage.
+
+1. **Dataset:**
+   - A dataset is a collection of related data or files. In file systems, a dataset is often synonymous with a directory or folder that contains files. However, in some storage systems, especially in the context of ZFS (Zettabyte File System), a dataset can be more than just a directory; it can represent a more complex structure with properties and settings.
+
+2. **Blocks:**
+   - Blocks are units of storage used by file systems to manage data. A block is typically a fixed-size allocation of storage space, and it is the minimum amount of data that can be read or written at a time. File systems organize data into blocks to efficiently manage storage and facilitate data retrieval. The block size can vary depending on the file system and the configuration.
+
+3. **Sectors:**
+   - Sectors are the smallest addressable unit on a physical storage device such as a hard disk drive (HDD) or a solid-state drive (SSD). A sector is a fixed-size unit of storage on the disk surface. Historically, the standard sector size was 512 bytes, but modern storage devices often use larger sector sizes, such as 4 KB (4096 bytes).
+
+In summary, datasets represent collections of related data or files, blocks are units of storage used by file systems for data management, and sectors are the smallest addressable units on physical storage devices. The concepts of datasets and blocks are more closely associated with file systems and logical data organization, while sectors are a lower-level concept related to the physical structure of storage devices. Understanding these terms is essential for effectively managing and organizing data in storage systems.
+
+#### COW
+
+Copy-on-Write (COW) is a data storage strategy employed by some file systems and database systems to optimize resource utilization and improve system performance. The core idea behind Copy-on-Write is to defer the duplication (copying) of data until it is necessary, rather than making a redundant copy of data immediately. This approach is particularly useful in scenarios where data is frequently read and rarely modified.
+
+Here's how Copy-on-Write typically works:
+
+1. **Initial Read:**
+   - When a piece of data needs to be read or accessed, the system does not create an immediate duplicate copy.
+
+2. **Modification Request:**
+   - If a write or modification operation is requested on the data, Copy-on-Write comes into play.
+
+3. **Copy Operation:**
+   - Instead of modifying the existing data in place, a new copy of the data is created. The modification is made to the copy.
+
+4. **Update Reference:**
+   - The reference to the original data is updated to point to the newly created copy.
+
+Copy-on-Write has several advantages and use cases:
+
+- **Efficiency in Read-Heavy Workloads:** In scenarios where data is predominantly read rather than modified, COW can be more efficient. It avoids unnecessary copying until a modification is needed.
+
+- **Reduced Overhead:** Immediate duplication of data for write operations can lead to unnecessary storage overhead, especially if the data is never modified again. COW minimizes this overhead.
+
+- **Snapshot Creation:** Copy-on-Write facilitates the efficient creation of snapshots. Since creating a snapshot involves copying only the modified data, it can be faster and less resource-intensive.
+
+- **Consistency and Atomicity:** Copy-on-Write ensures that modifications are atomic. If a failure occurs during the write operation, the original data remains intact.
+
+Common implementations of Copy-on-Write are found in some file systems (such as ZFS and Btrfs) and in certain database systems. However, it's important to note that the effectiveness of Copy-on-Write depends on the specific use case and workload characteristics. While it can offer significant benefits in certain scenarios, its impact on performance may vary in different contexts.
+
 ## Cloudflare Tunnel
 ## Rancher
 
