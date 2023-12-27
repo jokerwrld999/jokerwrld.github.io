@@ -729,6 +729,8 @@ zfs, xfs, raid, iscisi
 
 #### Zpools, vdevs, and devices
 
+![Homelab Containers ZFS Architecture](/assets/img/2023/posts/homelab-containers-zfs-architecture.webp)
+
 The ZFS (Zettabyte File System) architecture consists of several key components, each playing a crucial role in the organization and management of storage. Here's an overview of the terms and concepts related to ZFS:
 
 1. **Zpool:**
@@ -762,10 +764,12 @@ Understanding these ZFS terms is crucial for effectively managing storage with Z
 
 #### Datasets, blocks, and sectors
 
-In the context of storage systems and file systems, "datasets," "blocks," and "sectors" are terms that refer to different levels of data organization and storage.
+![Homelab Containers ZFS Datasets](/assets/img/2023/posts/homelab-containers-zfs-datasets.webp)
+
+In the context of storage systems and file systems, datasets, blocks, and sectors are terms that refer to different levels of data organization and storage.
 
 1. **Dataset:**
-   - A dataset is a collection of related data or files. In file systems, a dataset is often synonymous with a directory or folder that contains files. However, in some storage systems, especially in the context of ZFS (Zettabyte File System), a dataset can be more than just a directory; it can represent a more complex structure with properties and settings.
+   - A dataset is a collection of related data or files. In file systems, a dataset is often synonymous with a directory or folder that contains files. However, in some storage systems, especially in the context of ZFS, a dataset can be more than just a directory; it can represent a more complex structure with properties and settings.
 
 2. **Blocks:**
    - Blocks are units of storage used by file systems to manage data. A block is typically a fixed-size allocation of storage space, and it is the minimum amount of data that can be read or written at a time. File systems organize data into blocks to efficiently manage storage and facilitate data retrieval. The block size can vary depending on the file system and the configuration.
@@ -775,7 +779,7 @@ In the context of storage systems and file systems, "datasets," "blocks," and "s
 
 In summary, datasets represent collections of related data or files, blocks are units of storage used by file systems for data management, and sectors are the smallest addressable units on physical storage devices. The concepts of datasets and blocks are more closely associated with file systems and logical data organization, while sectors are a lower-level concept related to the physical structure of storage devices. Understanding these terms is essential for effectively managing and organizing data in storage systems.
 
-#### COW
+#### Copy-on-Write
 
 Copy-on-Write (COW) is a data storage strategy employed by some file systems and database systems to optimize resource utilization and improve system performance. The core idea behind Copy-on-Write is to defer the duplication (copying) of data until it is necessary, rather than making a redundant copy of data immediately. This approach is particularly useful in scenarios where data is frequently read and rarely modified.
 
@@ -803,7 +807,6 @@ Copy-on-Write has several advantages and use cases:
 
 - **Consistency and Atomicity:** Copy-on-Write ensures that modifications are atomic. If a failure occurs during the write operation, the original data remains intact.
 
-Common implementations of Copy-on-Write are found in some file systems (such as ZFS and Btrfs) and in certain database systems. However, it's important to note that the effectiveness of Copy-on-Write depends on the specific use case and workload characteristics. While it can offer significant benefits in certain scenarios, its impact on performance may vary in different contexts.
 
 ## Cloudflare Tunnel
 ## Rancher
