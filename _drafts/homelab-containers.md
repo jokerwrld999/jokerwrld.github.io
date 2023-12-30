@@ -717,17 +717,86 @@ address=/home.jokerwrld.win/192.168.1.20
 4. Save the file, and exit the editor
 5. Run the command: ```service pihole-FTL restart```
 
-## TrueNAS Scale
+### File Systems Fundamentals
 
-zfs, xfs, raid, iscisi
+File system information is categorized into two main parts: data and metadata. Data comprises the actual blocks, records, or any other grouping that the file system uses to constitute a file. Metadata includes pieces of information describing a file, such as its reference, location, creation time, and permissions. While data is the content of the file, metadata provides essential details about the file itself.
 
-[How fast are your disks? Find out the open source way, with fio](https://arstechnica.com/gadgets/2020/02/how-fast-are-your-disks-find-out-the-open-source-way-with-fio/){:target="_blank"}
+#### Journaling File Systems
+
+Journaling is a technique employed by many modern file systems, including NTFS, ext4, and XFS. The process involves maintaining a special log file known as the journal, where the file system records all its actions before executing them. The primary purpose of journaling is to enhance the reliability and recovery capabilities of the file system.
+
+1. **Action Recording:**
+   - Before performing any action, the file system records the action in the journal.
+
+2. **Action Execution:**
+   - The file system executes the action, whether it's creating, modifying, or deleting files or directories.
+
+3. **Journal Investigation (In Case of Crash):**
+   - If the operating system crashes during an action, the file system can investigate the journal on the next system boot.
+
+4. **Completing Actions:**
+   - The file system completes any actions recorded in the journal that were not finalized due to the crash.
+
+#### Advantages of Journaling:
+
+- **Enhanced Reliability:**
+  - Journaling improves the reliability of file systems by providing a consistent and recoverable state, especially in the event of an unexpected system crash.
+
+- **Faster Recovery:**
+  - In case of a crash, the file system can quickly recover by examining the journal and completing any pending actions on the next system boot.
+
+- **Metadata Integrity:**
+  - Journaling primarily focuses on logging metadata changes, ensuring the integrity and consistency of critical file system information.
+
+#### Use Cases for Journaling File Systems:
+
+- **Operating System Integrity:**
+  - Journaling is essential for the integrity of the operating system, ensuring that file system actions are completed even in the face of unexpected failures.
+
+- **Transactional Systems:**
+  - Journaling is commonly used in systems where transactional consistency is crucial, such as databases and critical server environments.
+
+- **Data Recovery:**
+  - The journaling process aids in the recovery of data and file system consistency after an unexpected system crash.
+
+- **Critical File System Operations:**
+  - Journaling is particularly beneficial for critical file system operations, where maintaining the integrity of metadata is vital.
+
+#### Copy-on-Write
+
+Copy-on-Write (COW) is a data storage strategy employed by some file systems and database systems to optimize resource utilization and improve system performance. The core idea behind Copy-on-Write is to defer the duplication (copying) of data until it is necessary, rather than making a redundant copy of data immediately. This approach is particularly useful in scenarios where data is frequently read and rarely modified.
+
+Here's how Copy-on-Write typically works:
+
+1. **Initial Read:**
+   - When a piece of data needs to be read or accessed, the system does not create an immediate duplicate copy.
+
+2. **Modification Request:**
+   - If a write or modification operation is requested on the data, Copy-on-Write comes into play.
+
+3. **Copy Operation:**
+   - Instead of modifying the existing data in place, a new copy of the data is created. The modification is made to the copy.
+
+4. **Update Reference:**
+   - The reference to the original data is updated to point to the newly created copy.
+
+Copy-on-Write has several advantages and use cases:
+
+- **Efficiency in Read-Heavy Workloads:** In scenarios where data is predominantly read rather than modified, COW can be more efficient. It avoids unnecessary copying until a modification is needed.
+
+- **Reduced Overhead:** Immediate duplication of data for write operations can lead to unnecessary storage overhead, especially if the data is never modified again. COW minimizes this overhead.
+
+- **Snapshot Creation:** Copy-on-Write facilitates the efficient creation of snapshots. Since creating a snapshot involves copying only the modified data, it can be faster and less resource-intensive.
+
+- **Consistency and Atomicity:** Copy-on-Write ensures that modifications are atomic. If a failure occurs during the write operation, the original data remains intact.
 
 ### ZFS
 
-[ZFS 101—Understanding ZFS storage and performance](https://arstechnica.com/information-technology/2020/05/zfs-101-understanding-zfs-storage-and-performance/){:target="_blank"}
-
 #### Zpools, vdevs, and devices
+
+[How fast are your disks? Find out the open source way, with fio](https://arstechnica.com/gadgets/2020/02/how-fast-are-your-disks-find-out-the-open-source-way-with-fio/){:target="_blank"}
+
+[ZFS 101—Understanding ZFS storage and performance](https://arstechnica.com/information-technology/2020/05/zfs-101-understanding-zfs-storage-and-performance/){:target="_blank"}
 
 ![Homelab Containers ZFS Architecture](/assets/img/2023/posts/homelab-containers-zfs-architecture.webp)
 
@@ -779,33 +848,9 @@ In the context of storage systems and file systems, datasets, blocks, and sector
 
 In summary, datasets represent collections of related data or files, blocks are units of storage used by file systems for data management, and sectors are the smallest addressable units on physical storage devices. The concepts of datasets and blocks are more closely associated with file systems and logical data organization, while sectors are a lower-level concept related to the physical structure of storage devices. Understanding these terms is essential for effectively managing and organizing data in storage systems.
 
-#### Copy-on-Write
 
-Copy-on-Write (COW) is a data storage strategy employed by some file systems and database systems to optimize resource utilization and improve system performance. The core idea behind Copy-on-Write is to defer the duplication (copying) of data until it is necessary, rather than making a redundant copy of data immediately. This approach is particularly useful in scenarios where data is frequently read and rarely modified.
 
-Here's how Copy-on-Write typically works:
-
-1. **Initial Read:**
-   - When a piece of data needs to be read or accessed, the system does not create an immediate duplicate copy.
-
-2. **Modification Request:**
-   - If a write or modification operation is requested on the data, Copy-on-Write comes into play.
-
-3. **Copy Operation:**
-   - Instead of modifying the existing data in place, a new copy of the data is created. The modification is made to the copy.
-
-4. **Update Reference:**
-   - The reference to the original data is updated to point to the newly created copy.
-
-Copy-on-Write has several advantages and use cases:
-
-- **Efficiency in Read-Heavy Workloads:** In scenarios where data is predominantly read rather than modified, COW can be more efficient. It avoids unnecessary copying until a modification is needed.
-
-- **Reduced Overhead:** Immediate duplication of data for write operations can lead to unnecessary storage overhead, especially if the data is never modified again. COW minimizes this overhead.
-
-- **Snapshot Creation:** Copy-on-Write facilitates the efficient creation of snapshots. Since creating a snapshot involves copying only the modified data, it can be faster and less resource-intensive.
-
-- **Consistency and Atomicity:** Copy-on-Write ensures that modifications are atomic. If a failure occurs during the write operation, the original data remains intact.
+## TrueNAS Scale
 
 
 ## Cloudflare Tunnel
