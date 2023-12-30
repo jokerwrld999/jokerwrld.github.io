@@ -848,7 +848,83 @@ In the context of storage systems and file systems, datasets, blocks, and sector
 
 In summary, datasets represent collections of related data or files, blocks are units of storage used by file systems for data management, and sectors are the smallest addressable units on physical storage devices. The concepts of datasets and blocks are more closely associated with file systems and logical data organization, while sectors are a lower-level concept related to the physical structure of storage devices. Understanding these terms is essential for effectively managing and organizing data in storage systems.
 
+### File Sharing
 
+When it comes to network protocols for sharing files and storage, SMB, NFS, AFP, and iSCSI are common choices, each with its own characteristics and use cases.
+
+Now, let's explore each protocol individually:
+
+1. **SMB (Server Message Block):**
+   - Originating from Windows, SMB is widely supported and excels in compatibility. It's ideal for mixed environments and offers excellent performance for large sequential read and write operations. Aim for SMB v3 for enhanced security and features.
+
+2. **AFP (Apple Filing Protocol):**
+   - Developed by Apple, AFP was once the go-to protocol for macOS environments. However, it has been deprecated, and it's recommended to use SMB for broader compatibility and ongoing support. AFP may offer slightly faster speeds on macOS, but the trade-offs make it less favorable.
+
+3. **NFS (Network File System):**
+   - NFS is a Linux-centric protocol that can be incredibly fast with the right tuning. It's suitable for Linux to Linux file sharing, offering high performance for small, sequential file transfers. While more complex to set up and less user-friendly than SMB, NFS shines in enterprise environments with specific needs.
+
+4. **iSCSI (Internet Small Computer System Interface):**
+   - Unlike the file-based protocols, iSCSI is a block-based sharing protocol. It provides direct access to a virtual hard drive on the NAS, making it excellent for applications that require ultra-low latency and direct disk access. iSCSI is beneficial for virtualized environments, offering flexibility and centralized storage control.
+
+Remember, iSCSI is not recommended for general home use unless you have specific requirements, as it involves complexities like ejecting disks and potential file corruption if not managed carefully.
+
+In conclusion, SMB is the go-to choice for most users due to its broad compatibility and ease of use. AFP is deprecated, NFS is powerful but more complex, and iSCSI serves specific use cases in advanced setups. Choose the protocol that aligns with your specific needs and environment.
+
+## LVM, Raid...
+
+### Advanced Storage Solutions: LVM and RAID
+
+In the realm of advanced storage solutions, LVM (Logical Volume Manager) and RAID (Redundant Array of Independent Disks) play crucial roles in optimizing storage performance, reliability, and flexibility. Let's explore these concepts:
+
+#### LVM (Logical Volume Manager):
+
+**Overview:**
+- LVM is a logical volume management tool for Linux that allows users to manage disk space more dynamically.
+- It enables the creation of logical volumes (similar to partitions) that can span multiple physical disks.
+- LVM provides features like resizing volumes, snapshotting, and dynamic striping.
+
+**Advantages:**
+1. **Dynamic Volume Management:**
+   - LVM allows resizing of volumes on-the-fly, providing flexibility in adjusting storage allocations as needed.
+2. **Snapshotting:**
+   - Snapshots enable the creation of point-in-time copies of volumes, useful for backup purposes or testing.
+3. **Spanning Across Disks:**
+   - Logical volumes can span multiple physical disks, improving storage utilization and distribution.
+
+#### RAID (Redundant Array of Independent Disks):
+
+**Overview:**
+- RAID is a storage technology that combines multiple physical disks into a single logical unit to enhance performance, redundancy, or a combination of both.
+- Different RAID levels offer various benefits, such as data redundancy, improved performance, or a balance of both.
+
+**Common RAID Levels:**
+1. **RAID 0 (Striping):**
+   - Improves performance by striping data across multiple disks. However, it offers no redundancy, and a failure of one disk results in data loss.
+2. **RAID 1 (Mirroring):**
+   - Provides redundancy by mirroring data across two disks. If one disk fails, the data is still available on the mirrored disk.
+3. **RAID 5 (Striping with Parity):**
+   - Balances performance and redundancy by striping data across multiple disks with parity for fault tolerance. It can tolerate the failure of one disk.
+4. **RAID 10 (Combination of Mirroring and Striping):**
+   - Offers a combination of mirroring and striping, providing both redundancy and improved performance. Requires a minimum of four disks.
+
+**Advantages:**
+1. **Redundancy:**
+   - RAID levels like 1, 5, and 10 provide data redundancy, ensuring that the failure of one disk doesn't result in data loss.
+2. **Improved Performance:**
+   - RAID 0 and RAID 10 enhance performance by striping data across multiple disks or combining mirroring with striping.
+
+**Considerations:**
+1. **Data Security:**
+   - While RAID provides redundancy, it is not a substitute for regular backups. Regular backups are crucial to safeguard against data loss due to various factors.
+2. **Performance vs. Redundancy:**
+   - Choose a RAID level based on your specific needs, balancing performance requirements with the level of redundancy desired.
+
+#### Integration of LVM and RAID:
+
+- LVM and RAID can be used together to achieve more sophisticated storage configurations.
+- For example, you can create logical volumes on a RAID array, combining the flexibility of LVM with the redundancy or performance benefits of RAID.
+
+In summary, LVM and RAID are powerful tools in the realm of storage management. LVM enhances flexibility and dynamic management, while RAID provides options for performance improvement and data redundancy. Depending on your specific use case, combining these technologies can result in a robust and adaptable storage infrastructure.
 
 ## TrueNAS Scale
 
