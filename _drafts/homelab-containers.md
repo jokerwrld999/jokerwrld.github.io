@@ -737,7 +737,7 @@ Journaling is a technique employed by many modern file systems, including NTFS, 
 4. **Completing Actions:**
    - The file system completes any actions recorded in the journal that were not finalized due to the crash.
 
-#### Advantages of Journaling:
+#### Advantages of Journaling
 
 - **Enhanced Reliability:**
   - Journaling improves the reliability of file systems by providing a consistent and recoverable state, especially in the event of an unexpected system crash.
@@ -748,7 +748,7 @@ Journaling is a technique employed by many modern file systems, including NTFS, 
 - **Metadata Integrity:**
   - Journaling primarily focuses on logging metadata changes, ensuring the integrity and consistency of critical file system information.
 
-#### Use Cases for Journaling File Systems:
+#### Use Cases for Journaling File Systems
 
 - **Operating System Integrity:**
   - Journaling is essential for the integrity of the operating system, ensuring that file system actions are completed even in the face of unexpected failures.
@@ -874,7 +874,7 @@ In conclusion, SMB is the go-to choice for most users due to its broad compatibi
 
 In the realm of advanced storage solutions, LVM (Logical Volume Manager) and RAID (Redundant Array of Independent Disks) play crucial roles in optimizing storage performance, reliability, and flexibility. Let's explore these concepts:
 
-#### LVM (Logical Volume Manager):
+#### LVM (Logical Volume Manager)
 
 ![LVM Layout](/assets/img/2023/posts/homelab-containers-lvm-layout.webp)
 
@@ -891,7 +891,7 @@ In the realm of advanced storage solutions, LVM (Logical Volume Manager) and RAI
 3. **Spanning Across Disks:**
    - Logical volumes can span multiple physical disks, improving storage utilization and distribution.
 
-#### RAID (Redundant Array of Independent Disks):
+#### RAID (Redundant Array of Independent Disks)
 
 ![RAID Layout](/assets/img/2023/posts/homelab-containers-raid-layout.webp)
 
@@ -921,7 +921,7 @@ In the realm of advanced storage solutions, LVM (Logical Volume Manager) and RAI
 2. **Performance vs. Redundancy:**
    - Choose a RAID level based on your specific needs, balancing performance requirements with the level of redundancy desired.
 
-#### Integration of LVM and RAID:
+#### Integration of LVM and RAID
 
 - LVM and RAID can be used together to achieve more sophisticated storage configurations.
 - For example, you can create logical volumes on a RAID array, combining the flexibility of LVM with the redundancy or performance benefits of RAID.
@@ -932,11 +932,53 @@ In summary, LVM and RAID are powerful tools in the realm of storage management. 
 
 ![TrueNAS Scale Diagram](/assets/img/2023/posts/homelab-containers-truenas-scale-diagram.webp)
 
-<!-- Nas image with alot aof -->
+In the dynamic landscape of open-source storage tools, [TrueNAS Scale](https://www.truenas.com/truenas-scale/){:target="_blank"}, an open-source project by iXsystems, stands out as a robust platform for efficient data management and storage. In this article, we'll delve into the intricacies of TrueNAS Scale, exploring its features, advantages, and use cases. Additionally, we'll introduce some noteworthy alternatives, each bringing its unique set of benefits to the tool-centric ecosystem.
 
+TrueNAS Scale, built upon the solid foundation of Debian Linux and combining the flexibility of ZFS with containerization using Docker and Kubernetes, extends the capabilities of TrueNAS CORE into a hyper-converged infrastructure solution.
+
+### Key Features of TrueNAS Scale
+
+1. **ZFS Integration:** TrueNAS Scale leverages the power of the ZFS file system, providing robust data integrity, efficient snapshots, and a simplified management interface.
+
+2. **Containerization with Docker and Kubernetes:** The integration of Docker and Kubernetes allows users to deploy, manage, and scale applications seamlessly, enhancing the platform's versatility.
+
+3. **Hyper-Converged Infrastructure:** TrueNAS Scale unifies storage and compute resources, streamlining data management and optimizing resource utilization.
+
+4. **Web-Based Management Interface:** A user-friendly web interface simplifies configuration, monitoring, and maintenance tasks, making TrueNAS Scale accessible to both novices and experienced users.
+
+### Alternatives to TrueNAS Scale
+
+While TrueNAS Scale offers a comprehensive toolset, exploring alternatives can be beneficial based on specific use cases and preferences. Here are some notable tool-centric alternatives:
+
+1. **[TrueNAS CORE (formerly known as FreeNAS)](https://www.truenas.com/truenas-core/){:target="_blank"}:** A mature and stable storage-focused solution with an emphasis on enterprise-grade features.
+
+2. **[OpenMediaVault](https://www.openmediavault.org/){:target="_blank"}:** An open-source NAS solution with a user-friendly suitable for home and small business environments.
+
+3. **[Rockstor](https://rockstor.com/){:target="_blank"}:** A Linux-based NAS solution focusing on scalability and flexibility, utilizing Btrfs for advanced storage features.
+
+### Installation
+
+TrueNAS SCALE can be installed either on bare metal or a virtual machine (VM). Just [download](https://www.truenas.com/download-truenas-scale/){:target='_blank'} the `.iso` file, and start installing it.
+
+#### Minimum System Requirements
+
+1. **Processor:**
+   - 64-bit processor (Intel or AMD).
+
+2. **RAM:**
+   - 8 GB RAM (more recommended for better performance).
+
+3. **Storage:**
+   - Minimum 32 GB boot device (USB or SSD).
+   - Additional storage for data based on your requirements.
+
+4. **Network Interface:**
+   - Gigabit Ethernet (10GbE or higher for larger deployments).
+
+
+## Overlay VPNS: Tailscale...
 ## Cloudflare Tunnel
 ## Rancher
 
 ## MediaFile hosting Next Cloud
 
-## Gaming server
