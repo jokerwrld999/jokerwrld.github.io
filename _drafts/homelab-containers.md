@@ -717,11 +717,11 @@ address=/home.jokerwrld.win/192.168.1.20
 4. Save the file, and exit the editor
 5. Run the command: ```service pihole-FTL restart```
 
-### File Systems Fundamentals
+## File Systems Fundamentals
 
 File system information is categorized into two main parts: data and metadata. Data comprises the actual blocks, records, or any other grouping that the file system uses to constitute a file. Metadata includes pieces of information describing a file, such as its reference, location, creation time, and permissions. While data is the content of the file, metadata provides essential details about the file itself.
 
-#### Journaling File Systems
+### Journaling File Systems
 
 Journaling is a technique employed by many modern file systems, including NTFS, ext4, and XFS. The process involves maintaining a special log file known as the journal, where the file system records all its actions before executing them. The primary purpose of journaling is to enhance the reliability and recovery capabilities of the file system.
 
@@ -762,7 +762,7 @@ Journaling is a technique employed by many modern file systems, including NTFS, 
 - **Critical File System Operations:**
   - Journaling is particularly beneficial for critical file system operations, where maintaining the integrity of metadata is vital.
 
-#### Copy-on-Write
+### Copy-on-Write
 
 Copy-on-Write (COW) is a data storage strategy employed by some file systems and database systems to optimize resource utilization and improve system performance. The core idea behind Copy-on-Write is to defer the duplication (copying) of data until it is necessary, rather than making a redundant copy of data immediately. This approach is particularly useful in scenarios where data is frequently read and rarely modified.
 
@@ -870,13 +870,13 @@ Remember, iSCSI is not recommended for general home use unless you have specific
 
 In conclusion, SMB is the go-to choice for most users due to its broad compatibility and ease of use. AFP is deprecated, NFS is powerful but more complex, and iSCSI serves specific use cases in advanced setups. Choose the protocol that aligns with your specific needs and environment.
 
-## LVM, Raid...
-
 ### Advanced Storage Solutions: LVM and RAID
 
 In the realm of advanced storage solutions, LVM (Logical Volume Manager) and RAID (Redundant Array of Independent Disks) play crucial roles in optimizing storage performance, reliability, and flexibility. Let's explore these concepts:
 
 #### LVM (Logical Volume Manager):
+
+![LVM Layout](/assets/img/2023/posts/homelab-containers-lvm-layout.webp)
 
 **Overview:**
 - LVM is a logical volume management tool for Linux that allows users to manage disk space more dynamically.
@@ -892,6 +892,8 @@ In the realm of advanced storage solutions, LVM (Logical Volume Manager) and RAI
    - Logical volumes can span multiple physical disks, improving storage utilization and distribution.
 
 #### RAID (Redundant Array of Independent Disks):
+
+![RAID Layout](/assets/img/2023/posts/homelab-containers-raid-layout.webp)
 
 **Overview:**
 - RAID is a storage technology that combines multiple physical disks into a single logical unit to enhance performance, redundancy, or a combination of both.
@@ -928,6 +930,9 @@ In summary, LVM and RAID are powerful tools in the realm of storage management. 
 
 ## TrueNAS Scale
 
+![TrueNAS Scale Diagram](/assets/img/2023/posts/homelab-containers-truenas-scale-diagram.webp)
+
+<!-- Nas image with alot aof -->
 
 ## Cloudflare Tunnel
 ## Rancher
