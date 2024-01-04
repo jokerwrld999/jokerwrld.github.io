@@ -387,6 +387,7 @@ ghclone() {
     ```bash
     git fetch origin main
     git rebase main
+    git push
     ```
 
 5. **Create a Pull Request:**
