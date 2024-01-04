@@ -2,17 +2,14 @@
 layout: post
 title: HomeLab Containers
 image:
-  path: "/assets/img/2023/thumbs/default.webp"
+  path: "/assets/img/2023/thumbs/homelab-containers.webp"
 categories:
 - Self-hosted
 - Automation
-- CI/CD
-- Configuration Management
 - Infrastructure as Code (IaC)
 - Networking
 - Monitoring
 - Project
-- Guide
 tags:
 - Git
 - Linux
@@ -20,23 +17,13 @@ tags:
 - Nginx
 - Docker
 - Kubernetes
-- Ansible
-- AWS
-- Terraform
 - Jenkins
 - Python
-- Prometheus
-- Grafana
 ---
-
 
 HomeLab Containers is a project about how to selfhost different services in your environment.
 
-
-
 ## Proxmox
-
-Commands, Environment, Clusters, Cloud-Init, Template, Base Setup, Tagging, Cloning
 
 [Proxmox Virtual Environment](https://www.proxmox.com/en/){:target="_blank"} (Proxmox VE) is an open-source platform that combines two virtualization technologies: KVM (Kernel-based Virtual Machine) for virtual machines and LXC (Linux Containers) for lightweight container-based virtualization. This powerful solution allows users to manage virtual machines, containers, storage, and networking through a web-based interface.
 
