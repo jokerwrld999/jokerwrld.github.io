@@ -938,6 +938,8 @@ TrueNAS Scale, built upon the solid foundation of Debian Linux and combining the
 
 ### Key Features of TrueNAS Scale
 
+[TrueNas SCALE Features](https://www.truenas.com/truenas-scale/#TrueNAS-PDF-datasheet-truenas-scale-datasheet/1/){:target='_blank'}
+
 1. **ZFS Integration:** TrueNAS Scale leverages the power of the ZFS file system, providing robust data integrity, efficient snapshots, and a simplified management interface.
 
 2. **Containerization with Docker and Kubernetes:** The integration of Docker and Kubernetes allows users to deploy, manage, and scale applications seamlessly, enhancing the platform's versatility.
@@ -975,8 +977,118 @@ TrueNAS SCALE can be installed either on bare metal or a virtual machine (VM). J
 4. **Network Interface:**
    - Gigabit Ethernet (10GbE or higher for larger deployments).
 
+### Setting Up TrueNAS
 
-## Overlay VPNS: Tailscale...
+Now, we will explore how to do base setup, create users, datasets, shares and configure appropriate permissions.
+
+#### Data Protection
+
+**Ensuring Disk Health with `Smart Tests` in TrueNAS**
+
+In the realm of TrueNAS system maintenance, prioritizing the health of your storage disks is paramount. To achieve this, regular `Smart Tests` are essential, offering insights into the overall condition of your drives. These tests come in two variants - `short` and `long`, each serving a distinct purpose in preemptively identifying potential failures.
+
+The process begins by navigating to the `Data Protection` section and selecting `Smart Tests`. Here, we embark on the creation of two distinct tests, tailored to meet different frequency and duration requirements.
+
+The first, a `Short Smart Test`, is set to run weekly. This brief examination provides a quick overview of the drives' well-being, making it a valuable routine. The schedule is meticulously set for Sundays at `02:00 a.m.`, ensuring minimal disruption to system operations.
+
+Simultaneously, a `Long Smart Test` is configured for a bimonthly schedule, occurring every other month. Recognizing the extended duration of these tests, this periodicity strikes a balance between thorough examination and practicality.
+
+The recommendation is to include all drives in these tests unless there's a specific reason to focus on one. Tailoring the frequency or scope based on individual drive performance is a wise approach.
+
+These `Smart Tests` serve as a proactive measure, allowing drives to self-assess and report any potential impending failures. While `short tests` offer frequent insights, `long tests` act as a comprehensive check, albeit less frequently.
+
+It's noteworthy that `Smart Tests` are not automatically enabled, emphasizing the importance of manually setting them up. This ensures a hands-on approach to disk health management, aligning with the user's specific requirements and preferences.
+
+In conclusion, the implementation of regular `Smart Tests` forms the second crucial step in maintaining an optimal TrueNAS storage environment.
+
+Stay tuned for the next segment, where we delve into the significance of regular `scrubs` and their role in preserving data integrity.
+
+**Understanding the Importance of `Scrubbing` in TrueNAS**
+
+A `scrub` operation within TrueNAS is a vital process in maintaining the integrity of your data pool. This meticulous procedure involves reading every single file stored in the pool, conducting thorough checks on checksums, and ensuring there are no lurking errors. The primary goal is to identify and rectify any potential issues such as `bitrot` or corruption before they escalate.
+
+Here's how the process unfolds: in the event of `bitrot` causing file corruption, the `scrub` operation acts as a silent guardian. It detects the discrepancy, swiftly intervenes, and silently corrects the problem without alerting the user. This seamless correction ensures that the file remains untainted, and the integrity of your data is preserved.
+
+The effectiveness of `scrubs` lies in their ability to handle mildly corrupted files. The operation is adept at fixing these issues during its routine checks, provided the corruption hasn't reached an irreparable state. This capability makes `scrubs` a crucial component of your data maintenance strategy.
+
+Running `scrubs` regularly is imperative. The frequency recommended by TrueNAS is at least every three months. While some might find weekly `scrubs` too aggressive, especially for large-scale multi-petabyte pools, it ultimately depends on the size and usage patterns of your storage.
+
+TrueNAS, by default, enables `scrubs`, but users have the flexibility to customize settings. It's important to note that `scrubs` operate on a per-pool basis, and adjusting the frequency should be aligned with your specific storage environment and performance considerations.
+
+In conclusion, integrating regular `scrubs` into your TrueNAS maintenance routine ensures that potential data corruption is identified and rectified promptly, contributing to the overall health and reliability of your storage infrastructure.
+
+
+#### Managing Users
+
+In the `Credentials` tab we can create and configure local users and groups. It's highly recommended to create [admin user](https://www.truenas.com/docs/scale/scaletutorials/credentials/managelocalusersscale/#creating-an-admin-user-account){:target='_blank'} account with least privileges.
+
+More info you can find about `Credentials` tab on official [Documentation Hub](https://www.truenas.com/docs/scale/scaletutorials/credentials/){:target='_blank'}
+
+#### Datasets
+
+In the `Datasets` tab we are able to manage our datasets, you can think of datasets as folders or containers for your data in pool. You can create multiple datasets per pool that for different purposes like shares, block storages, apps configs and data with configured `Permission ACLs`.
+
+You can checkout more details about [Adding and Managing Datasets](https://www.truenas.com/docs/scale/scaletutorials/datasets/datasetsscale/){:target='_blank'}
+
+> The `Share Type` is very important if you choose `Generic` it will use Unix permissions if you choose `SMB` or `Apps` it will use the more advanced ACLs. These can be switched later, but if you don't have this correct you will not be able to get this working properly.
+{: .prompt-info}
+
+#### Shares
+
+File sharing is one of the primary benefits of a NAS. In the TrueNAS `Shares` tab you can set up different share types like `Windows (SMB) Shares`, `Block (iSCSI) Shares Targets`, `UNIX (NFS) Shares`.
+
+On official [Documentation Hub](https://www.truenas.com/docs/scale/scaletutorials/shares/){:target='_blank'} you can get more info about how to enable file sharing.
+
+#### Setting Dataset Permissions
+
+> It's important ot note that all of your ACLs are applied to datasets.
+{: .prompt-info}
+
+You can create a nested dateset that has different permissions than the parent one. Just add a dataset to already existing one, for example, `Family`, choose `Share Type` as `SMB` even if it's a nested one and it will prompt us to go right to the `ACL Manager`. Now, in the `Custom ACL Editor` we want to make sure that we have the word `Family` in the `Owner Group` field and choose `Apply Group`. And in the `Access Control List` we need to add an item `group@` and set `Full Control` permissions, also applying them `Recursively`, and finally we can save our ACL.
+
+> When you change users and members of groups Samba re-reads that on restart so we need to stop and start `SMB` service to reload and grab all the group information and apply the permissions.
+{: .prompt-tip}
+
+![TrueNAS Scale Nested Dataset Permissions](/assets/img/2023/posts/homelab-containers-truenas-nested-acl.webp)
+
+Now, after successfully applying all needed permissions just members of the `Family` group are able to access the content of that share.
+
+#### Apps
+
+The concept of applications is TrueNAS being a NAS first is a great place to store data and the applications should be ephemeral meaning they can go away at any point of time we can rebuild them, we can delete them it doesn't matter we don't need to back up our applications we just point them at the config files and we can reload them on another NAS we only have to backup the data we care about which is going to be the configuration or any shared data within.
+
+In order to make sure that your data is safe is to create a datastores to map them to your apps. The datasets structure can be as follows:
+
+```
+ZFS-Pool/
+├── APP_Configs/
+│   └── Nextcloud_Database/
+└── APP_Data/
+    └── Nextcloud/
+```
+
+After setting up needed datasets we can go to `Applications` ==> `Discover` and create an application that will be using these datasets.
+
+![TrueNAS Scale Apps /W Shares](/assets/img/2023/posts/homelab-containers-truenas-apps-shares.webp)
+
+Now, we can verify our app's data into our newly created dataset.
+
+![TrueNas Scale Apps /w Shares Verifying Data](/assets/img/2023/posts/homelab-containers-truenas-apps-verify-data.webp)
+
+As far as our dataset is present our files are all intact and we can redeploy apps without loosing our data.
+
+**TRUECHARTS**
+
+We can expand our applications database by adding the  [TrueCharts Community App Catalog](https://truecharts.org/){:target='_blank'}. TrueCharts is an open source project that contains pre-configured applications for TrueNAS Scale.
+
+To add it we'll just add a catalog in `Applications/Discover/Catalogs` tab:
+
+```
+https://github.com/truecharts/catalog
+```
+
+
+## Overlay VPNS: Talescale...
 ## Cloudflare Tunnel
 ## Rancher
 
