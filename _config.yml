@@ -187,7 +187,7 @@ jekyll_compose:
   default_front_matter:
     drafts:
       image:
-        path: /assets/img/2023/thumbs/default.webp
+        path: /assets/img/2024/thumbs/default.webp
       categories:
         - Self-hosted
         - Automation
