@@ -19,8 +19,8 @@ tags:
 - Kubernetes
 - Jenkins
 - Python
+date: 2024-01-05 00:39 +0200
 ---
-
 HomeLab Containers is a project about how to selfhost different services in your environment.
 
 ## Proxmox
