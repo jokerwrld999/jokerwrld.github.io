@@ -382,9 +382,11 @@ ghclone() {
     git commit -m "#1 Commit Message"
     ```
 
-4. **Push Changes:**
+4. **Rebase a Branch (If Needed) && Push Changes:**
 
     ```bash
+    git fetch origin main
+    git rebase main
     git push
     ```
 
