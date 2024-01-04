@@ -983,40 +983,34 @@ Now, we will explore how to do base setup, create users, datasets, shares and co
 
 #### Data Protection
 
-**Ensuring Disk Health with `Smart Tests` in TrueNAS**
+**Ensuring Disk Health with S.M.A.R.T. Tests in TrueNAS**
 
-In the realm of TrueNAS system maintenance, prioritizing the health of your storage disks is paramount. To achieve this, regular `Smart Tests` are essential, offering insights into the overall condition of your drives. These tests come in two variants - `short` and `long`, each serving a distinct purpose in preemptively identifying potential failures.
+S.M.A.R.T. (Self-Monitoring, Analysis, and Reporting Technology) is a monitoring system built into hard drives, solid-state drives, and other storage devices. It provides information about the health, performance, and potential issues of the device. TrueNAS Scale utilizes S.M.A.R.T. monitoring to assess the condition of storage drives and predict potential failures.
 
-The process begins by navigating to the `Data Protection` section and selecting `Smart Tests`. Here, we embark on the creation of two distinct tests, tailored to meet different frequency and duration requirements.
+In the realm of TrueNAS system maintenance, prioritizing the health of your storage disks is paramount. To achieve this, regular `S.M.A.R.T. Tests` are essential, offering insights into the overall condition of your drives. These tests come in two variants - `Short` and `Long`, each serving a distinct purpose in preemptively identifying potential failures.
 
-The first, a `Short Smart Test`, is set to run weekly. This brief examination provides a quick overview of the drives' well-being, making it a valuable routine. The schedule is meticulously set for Sundays at `02:00 a.m.`, ensuring minimal disruption to system operations.
+The first, a `Short S.M.A.R.T. Test`, is set to run weekly. This brief examination provides a quick overview of the drives' well-being, making it a valuable routine. The schedule is meticulously set for Sundays at `02:00 a.m.`, ensuring minimal disruption to system operations.
 
-Simultaneously, a `Long Smart Test` is configured for a bimonthly schedule, occurring every other month. Recognizing the extended duration of these tests, this periodicity strikes a balance between thorough examination and practicality.
+Simultaneously, a `Long S.M.A.R.T. Test` is configured for a bimonthly schedule, occurring every other month. Recognizing the extended duration of these tests, this periodicity strikes a balance between thorough examination and practicality.
+
+It's noteworthy that `S.M.A.R.T. Tests` are not automatically enabled, emphasizing the importance of manually setting them up. This ensures a hands-on approach to disk health management, aligning with the user's specific requirements and preferences.
+
+![TrueNAS Scale Smart Tests](/assets/img/2023/posts/homelab-containers-truenas-smart-tests.webp)
 
 The recommendation is to include all drives in these tests unless there's a specific reason to focus on one. Tailoring the frequency or scope based on individual drive performance is a wise approach.
 
-These `Smart Tests` serve as a proactive measure, allowing drives to self-assess and report any potential impending failures. While `short tests` offer frequent insights, `long tests` act as a comprehensive check, albeit less frequently.
-
-It's noteworthy that `Smart Tests` are not automatically enabled, emphasizing the importance of manually setting them up. This ensures a hands-on approach to disk health management, aligning with the user's specific requirements and preferences.
-
-In conclusion, the implementation of regular `Smart Tests` forms the second crucial step in maintaining an optimal TrueNAS storage environment.
-
-Stay tuned for the next segment, where we delve into the significance of regular `scrubs` and their role in preserving data integrity.
-
 **Understanding the Importance of `Scrubbing` in TrueNAS**
 
-A `scrub` operation within TrueNAS is a vital process in maintaining the integrity of your data pool. This meticulous procedure involves reading every single file stored in the pool, conducting thorough checks on checksums, and ensuring there are no lurking errors. The primary goal is to identify and rectify any potential issues such as `bitrot` or corruption before they escalate.
-
-Here's how the process unfolds: in the event of `bitrot` causing file corruption, the `scrub` operation acts as a silent guardian. It detects the discrepancy, swiftly intervenes, and silently corrects the problem without alerting the user. This seamless correction ensures that the file remains untainted, and the integrity of your data is preserved.
+A `scrub` operation within TrueNAS is a vital process in maintaining the integrity of your data pool. This meticulous procedure involves reading every single file stored in the pool, conducting thorough checks on checksums, and ensuring there are no lurking errors.
 
 The effectiveness of `scrubs` lies in their ability to handle mildly corrupted files. The operation is adept at fixing these issues during its routine checks, provided the corruption hasn't reached an irreparable state. This capability makes `scrubs` a crucial component of your data maintenance strategy.
 
-Running `scrubs` regularly is imperative. The frequency recommended by TrueNAS is at least every three months. While some might find weekly `scrubs` too aggressive, especially for large-scale multi-petabyte pools, it ultimately depends on the size and usage patterns of your storage.
-
 TrueNAS, by default, enables `scrubs`, but users have the flexibility to customize settings. It's important to note that `scrubs` operate on a per-pool basis, and adjusting the frequency should be aligned with your specific storage environment and performance considerations.
 
-In conclusion, integrating regular `scrubs` into your TrueNAS maintenance routine ensures that potential data corruption is identified and rectified promptly, contributing to the overall health and reliability of your storage infrastructure.
 
+![TrueNAS Scale Scrub Tasks](/assets/img/2023/posts/homelab-containers-truenas-scrub-tasks.webp)
+
+Running `scrubs` regularly is imperative. The frequency recommended by TrueNAS is at least every three months. While some might find weekly `scrubs` too aggressive, especially for large-scale multi-petabyte pools, it ultimately depends on the size and usage patterns of your storage.
 
 #### Managing Users
 
@@ -1086,11 +1080,3 @@ To add it we'll just add a catalog in `Applications/Discover/Catalogs` tab:
 ```
 https://github.com/truecharts/catalog
 ```
-
-
-## Overlay VPNS: Talescale...
-## Cloudflare Tunnel
-## Rancher
-
-## MediaFile hosting Next Cloud
-
