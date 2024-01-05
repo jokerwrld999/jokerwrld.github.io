@@ -58,36 +58,17 @@ published: true
 
 Jekyll is a valuable tool for anyone looking to build a static website or blog efficiently and focus on content creation rather than complex configurations.
 
-## Install Dependencies
+## Installation
 
-### Ubuntu
+### Install Dependencies
+
+#### Ubuntu
 
 ```shell
 sudo apt update
 sudo apt install -y ruby-full build-essential zlib1g-dev git
 ```
-
-To avoid installing RubyGems packages as the root user:
-
-If you are using `bash` (usually the default for most)
-
-```bash
-echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
-echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
-echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-If you are using `zsh` (you know if you are)
-
-```bash
-echo '# Install Ruby Gems to ~/gems' >> ~/.zshrc
-echo 'export GEM_HOME="$HOME/gems"' >> ~/.zshrc
-echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-### Arch
+#### Arch
 
 ```shell
 sudo pacman -Syu
@@ -99,9 +80,9 @@ To avoid installing RubyGems packages as the root user:
 If you are using `bash` (usually the default for most)
 
 ```bash
-echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
-echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
-echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
+echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc && \
+echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc && \
+echo 'export PATH="$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH"' >> ~/.bashrc && \
 source ~/.bashrc
 ```
 
@@ -114,7 +95,7 @@ echo 'export PATH="$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-### Install Jekyll `bundler`
+### Install Jekyll Bundler
 
 ```bash
 gem update --user-install
@@ -127,9 +108,9 @@ Templates <https://pinglestudio.peopleforce.io/knowledge_base/articles/46782>{:t
 
 After selecting a Jekyll template, you can fork it and follow the setup instructions in the `README.md` file.
 
-## Site Configuration
+### Site Configuration
 
-### Comments Section /W Giscus
+#### Comments Section /W Giscus
 
 Choose the repository giscus will connect to. Make sure that:
 
@@ -214,19 +195,6 @@ bundle exec jekyll post "My New Post"
 bundle exec jekyll post "My New Post" --timestamp-format "%Y-%m-%d %H:%M:%S %z"
 ```
 
-Convenient quick Bash `function` to create a post in a desired subdirectory
-
-```bash
-new_post() {
-    if [ ! -d "_posts/$1" ]; then
-        mkdir -p "_posts/$1"
-    fi
-    bundle exec jekyll post "$2" | grep -oP '_.*?\.md' | xargs basename | read filename
-    mv "_posts/$filename" "_posts/$1/$filename"
-}
-
-new_post "<YOUR-SUBFOLDER>" "<POST-NAME>"
-```
 
 Serving your site
 
@@ -261,6 +229,7 @@ JEKYLL_ENV=production bundle exec jekyll b
 3. Configure GitHub Pages:
 - Navigate to the repository's settings.
 - Under the `GitHub Pages` section, add your custom domain (e.g., example.com).
+
 
 ## Creating a Post
 
@@ -304,3 +273,76 @@ See more post formatting rules on the [Jekyll site](https://jekyllrb.com/docs/po
 ### Markdown Examples
 
 If you need some help with markdown, check out the [markdown cheat sheet](https://www.markdownguide.org/cheat-sheet/){:target="_blank"}
+
+### Jekyll Full Workflow
+
+![Creating post workflow](/assets/img/2023/posts/jekyll-workflow-diagram.webp)
+
+1. **Create Your New Draft:**
+
+    ```bash
+    bundle exec jekyll draft "My new draft"
+    ```
+
+    Useful alias:
+
+    ```bash
+    alias draft="bundle exec jekyll draft"
+    ```
+
+2. **Serve Your Website with Drafts:**
+
+    ```bash
+    bundle exec jekyll s --drafts
+    ```
+
+    Useful alias:
+
+    ```bash
+    alias jekyll="bundle exec jekyll s --drafts"
+    ```
+
+    Now, you can see your changes dynamically while writing your draft on [`http://127.0.0.1:4000/`](http://127.0.0.1:4000/){:target='_blank'}
+
+3. **Publish Your Draft:**
+
+    After finishing your draft you can publish it, so that it will be available in posts.
+
+    ```bash
+    bundle exec jekyll publish _drafts/my-new-draft.md
+    ```
+
+    Useful alias:
+
+    ```bash
+    publish_draft() {
+        if [ ! -d "_posts/$1" ]; then
+            mkdir -p "_posts/$1"
+        fi
+        draft_filename="$(find ./_drafts/ -type f -name $2*.md -printf "%f\n")"
+        bundle exec jekyll publish "./_drafts/$draft_filename" | grep -oP '_posts/.*?\.md' | xargs basename | read filename
+        mv "_posts/$filename" "_posts/$1/$filename"
+    }
+
+    alias publish='publish_draft'
+
+    publish "<YOUR-SUBFOLDER>" "<POST-NAME>"
+    ```
+
+You don't actually need to start a new post from a draft, but it's highly recommended.
+
+Here are some helpful aliases:
+
+  ```bash
+  new_post() {
+      if [ ! -d "_posts/$1" ]; then
+          mkdir -p "_posts/$1"
+      fi
+      bundle exec jekyll post "$2" | grep -oP '_.*?\.md' | xargs basename | read filename
+      mv "_posts/$filename" "_posts/$1/$filename"
+  }
+
+  alias post='new_post'
+
+  post "<YOUR-SUBFOLDER>" "<POST-NAME>"
+  ```
