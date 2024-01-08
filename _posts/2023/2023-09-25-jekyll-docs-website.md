@@ -89,9 +89,9 @@ source ~/.bashrc
 If you are using `zsh` (you know if you are)
 
 ```bash
-echo '# Install Ruby Gems to ~/gems' >> ~/.zshrc
-echo 'export GEM_HOME="$HOME/gems"' >> ~/.zshrc
-echo 'export PATH="$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH"' >> ~/.zshrc
+echo '# Install Ruby Gems to ~/gems' >> ~/.zshrc && \
+echo 'export GEM_HOME="$HOME/gems"' >> ~/.zshrc && \
+echo 'export PATH="$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH"' >> ~/.zshrc && \
 source ~/.zshrc
 ```
 
