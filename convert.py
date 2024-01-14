@@ -29,6 +29,6 @@ def convert_images_in_directory(input_directory, output_directory, quality=80):
         convert_to_webp(input_path, output_path, quality)
 
 # Example usage:
-input_directory = "static-website/images"
-output_directory = "static-website/converted"
+input_directory = "assets/img/2024/posts/"
+output_directory = "assets/img/2024/posts/"
 convert_images_in_directory(input_directory, output_directory)
