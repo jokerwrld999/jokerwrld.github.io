@@ -5,28 +5,8 @@ image:
   path: "/assets/img/2024/thumbs/truenas-scale-thumbnail.webp"
 categories:
 - Self-hosted
-- Automation
-- CI/CD
-- Configuration Management
-- Infrastructure as Code (IaC)
-- Networking
-- Monitoring
-- Project
-- Guide
 tags:
-- Git
-- Linux
-- Bash
-- Nginx
-- Docker
-- Kubernetes
-- Ansible
-- AWS
-- Terraform
-- Jenkins
-- Python
-- Prometheus
-- Grafana
+- TrueNAS Scale
 date: 2024-01-14 23:27 +0200
 ---
 ## File Systems Fundamentals
@@ -389,6 +369,6 @@ We can expand our applications database by adding the  [TrueCharts Community App
 
 To add it we'll just add a catalog in `Applications/Discover/Catalogs` tab:
 
-```
+```vim
 https://github.com/truecharts/catalog
 ```

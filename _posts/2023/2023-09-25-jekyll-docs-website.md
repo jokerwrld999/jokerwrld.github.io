@@ -239,13 +239,13 @@ Jekyll uses a naming [convention for pages and posts](https://jekyllrb.com/docs/
 
 Create a file in `_posts` with the format
 
-```file
+```vim
 YEAR-MONTH-DAY-title.md
 ```
 
 For example:
 
-```file
+```vim
 2023-05-23-homelab-docs.md
 2023-07-09-hardware-specs.md
 ```
