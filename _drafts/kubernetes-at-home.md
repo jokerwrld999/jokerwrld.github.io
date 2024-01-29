@@ -125,14 +125,45 @@ In the realm of DevOps and infrastructure as code (IaC), Vagrant stands out as a
 
 ### **Vagrant Installation**
 
+Follow [Official Installation Instruction](https://developer.hashicorp.com/vagrant/install?product_intent=vagrant#Linux){:target='_blank'} to get Vagrant up & running.
 
+Check the Vagrant version:
 
-
+```bash
+vagrant -v
+```
 
 ### Architecture
 
+## **k3s Architecture**
 
+![k3s Architecture](/assets/img/2024/posts/k3s-on-prem-k3s-architecture.webp)
 
+The components of k3s are very similar to traditional kubernetes(k8s).
+
+First is a k3s Server which is host running the control plane and the datastore.
+
+Next is a k3s Agent this is a host that is running, but without control plane and datastore, traditionally where the workloads would go.
+
+Each of these are running in a single process on a respective hosts.
+
+### **Single-Server**
+
+![k3s Single-Server Architecture](/assets/img/2024/posts/k3s-on-prem-k3s-single-server-architecture.webp)
+
+A single-server setup will use a single-server node with embedded SQLLite database. Each agent node will be registered with a single-server node and all changes a user will do will be done through the Server Node.
+
+### **High Availability with etcd**
+
+![k3s HA /W etcd](/assets/img/2024/posts/k3s-on-prem-k3s-ha-with-etcd.webp)
+
+With High Availability with etcd end users will connect to load balancer that will load balance traffic across all server nodes. The database store and etcd will be embedded into each of the Server Nodes and those Server Nodes will be able to communicate with respective agent nodes. External traffic will come in through a load balancer to each Agent Node and their respective workloads.
+
+### **High Availability with External Database**
+
+![k3s HA /W External DB](/assets/img/2024/posts/k3s-on-prem-k3s-ha-with-external-db.webp)
+
+High availability with an external database works pretty similarly to how high availability works with an embedded database, but this instead of just having an external database.
 
 ## Ansible
 
