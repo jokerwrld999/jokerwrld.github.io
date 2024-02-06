@@ -108,6 +108,40 @@ This script is dedicated to applying various tweaks to optimize and customize yo
 
 This script plays a pivotal role in tailoring the Windows environment according to user preferences, optimizing performance, and enhancing privacy. It reflects the project's commitment to efficiency, consistency, and user-friendly customization.
 
+### Setting Up OpenSSH
+
+```powershell
+irm "https://raw.githubusercontent.com/jokerwrld999/ultimate-powershell/main/tasks/system_setup/openssh.ps1" | iex
+```
+
+This script automates the configuration of OpenSSH on your Windows environment. Below are the key features:
+
+1. **Installation and Startup:**
+
+   - Installs OpenSSH packages if not present.
+
+   - Ensures automatic startup of the OpenSSH service.
+
+2. **Firewall Rule:**
+
+   - Adds a firewall rule to allow SSH traffic on port 22.
+
+3. **Default Shell Configuration:**
+
+   - Sets PowerShell as the default shell for OpenSSH.
+
+4. **SSH Agent:**
+
+   - Ensures the SSH agent service is running.
+
+5. **SSH Key Generation:**
+
+   - Generates an Ed25519 SSH key pair.
+
+   - Adds the key to the SSH agent for secure authentication.
+
+This script enhances your Windows environment by enabling secure and convenient SSH connectivity. It ensures that OpenSSH is properly configured with default settings for a hassle-free experience.
+
 ### Installing Scoop Packages
 
 ```powershell
