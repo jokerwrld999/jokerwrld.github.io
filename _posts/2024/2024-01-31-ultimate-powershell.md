@@ -130,7 +130,9 @@ Let's break down the key components of this script:
 
   - [Grep](https://en.wikipedia.org/wiki/Grep){:target="_blank"}: Command-line text search utility.
 
-  - [OpenSSH](https://www.openssh.com/){:target="_blank"}: Connectivity tools for remote login sessions.
+  - [Nano](https://www.nano-editor.org/){:target="_blank"}: Command-line text editor.
+
+  - [Vim](https://www.vim.org/){:target="_blank"}: Highly configurable text editor.
 
 **Productivity and Communication:**
 
@@ -174,8 +176,7 @@ Let's break down the key components of this script:
 
   - [qBittorrent](https://www.qbittorrent.org/){:target="_blank"}: Open-source BitTorrent client.
 
-These applications, provide a comprehensive set of tools for developers, communication, browsing, document handling, system monitoring, fonts for developers, and entertainment.
-
+These applications provide a comprehensive set of tools for developers, communication, browsing, document handling, system monitoring, fonts for developers, and entertainment.
 
 ### Setting Up Oh-My-Posh
 
