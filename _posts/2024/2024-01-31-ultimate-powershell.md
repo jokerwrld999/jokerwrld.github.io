@@ -31,9 +31,13 @@ ultimate-powershell/
 │   │   └── ShareX_backup.sxb
 │   └── terminal/
 │       ├── pwsh_scripts/
-│       │   └── SFTA.ps1
+│       │   ├── rebootRemotely.ps1
+│       │   ├── SFTA.ps1
+│       │   ├── sshCopyID.ps1
+│       │   └── wakeOnLan.ps1
 │       ├── walls/
-│       └── PowerShell_profile.ps1
+│       ├── PowerShell5_profile.ps1
+│       └── PowerShell7_profile.ps1
 ├── tasks/
 │   ├── software/
 │   │   ├── autohotkey.ps1
@@ -49,6 +53,7 @@ ultimate-powershell/
 │   │   └── wsl.ps1
 │   └── main.ps1
 ├── local.ps1
+├── pre-commit.ps1
 └── README.md
 ```
 
