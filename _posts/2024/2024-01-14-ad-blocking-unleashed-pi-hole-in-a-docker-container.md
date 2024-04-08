@@ -222,28 +222,24 @@ So, how do we add Wildcard DNS to Pi-Hole on our homelab? Follow these steps:
     ```
 
     - Install the Unbound recursive DNS resolver.
-
-    [Unbound DNS](https://github.com/anudeepND/pihole-unbound){:target='_blank'}
+      [Unbound DNS](https://github.com/anudeepND/pihole-unbound){:target='_blank'}
 
     - Disable the stub resolver as showed before on Ubuntu.
 
 3. **Add Tailscale into LXC:**
 
-    [Tailscale in LXC](https://tailscale.com/kb/1130/lxc-unprivileged){:target='_blank'}
-
     - By adding Tailscale into your LXC Container you can use Pi-hole as your Ad-blocker and DNS caching solution across all of your connected devices.
+      [Tailscale in LXC](https://tailscale.com/kb/1130/lxc-unprivileged){:target='_blank'}
 
 4. **Add Pi-hole to your Tailscale nameservers:**
 
     - Now you can add your Pi-hole to Tailscale's global nameservers.
-
-    [Pi-hole and Tailscale](https://tailscale.com/kb/1114/pi-hole){:target='_blank'}
+      [Pi-hole and Tailscale](https://tailscale.com/kb/1114/pi-hole){:target='_blank'}
 
 5. **Expand Pi-hole's Ad-block list:**
 
     - Log in to your Pi-hole Admin UI and update `Adlists` with lists from `firebog.net`.
-
-    [Big Blocklist](https://firebog.net/){:target='_blank'}
+      [Big Blocklist](https://firebog.net/){:target='_blank'}
 
     ```vim
     https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt
@@ -298,5 +294,4 @@ So, how do we add Wildcard DNS to Pi-Hole on our homelab? Follow these steps:
 6. **Whitelist false positive domains:**
 
     - When you add a lot of domains to your adlist there's probability of false positives, so it is recommended to add some commonly white listed domains. Here is the link to an awesome github repository with unattended setup.
-
-    [White List Pi-hole](https://github.com/anudeepND/whitelist){:target='_blank'}
+      [White List Pi-hole](https://github.com/anudeepND/whitelist){:target='_blank'}
