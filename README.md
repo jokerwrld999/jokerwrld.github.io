@@ -33,6 +33,12 @@ new_post() {
 new_post "<YOUR-SUBFOLDER>" "<POST-NAME>"
 ```
 
+Install dependencies
+
+```bash
+bundle install
+```
+
 Serving your site
 
 ```bash

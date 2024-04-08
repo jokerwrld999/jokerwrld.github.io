@@ -200,3 +200,103 @@ So, how do we add Wildcard DNS to Pi-Hole on our homelab? Follow these steps:
     ```bash
     service pihole-FTL restart
     ```
+
+## Pi-hole In LXC Container
+
+1. **Create Ubuntu LXC:**
+
+    - Start by creating an Ubuntu LXC container within Proxmox. You can get it from [Proxmox VE Helper-Scripts](https://tteck.github.io/Proxmox/){:target='_blank'}
+
+    - To create a new Proxmox VE Ubuntu LXC, run the command bellow in the `Proxmox VE Shell`.
+
+    ```bash
+    bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/ubuntu.sh)"
+    ```
+
+2. **Install Pi-hole and Unbound:**
+
+    - Run a command in the newly created `LXC Container` to automatically install Pi-hole.
+
+    ```bash
+    curl -sSL https://install.pi-hole.net | bash
+    ```
+
+    - Install the Unbound recursive DNS resolver.
+
+    [Unbound DNS](https://github.com/anudeepND/pihole-unbound){:target='_blank'}
+
+    - Disable the stub resolver as showed before on Ubuntu.
+
+3. **Add Tailscale into LXC:**
+
+    [Tailscale in LXC](https://tailscale.com/kb/1130/lxc-unprivileged){:target='_blank'}
+
+    - By adding Tailscale into your LXC Container you can use Pi-hole as your Ad-blocker and DNS caching solution across all of your connected devices.
+
+4. **Add Pi-hole to your Tailscale nameservers:**
+
+    - Now you can add your Pi-hole to Tailscale's global nameservers.
+
+    [Pi-hole and Tailscale](https://tailscale.com/kb/1114/pi-hole){:target='_blank'}
+
+5. **Expand Pi-hole's Ad-block list:**
+
+    - Log in to your Pi-hole Admin UI and update `Adlists` with lists from `firebog.net`.
+
+    [Big Blocklist](https://firebog.net/){:target='_blank'}
+
+    ```vim
+    https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt
+    https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
+    https://v.firebog.net/hosts/static/w3kbl.txt
+    https://raw.githubusercontent.com/matomo-org/referrer-spam-blacklist/master/spammers.txt
+    https://someonewhocares.org/hosts/zero/hosts
+    https://raw.githubusercontent.com/VeleSila/yhosts/master/hosts
+    https://winhelp2002.mvps.org/hosts.txt
+    https://v.firebog.net/hosts/neohostsbasic.txt
+    https://raw.githubusercontent.com/RooneyMcNibNug/pihole-stuff/master/SNAFU.txt
+    https://paulgb.github.io/BarbBlock/blacklists/hosts-file.txt
+    https://adaway.org/hosts.txt
+    https://v.firebog.net/hosts/AdguardDNS.txt
+    https://v.firebog.net/hosts/Admiral.txt
+    https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
+    https://v.firebog.net/hosts/Easylist.txt
+    https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext
+    https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
+    https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts
+    https://raw.githubusercontent.com/jdlingyu/ad-wars/master/hosts
+    https://v.firebog.net/hosts/Easyprivacy.txt
+    https://v.firebog.net/hosts/Prigent-Ads.txt
+    https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
+    https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
+    https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt
+    https://www.github.developerdan.com/hosts/lists/ads-and-tracking-extended.txt
+    https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt
+    https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt
+    https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt
+    https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-blocklist.txt
+    https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt
+    https://osint.digitalside.it/Threat-Intel/lists/latestdomains.txt
+    https://v.firebog.net/hosts/Prigent-Crypto.txt
+    https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
+    https://bitbucket.org/ethanr/dns-blacklists/raw/8575c9f96e5b4a1308f2f12394abd86d0927a4a0/bad_lists/Mandiant_APT1_Report_Appendix_D.txt
+    https://phishing.army/download/phishing_army_blocklist_extended.txt
+    https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt
+    https://v.firebog.net/hosts/RPiList-Malware.txt
+    https://v.firebog.net/hosts/RPiList-Phishing.txt
+    https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
+    https://raw.githubusercontent.com/AssoEchap/stalkerware-indicators/master/generated/hosts
+    https://urlhaus.abuse.ch/downloads/hostfile/
+    https://malware-filter.gitlab.io/malware-filter/phishing-filter-hosts.txt
+    https://v.firebog.net/hosts/Prigent-Malware.txt
+    https://zerodot1.gitlab.io/CoinBlockerLists/hosts_browser
+    https://raw.githubusercontent.com/chadmayfield/my-pihole-blocklists/master/lists/pi_blocklist_porn_top1m.list
+    https://v.firebog.net/hosts/Prigent-Adult.txt
+    https://raw.githubusercontent.com/anudeepND/blacklist/master/facebook.txt
+    ```
+
+6. **Whitelist false positive domains:**
+
+    - When you add a lot of domains to your adlist there's probability of false positives, so it is recommended to add some commonly white listed domains. Here is the link to an awesome github repository with unattended setup.
+
+    [White List Pi-hole](https://github.com/anudeepND/whitelist){:target='_blank'}
