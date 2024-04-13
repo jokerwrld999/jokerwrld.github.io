@@ -119,7 +119,7 @@ gem install jekyll bundle --user-install
 
 ## Creating a site based on Starter Template
 
-Templates <https://pinglestudio.peopleforce.io/knowledge_base/articles/46782>{:target="_blank"}
+Templates: <https://github.com/topics/jekyll-theme>{:target="_blank"}
 
 After selecting a Jekyll template, you can fork it and follow the setup instructions in the `README.md` file.
 
