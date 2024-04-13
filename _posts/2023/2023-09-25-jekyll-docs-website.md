@@ -62,38 +62,53 @@ Jekyll is a valuable tool for anyone looking to build a static website or blog e
 
 ### Install Dependencies
 
-#### Ubuntu
+{% tabs distro %}
 
+{% tab distro Ubuntu %}
 ```shell
 sudo apt update
 sudo apt install -y ruby-full build-essential zlib1g-dev git
 ```
-#### Arch
+{% endtab %}
 
+{% tab distro Arch %}
 ```shell
 sudo pacman -Syu
 sudo pacman -S ruby ruby-rdoc gcc make --noconfirm
 ```
+{% endtab %}
 
-To avoid installing RubyGems packages as the root user:
+{% endtabs %}
 
-If you are using `bash` (usually the default for most)
+To avoid installing RubyGems packages as the root user update your shell profile:
 
+{% tabs profile %}
+
+{% tab profile Bash %}
 ```bash
-echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc && \
-echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc && \
-echo 'export PATH="$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH"' >> ~/.bashrc && \
+tee -a ~/.bashrc > /dev/null <<EOF
+
+# Install Ruby Gems to ~/gems
+export GEM_HOME=\$HOME/gems
+export PATH=\$HOME/.local/share/gem/ruby/3.0.0/bin:\$PATH
+EOF
 source ~/.bashrc
 ```
+{% endtab %}
 
-If you are using `zsh` (you know if you are)
-
+{% tab profile Zsh %}
 ```bash
-echo '# Install Ruby Gems to ~/gems' >> ~/.zshrc && \
-echo 'export GEM_HOME="$HOME/gems"' >> ~/.zshrc && \
-echo 'export PATH="$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH"' >> ~/.zshrc && \
+tee -a ~/.zshrc > /dev/null <<EOF
+
+# Install Ruby Gems to ~/gems
+export GEM_HOME=\$HOME/gems
+export PATH=\$HOME/.local/share/gem/ruby/3.0.0/bin:\$PATH
+EOF
 source ~/.zshrc
 ```
+{% endtab %}
+
+{% endtabs %}
 
 ### Install Jekyll Bundler
 
@@ -195,6 +210,11 @@ bundle exec jekyll post "My New Post"
 bundle exec jekyll post "My New Post" --timestamp-format "%Y-%m-%d %H:%M:%S %z"
 ```
 
+Install gem dependencies
+
+```bash
+bundle install
+```
 
 Serving your site
 
@@ -229,7 +249,6 @@ JEKYLL_ENV=production bundle exec jekyll b
 3. Configure GitHub Pages:
 - Navigate to the repository's settings.
 - Under the `GitHub Pages` section, add your custom domain (e.g., example.com).
-
 
 ## Creating a Post
 

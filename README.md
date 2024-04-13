@@ -19,7 +19,7 @@ bundle exec jekyll post "My New Post"
 bundle exec jekyll post "My New Post" --timestamp-format "%Y-%m-%d %H:%M:%S %z"
 ```
 
-Covenient quick Bash `function` to create a post in a desired subdirectory
+Convenient quick Bash `function` to create a post in a desired subdirectory
 
 ```bash
 new_post() {
@@ -33,7 +33,7 @@ new_post() {
 new_post "<YOUR-SUBFOLDER>" "<POST-NAME>"
 ```
 
-Install dependencies
+Install gem dependencies
 
 ```bash
 bundle install

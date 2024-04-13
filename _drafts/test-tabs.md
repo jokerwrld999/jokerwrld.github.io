@@ -30,11 +30,24 @@ tags:
 ---
 
 
+
+
+
 ### First tabs
 
 {% tabs log %}
-
 {% tab log php %}
+
+This Jekyll plugin provides tags used to add tabs in your content. It is heavily inspired from https://github.com/clustergarage/jekyll-code-tabs.
+
+It works with multiple tab panels on the same page.
+It does not require a specific javascript framework.
+Additionally, you can:
+
+Sync tabs with similar labels.
+Have a specific tab automatically opened on page load.
+Add a "copy to clipboard" button for tabs that contain code.
+
 ```php
 var_dump('hello');
 ```
@@ -51,7 +64,6 @@ console.log('hello');
 pputs 'hello'
 ```
 {% endtab %}
-
 {% endtabs %}
 
 ### Second tabs
