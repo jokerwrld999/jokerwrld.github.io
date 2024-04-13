@@ -240,3 +240,6 @@ jekyll_compose:
         - Prometheus
         - Grafana
       published: false
+
+plugins:
+  - jekyll-tabs

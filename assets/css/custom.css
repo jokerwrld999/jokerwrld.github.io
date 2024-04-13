@@ -1,0 +1,63 @@
+.tab {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 5px 5px 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  transition: all 0.7s !important;
+}
+
+.content a:not(.img-link):hover {
+  color: deepskyblue !important;
+  transition: all 0.7s !important;
+}
+
+.tab > * {
+  flex: none;
+  padding-left: 5px;
+  position: relative;
+}
+
+.tab > * > a {
+  display: block;
+  text-align: center;
+  padding: 3pt 40pt;
+  color: #fff;
+  background-color: #26292c;
+  border-top: none !important;
+  border-bottom: 5px solid transparent !important;
+  border-image-slice: 1;
+  border-radius: 7px 7px 0 0 !important;
+  font-size: 8pt;
+  font-weight: 800 !important;
+  text-transform: uppercase;
+  line-height: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tab > .active > a {
+  color: deepskyblue;
+  border-top: none !important;
+  border-bottom: 5px solid transparent;
+  border-image: linear-gradient( 113deg, hsl(260deg 100% 64%) 0%, hsl(190deg 100% 55%) 100% );
+  border-image-slice: 1;
+  width:100%;
+}
+
+/* Remove unused styles from original code */
+.tab > li > a:hover {
+  color: #26292c !important;
+}
+
+.tab-content {
+  padding: 0;
+}
+
+.tab-content > li {
+  display: none;
+}
+.tab-content > li.active {
+  display: block;
+}
