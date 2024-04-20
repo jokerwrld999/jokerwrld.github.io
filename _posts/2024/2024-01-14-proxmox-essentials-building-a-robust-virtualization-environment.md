@@ -67,7 +67,7 @@ date: 2024-01-14 22:01 +0200
 Add No-Subscription repository:
 
 ```bash
-echo 'deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription' >> /etc/apt/sources.list
+echo 'deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription' > /etc/apt/sources.list.d/pve-no-subscription.list
 ```
 
 Disable the enterprise repo:
@@ -85,11 +85,7 @@ sed -i 's/^deb/#deb/g' /etc/apt/sources.list.d/ceph.list
 To install the newest updates run:
 
 ```bash
-apt update
-```
-
-```bash
-apt dist-upgrade
+apt update && apt dist-upgrade -y
 ```
 
 ```bash
