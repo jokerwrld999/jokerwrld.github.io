@@ -46,18 +46,14 @@
   width:100%;
 }
 
-/* Remove unused styles from original code */
-.tab > li > a:hover {
-  color: #26292c !important;
-}
-
 .tab-content {
-  padding: 0;
+    padding: 0;
 }
 
 .tab-content > li {
-  display: none;
+    display: none;
 }
 .tab-content > li.active {
-  display: block;
+    display: block;
+    padding-left: 10pt;
 }
