@@ -36,5 +36,7 @@ gem "json", "~> 2.7"
 
 group :jekyll_plugins do
   gem "jekyll-tabs"
+  gem "jekyll-sitemap"
+  gem "jekyll-feed"
   gem "jekyll-seo-tag"
 end

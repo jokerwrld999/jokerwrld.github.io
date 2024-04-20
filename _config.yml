@@ -243,4 +243,6 @@ jekyll_compose:
 
 plugins:
   - jekyll-tabs
+  - jekyll-feed
+  - jekyll-sitemap
   - jekyll-seo-tag
