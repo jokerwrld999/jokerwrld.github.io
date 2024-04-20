@@ -157,23 +157,25 @@ GitHub CLI (gh) is a command-line interface for GitHub, providing an easy way to
 
 ### Installation
 
-#### Debian Linux
-
+{% tabs github-cli %}
+{% tab github-cli Debian %}
 ```bash
 sudo apt install gh
 ```
+{% endtab %}
 
-#### Windows
-
+{% tab github-cli Windows %}
 ```bash
 winget install -e GitHub.cli
 ```
+{% endtab %}
 
-#### Mac
-
+{% tab github-cli Mac %}
 ```bash
 brew install gh
 ```
+{% endtab %}
+{% endtabs %}
 
 ### First Login
 
@@ -208,6 +210,18 @@ Choosing SSH during login offers a more secure and efficient authentication meth
   ```
 
   Creates a new GitHub repository with the specified name.
+
+
+### Configure your Git Project
+
+It is recommended to set your identity to associate local commits with.
+
+```bash
+git config --local user.email ""
+git config --local user.name ""
+```
+
+By utilizing `--local` option you save your config to the repo's .git directory `.git/config` so that your config always present.
 
 ## GitHub Workflow
 
