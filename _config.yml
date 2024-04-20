@@ -243,3 +243,4 @@ jekyll_compose:
 
 plugins:
   - jekyll-tabs
+  - jekyll-seo-tag
