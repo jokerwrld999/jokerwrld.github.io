@@ -62,19 +62,30 @@ date: 2024-01-14 22:01 +0200
 
 ## First Setup
 
-### Updates
+### Disable Commercial Repositories
 
-Create a file at `/etc/apt/sources.list.d/pve-no-enterprise.list` with the following contents:
+Add No-Subscription repository:
 
 ```bash
-# not for production use
-deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
+echo 'deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription' >> /etc/apt/sources.list
 ```
 
-Run
+Disable the enterprise repo:
 
 ```bash
-apt-get update
+sed -i 's/^deb/#deb/g' /etc/apt/sources.list.d/pve-enterprise.list
+```
+
+Disable the ceph repo:
+
+```bash
+sed -i 's/^deb/#deb/g' /etc/apt/sources.list.d/ceph.list
+```
+
+To install the newest updates run:
+
+```bash
+apt update
 ```
 
 ```bash
