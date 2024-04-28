@@ -36,14 +36,20 @@ Current installation setup involves docker container and tailscale container wit
 
 6. **Enable Tun device on LXC:**
 
+    - Edit LXC's config file in the `Proxmox VE Shell`:
+
     ```bash
     vim /etc/pve/lxc/250.conf
     ```
 
-    ```yaml
+    - Add the following lines into config:
+
+    ```
     lxc.cgroup.devices.allow: c 10:200 rwm
     lxc.mount.entry: /dev/net dev/net none bind,create=dir
     ```
+
+    - Reboot the container:
 
     ```yaml
     pct reboot 250
@@ -69,6 +75,244 @@ Current installation setup involves docker container and tailscale container wit
 
 5. **Copy Configurations Files:**
 
+    {::options parse_block_html='true' /}
+    <details>
+      <summary markdown='span'>Services Configuration</summary>
+    
+      ```yaml
+      ---
+      - Hypervisors:
+          - Proxmox-Home-PVE1:
+              icon: proxmox.svg
+              href: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_URL}}"
+              description: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_DESCRIPTION}}"
+              widget:
+                  type: proxmox
+                  url: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_URL}}"
+                  username: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_USER}}"
+                  password: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_API_KEY}}"
+                  node: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_NODE}}"
+
+          - Proxmox-Work-PVE1:
+              icon: proxmox.svg
+              href: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_URL}}"
+              description: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_DESCRIPTION}}"
+              widget:
+                  type: proxmox
+                  url: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_URL}}"
+                  username: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_USER}}"
+                  password: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_API_KEY}}"
+                  node: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_NODE}}"
+
+          - Proxmox-Work-PVE2:
+              icon: proxmox.svg
+              href: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_URL}}"
+              description: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_DESCRIPTION}}"
+              widget:
+                  type: proxmox
+                  url: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_URL}}"
+                  username:  "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_USER}}"
+                  password:  "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_API_KEY}}"
+                  node: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_NODE}}"
+
+          - Proxmox-Work-PVE3:
+              icon: proxmox.svg
+              href: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_URL}}"
+              description: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_DESCRIPTION}}"
+              widget:
+                  type: proxmox
+                  url: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_URL}}"
+                  username: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_USER}}"
+                  password: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_API_KEY}}"
+                  node: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_NODE}}"
+
+      # - Containers:
+      #     - Rancher:
+      #         icon: rancher.svg
+      #         href: "{{HOMEPAGE_VAR_RACNHER_URL}}"
+      #         description: "{{HOMEPAGE_VAR_RACNHER_DESCRIPTION}}"
+      #     - Longhorn:
+      #         icon: longhorn.svg
+      #         href: "{{HOMEPAGE_VAR_LONGHORN_URL}}"
+      #         description: "{{HOMEPAGE_VAR_LONGHORN_DESCRIPTION}}"
+
+      - DNS:
+          - Pi-Hole1:
+              icon: pi-hole.svg
+              href: "{{HOMEPAGE_VAR_PIHOLE1_URL}}/admin/"
+              description: "{{HOMEPAGE_VAR_PIHOLE1_DESCRIPTION}}"
+              widget:
+                  type: pihole
+                  url: "{{HOMEPAGE_VAR_PIHOLE1_URL}}"
+                  key: "{{HOMEPAGE_VAR_PIHOLE1_API_KEY}}"
+
+      - Network:
+          - Uptime Kuma:
+              icon: uptime-kuma.svg
+              href: "{{HOMEPAGE_VAR_UPTIME_KUMA_URL}}"
+              description: internal
+              widget:
+                  type: uptimekuma
+                  url: "{{HOMEPAGE_VAR_UPTIME_KUMA_URL}}"
+                  slug: home
+
+          - Nginx Proxy Manager Home:
+              icon: nginx-proxy-manager.svg
+              href: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_URL}}"
+              description: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_DESCRIPTION}}"
+              widget:
+                  type: npm
+                  url: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_URL}}"
+                  username: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_USERNAME}}"
+                  password: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_PASSWORD}}"
+
+          - Nginx Proxy Manager Work:
+              icon: nginx-proxy-manager.svg
+              href: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_URL}}"
+              description: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_DESCRIPTION}}"
+              widget:
+                  type: npm
+                  url: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_URL}}"
+                  username: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_USERNAME}}"
+                  password: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_PASSWORD}}"
+
+      - Storage:
+          - TrueNAS-Home:
+              icon: truenas.svg
+              href: "{{HOMEPAGE_VAR_HOME_TRUENAS_URL}}"
+              description: "{{HOMEPAGE_VAR_HOME_TRUENAS_DESCRIPTION}}"
+              widget:
+                  type: truenas
+                  url: "{{HOMEPAGE_VAR_HOME_TRUENAS_URL}}"
+                  key: "{{HOMEPAGE_VAR_HOME_TRUENAS_API_KEY}}"
+
+          - TrueNAS-Work:
+              icon: truenas.svg
+              href: "{{HOMEPAGE_VAR_WORK_TRUENAS_URL}}"
+              description: "{{HOMEPAGE_VAR_WORK_TRUENAS_DESCRIPTION}}"
+              widget:
+                  type: truenas
+                  url: "{{HOMEPAGE_VAR_WORK_TRUENAS_URL}}"
+                  key: "{{HOMEPAGE_VAR_WORK_TRUENAS_API_KEY}}"
+
+          - File Browser:
+              icon: filebrowser.svg
+              href: "{{HOMEPAGE_VAR_FILE_BROWSER_URL}}"
+              description: "{{HOMEPAGE_VAR_FILE_BROWSER_DESCRIPTION}}"
+
+      - Media:
+          - NextCloud:
+              icon: nextcloud.svg
+              href: "{{HOMEPAGE_VAR_NEXTCLOUD_URL}}"
+              description: "{{HOMEPAGE_VAR_NEXTCLOUD_DESCRIPTION}}"
+              widget:
+                  type: nextcloud
+                  url: "{{HOMEPAGE_VAR_NEXTCLOUD_URL}}"
+                  username: "{{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}"
+                  password: "{{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}"
+
+      - Other:
+          - GitLab:
+              icon: gitlab.svg
+              href: https://gitlab.com
+              description: source code
+          - GitHub:
+              icon: github.svg
+              href: https://github.com
+              description: source code
+          - Shlink:
+              icon: https://shlink.io/images/shlink-logo-blue.svg
+              href: "{{HOMEPAGE_VAR_SHLINK_URL}}"
+              description: dashboard
+      ```
+
+    </details>
+    {::options parse_block_html='false' /}
+
+    {::options parse_block_html='true' /}
+    <details>
+      <summary markdown='span'>Setting Configuration</summary>
+
+      ```yaml
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/latest/configs/settings
+
+      title: Joker Wrld Homepage
+
+      background:
+        image: https://cdnb.artstation.com/p/assets/images/images/060/534/953/medium/julia-gorokhova-sci-fi-alley-fin2.jpg?1678790506
+        blur: sm # sm, md, xl... see https://tailwindcss.com/docs/backdrop-blur
+        saturate: 100 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
+        brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
+        opacity: 100 # 0-100
+
+      theme: dark
+      color: slate
+
+      # useEqualHeights: true
+
+      layout:
+        Hypervisors:
+          header: true
+          style: row
+          columns: 4
+        Containers:
+          header: true
+          style: row
+          columns: 4
+        DNS:
+          header: true
+          style: row
+          columns: 4
+        Network:
+          header: true
+          style: row
+          columns: 4
+        Storage:
+          header: true
+          style: row
+          columns: 4
+        Media:
+          header: true
+          style: row
+          columns: 4
+        Other:
+          header: true
+          style: row
+          columns: 4
+
+      providers:
+        openweathermap: openweathermapapikey
+        weatherapi: weatherapiapikey
+      ```
+
+    </details>
+    {::options parse_block_html='false' /}
+
+    {::options parse_block_html='true' /}
+    <details>
+      <summary markdown='span'>Widgets Configuration</summary>
+
+      ```yaml
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/latest/configs/service-widgets
+
+      - resources:
+          cpu: true
+          memory: true
+          disk: /
+
+      - datetime:
+          text_size: xl
+          format:
+            timeStyle: short
+      ```
+
+    </details>
+    {::options parse_block_html='false' /}
+
 
     ```bash
     cp -R ./config/* ~/homelab-containers/homepage/config/
@@ -79,7 +323,6 @@ Current installation setup involves docker container and tailscale container wit
     vim .env
     ```
 
-
 7. **Run Docker Compose:**
 
     {::options parse_block_html='true' /}
@@ -88,7 +331,6 @@ Current installation setup involves docker container and tailscale container wit
 
       ```yaml
       ---
-      version: '3.8'
       services:
         tailscale:
           container_name: tailscale
@@ -152,21 +394,21 @@ Current installation setup involves docker container and tailscale container wit
     ```
 
 
-  - Update Config
+    - Update Config
 
-    ```vim
-    server {
-        listen 80;
-        listen [::]:80;
+      ```vim
+      server {
+          listen 80;
+          listen [::]:80;
 
-        server_name homepage.home.jokerwrld.win;
+          server_name homepage.home.jokerwrld.win;
 
-        location / {
-            proxy_pass http://127.0.0.1:3000;
-            include proxy_params;
-        }
-    }
-    ```
+          location / {
+              proxy_pass http://127.0.0.1:3000;
+              include proxy_params;
+          }
+      }
+      ```
 
 10. Enable Site
 
@@ -180,3 +422,8 @@ Current installation setup involves docker container and tailscale container wit
     nginx -t
     systemctl restart nginx
     ```
+
+Result:
+
+![Homepage Dashboard](/assets/img/2024/posts/homepage-dashboard.webp)
+
