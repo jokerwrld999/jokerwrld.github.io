@@ -14,11 +14,7 @@ tags:
 - Nginx
 - Docker
 ---
-[Homepage](https://gethomepage.dev/latest/){:target='_blank'}
-
-
-
-
+Welcome [Homepage](https://gethomepage.dev/latest/){:target='_blank'}, a customizable application dashboard! This post guides you through integrating Homepage within an LXC container, leveraging the power of containers for a streamlined homelab experience.
 
 ## Installation on LXC
 
@@ -34,15 +30,15 @@ Current installation setup involves docker container and tailscale container wit
     bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/docker.sh)"
     ```
 
-6. **Enable Tun device on LXC:**
+6. **Enable `TUN/TAP` device on LXC:**
 
-    - Edit LXC's config file in the `Proxmox VE Shell`:
+    - Editing LXC config file in the `Proxmox VE Shell`:
 
     ```bash
     vim /etc/pve/lxc/250.conf
     ```
 
-    - Add the following lines into config:
+    - Add the following lines:
 
     ```
     lxc.cgroup.devices.allow: c 10:200 rwm
@@ -58,265 +54,273 @@ Current installation setup involves docker container and tailscale container wit
 2. **Clone Repository:**
 
     ```bash
-    mkdir ~/github && cd ~/github
+    mkdir ~/github && cd ~/github && \
     git clone "https://github.com/jokerwrld999/homelab-containers.git" && cd homelab-containers/homepage
     ```
 
 3. **Install Python Dependencies:**
 
     ```bash
-     apt install vim python-is-python3 python3-pip nginx -y
-     echo "alias pip='pip3'" >> ~/.bashrc
-     source ~/.bashrc
-     pip install --upgrade pip
-     pip install -r ../requirements.txt
-     python3 ../volumes.py
+    apt update
+    apt install vim python3-pip nginx -y
+    pip install --upgrade pip
+    pip install -r ../requirements.txt
+    python3 ../volumes.py
     ```
 
-5. **Copy Configurations Files:**
+5. **Create Configuration Files:**
 
-    {::options parse_block_html='true' /}
-    <details>
-      <summary markdown='span'>Services Configuration</summary>
-    
-      ```yaml
-      ---
-      - Hypervisors:
-          - Proxmox-Home-PVE1:
-              icon: proxmox.svg
-              href: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_URL}}"
-              description: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_DESCRIPTION}}"
-              widget:
-                  type: proxmox
-                  url: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_URL}}"
-                  username: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_USER}}"
-                  password: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_API_KEY}}"
-                  node: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_NODE}}"
+    - [Define application level options](https://gethomepage.dev/latest/configs/settings/){:target='_blank'} in `settings.yaml` file:
 
-          - Proxmox-Work-PVE1:
-              icon: proxmox.svg
-              href: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_URL}}"
-              description: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_DESCRIPTION}}"
-              widget:
-                  type: proxmox
-                  url: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_URL}}"
-                  username: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_USER}}"
-                  password: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_API_KEY}}"
-                  node: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_NODE}}"
+      {::options parse_block_html='true' /}
+      <details>
+        <summary markdown='span'>`settings.yaml`</summary>
 
-          - Proxmox-Work-PVE2:
-              icon: proxmox.svg
-              href: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_URL}}"
-              description: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_DESCRIPTION}}"
-              widget:
-                  type: proxmox
-                  url: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_URL}}"
-                  username:  "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_USER}}"
-                  password:  "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_API_KEY}}"
-                  node: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_NODE}}"
+        ```yaml
+        ---
+        # For configuration options and examples, please see:
+        # https://gethomepage.dev/latest/configs/settings
 
-          - Proxmox-Work-PVE3:
-              icon: proxmox.svg
-              href: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_URL}}"
-              description: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_DESCRIPTION}}"
-              widget:
-                  type: proxmox
-                  url: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_URL}}"
-                  username: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_USER}}"
-                  password: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_API_KEY}}"
-                  node: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_NODE}}"
+        title: Joker Wrld Homepage
 
-      # - Containers:
-      #     - Rancher:
-      #         icon: rancher.svg
-      #         href: "{{HOMEPAGE_VAR_RACNHER_URL}}"
-      #         description: "{{HOMEPAGE_VAR_RACNHER_DESCRIPTION}}"
-      #     - Longhorn:
-      #         icon: longhorn.svg
-      #         href: "{{HOMEPAGE_VAR_LONGHORN_URL}}"
-      #         description: "{{HOMEPAGE_VAR_LONGHORN_DESCRIPTION}}"
+        background:
+          image: https://cdnb.artstation.com/p/assets/images/images/060/534/953/medium/julia-gorokhova-sci-fi-alley-fin2.jpg?1678790506
+          blur: sm # sm, md, xl... see https://tailwindcss.com/docs/backdrop-blur
+          saturate: 100 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
+          brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
+          opacity: 100 # 0-100
 
-      - DNS:
-          - Pi-Hole1:
-              icon: pi-hole.svg
-              href: "{{HOMEPAGE_VAR_PIHOLE1_URL}}/admin/"
-              description: "{{HOMEPAGE_VAR_PIHOLE1_DESCRIPTION}}"
-              widget:
-                  type: pihole
-                  url: "{{HOMEPAGE_VAR_PIHOLE1_URL}}"
-                  key: "{{HOMEPAGE_VAR_PIHOLE1_API_KEY}}"
+        theme: dark
+        color: slate
 
-      - Network:
-          - Uptime Kuma:
-              icon: uptime-kuma.svg
-              href: "{{HOMEPAGE_VAR_UPTIME_KUMA_URL}}"
-              description: internal
-              widget:
-                  type: uptimekuma
-                  url: "{{HOMEPAGE_VAR_UPTIME_KUMA_URL}}"
-                  slug: home
+        # useEqualHeights: true
 
-          - Nginx Proxy Manager Home:
-              icon: nginx-proxy-manager.svg
-              href: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_URL}}"
-              description: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_DESCRIPTION}}"
-              widget:
-                  type: npm
-                  url: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_URL}}"
-                  username: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_USERNAME}}"
-                  password: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_PASSWORD}}"
+        layout:
+          Hypervisors:
+            header: true
+            style: row
+            columns: 4
+          Containers:
+            header: true
+            style: row
+            columns: 4
+          DNS:
+            header: true
+            style: row
+            columns: 4
+          Network:
+            header: true
+            style: row
+            columns: 4
+          Storage:
+            header: true
+            style: row
+            columns: 4
+          Media:
+            header: true
+            style: row
+            columns: 4
+          Other:
+            header: true
+            style: row
+            columns: 4
 
-          - Nginx Proxy Manager Work:
-              icon: nginx-proxy-manager.svg
-              href: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_URL}}"
-              description: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_DESCRIPTION}}"
-              widget:
-                  type: npm
-                  url: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_URL}}"
-                  username: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_USERNAME}}"
-                  password: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_PASSWORD}}"
+        providers:
+          openweathermap: openweathermapapikey
+          weatherapi: weatherapiapikey
+        ```
 
-      - Storage:
-          - TrueNAS-Home:
-              icon: truenas.svg
-              href: "{{HOMEPAGE_VAR_HOME_TRUENAS_URL}}"
-              description: "{{HOMEPAGE_VAR_HOME_TRUENAS_DESCRIPTION}}"
-              widget:
-                  type: truenas
-                  url: "{{HOMEPAGE_VAR_HOME_TRUENAS_URL}}"
-                  key: "{{HOMEPAGE_VAR_HOME_TRUENAS_API_KEY}}"
+      </details>
+      {::options parse_block_html='false' /}
 
-          - TrueNAS-Work:
-              icon: truenas.svg
-              href: "{{HOMEPAGE_VAR_WORK_TRUENAS_URL}}"
-              description: "{{HOMEPAGE_VAR_WORK_TRUENAS_DESCRIPTION}}"
-              widget:
-                  type: truenas
-                  url: "{{HOMEPAGE_VAR_WORK_TRUENAS_URL}}"
-                  key: "{{HOMEPAGE_VAR_WORK_TRUENAS_API_KEY}}"
+    - [Configure and group your homelab services](https://gethomepage.dev/latest/configs/services/){:target='_blank'} in the `services.yaml` file:
 
-          - File Browser:
-              icon: filebrowser.svg
-              href: "{{HOMEPAGE_VAR_FILE_BROWSER_URL}}"
-              description: "{{HOMEPAGE_VAR_FILE_BROWSER_DESCRIPTION}}"
+      {::options parse_block_html='true' /}
+      <details>
+        <summary markdown='span'>`services.yaml`</summary>
 
-      - Media:
-          - NextCloud:
-              icon: nextcloud.svg
-              href: "{{HOMEPAGE_VAR_NEXTCLOUD_URL}}"
-              description: "{{HOMEPAGE_VAR_NEXTCLOUD_DESCRIPTION}}"
-              widget:
-                  type: nextcloud
-                  url: "{{HOMEPAGE_VAR_NEXTCLOUD_URL}}"
-                  username: "{{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}"
-                  password: "{{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}"
+        ```yaml
+        ---
+        - Hypervisors:
+            - Proxmox-Home-PVE1:
+                icon: proxmox.svg
+                href: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_URL}}"
+                description: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_DESCRIPTION}}"
+                widget:
+                    type: proxmox
+                    url: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_URL}}"
+                    username: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_USER}}"
+                    password: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_API_KEY}}"
+                    node: "{{HOMEPAGE_VAR_HOME_PVE1_PROXMOX_NODE}}"
 
-      - Other:
-          - GitLab:
-              icon: gitlab.svg
-              href: https://gitlab.com
-              description: source code
-          - GitHub:
-              icon: github.svg
-              href: https://github.com
-              description: source code
-          - Shlink:
-              icon: https://shlink.io/images/shlink-logo-blue.svg
-              href: "{{HOMEPAGE_VAR_SHLINK_URL}}"
-              description: dashboard
+            - Proxmox-Work-PVE1:
+                icon: proxmox.svg
+                href: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_URL}}"
+                description: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_DESCRIPTION}}"
+                widget:
+                    type: proxmox
+                    url: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_URL}}"
+                    username: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_USER}}"
+                    password: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_API_KEY}}"
+                    node: "{{HOMEPAGE_VAR_WORK_PVE1_PROXMOX_NODE}}"
+
+            - Proxmox-Work-PVE2:
+                icon: proxmox.svg
+                href: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_URL}}"
+                description: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_DESCRIPTION}}"
+                widget:
+                    type: proxmox
+                    url: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_URL}}"
+                    username:  "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_USER}}"
+                    password:  "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_API_KEY}}"
+                    node: "{{HOMEPAGE_VAR_WORK_PVE2_PROXMOX_NODE}}"
+
+            - Proxmox-Work-PVE3:
+                icon: proxmox.svg
+                href: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_URL}}"
+                description: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_DESCRIPTION}}"
+                widget:
+                    type: proxmox
+                    url: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_URL}}"
+                    username: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_USER}}"
+                    password: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_API_KEY}}"
+                    node: "{{HOMEPAGE_VAR_WORK_PVE3_PROXMOX_NODE}}"
+
+        # - Containers:
+        #     - Rancher:
+        #         icon: rancher.svg
+        #         href: "{{HOMEPAGE_VAR_RACNHER_URL}}"
+        #         description: "{{HOMEPAGE_VAR_RACNHER_DESCRIPTION}}"
+        #     - Longhorn:
+        #         icon: longhorn.svg
+        #         href: "{{HOMEPAGE_VAR_LONGHORN_URL}}"
+        #         description: "{{HOMEPAGE_VAR_LONGHORN_DESCRIPTION}}"
+
+        - DNS:
+            - Pi-Hole1:
+                icon: pi-hole.svg
+                href: "{{HOMEPAGE_VAR_PIHOLE1_URL}}/admin/"
+                description: "{{HOMEPAGE_VAR_PIHOLE1_DESCRIPTION}}"
+                widget:
+                    type: pihole
+                    url: "{{HOMEPAGE_VAR_PIHOLE1_URL}}"
+                    key: "{{HOMEPAGE_VAR_PIHOLE1_API_KEY}}"
+
+        - Network:
+            - Uptime Kuma:
+                icon: uptime-kuma.svg
+                href: "{{HOMEPAGE_VAR_UPTIME_KUMA_URL}}"
+                description: internal
+                widget:
+                    type: uptimekuma
+                    url: "{{HOMEPAGE_VAR_UPTIME_KUMA_URL}}"
+                    slug: home
+
+            - Nginx Proxy Manager Home:
+                icon: nginx-proxy-manager.svg
+                href: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_URL}}"
+                description: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_DESCRIPTION}}"
+                widget:
+                    type: npm
+                    url: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_URL}}"
+                    username: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_USERNAME}}"
+                    password: "{{HOMEPAGE_VAR_HOME_NGINX_PROXY_MANAGER_PASSWORD}}"
+
+            - Nginx Proxy Manager Work:
+                icon: nginx-proxy-manager.svg
+                href: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_URL}}"
+                description: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_DESCRIPTION}}"
+                widget:
+                    type: npm
+                    url: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_URL}}"
+                    username: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_USERNAME}}"
+                    password: "{{HOMEPAGE_VAR_WORK_NGINX_PROXY_MANAGER_PASSWORD}}"
+
+        - Storage:
+            - TrueNAS-Home:
+                icon: truenas.svg
+                href: "{{HOMEPAGE_VAR_HOME_TRUENAS_URL}}"
+                description: "{{HOMEPAGE_VAR_HOME_TRUENAS_DESCRIPTION}}"
+                widget:
+                    type: truenas
+                    url: "{{HOMEPAGE_VAR_HOME_TRUENAS_URL}}"
+                    key: "{{HOMEPAGE_VAR_HOME_TRUENAS_API_KEY}}"
+
+            - TrueNAS-Work:
+                icon: truenas.svg
+                href: "{{HOMEPAGE_VAR_WORK_TRUENAS_URL}}"
+                description: "{{HOMEPAGE_VAR_WORK_TRUENAS_DESCRIPTION}}"
+                widget:
+                    type: truenas
+                    url: "{{HOMEPAGE_VAR_WORK_TRUENAS_URL}}"
+                    key: "{{HOMEPAGE_VAR_WORK_TRUENAS_API_KEY}}"
+
+            - File Browser:
+                icon: filebrowser.svg
+                href: "{{HOMEPAGE_VAR_FILE_BROWSER_URL}}"
+                description: "{{HOMEPAGE_VAR_FILE_BROWSER_DESCRIPTION}}"
+
+        - Media:
+            - NextCloud:
+                icon: nextcloud.svg
+                href: "{{HOMEPAGE_VAR_NEXTCLOUD_URL}}"
+                description: "{{HOMEPAGE_VAR_NEXTCLOUD_DESCRIPTION}}"
+                widget:
+                    type: nextcloud
+                    url: "{{HOMEPAGE_VAR_NEXTCLOUD_URL}}"
+                    username: "{{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}"
+                    password: "{{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}"
+
+        - Other:
+            - GitLab:
+                icon: gitlab.svg
+                href: https://gitlab.com
+                description: source code
+            - GitHub:
+                icon: github.svg
+                href: https://github.com
+                description: source code
+            - Shlink:
+                icon: https://shlink.io/images/shlink-logo-blue.svg
+                href: "{{HOMEPAGE_VAR_SHLINK_URL}}"
+                description: dashboard
+        ```
+
+      </details>
+      {::options parse_block_html='false' /}
+
+    - [Include resource information](https://gethomepage.dev/latest/widgets/info/resources/){:target='_blank'} in the `widgets.yaml` file:
+
+      {::options parse_block_html='true' /}
+      <details>
+        <summary markdown='span'>`widgets.yaml`</summary>
+
+        ```yaml
+        ---
+        # For configuration options and examples, please see:
+        # https://gethomepage.dev/latest/widgets/info/resources/
+
+        - resources:
+            cpu: true
+            cputemp: true
+            memory: true
+            disk: /
+            uptime: true
+
+        - datetime:
+            text_size: xl
+            format:
+              timeStyle: short
+        ```
+
+      </details>
+      {::options parse_block_html='false' /}
+
+    - Copy the configuration files into the mounted Docker volume's folder:
+
+      ```bash
+      cp -R ./config/* ~/homelab-containers/homepage/config/
       ```
-
-    </details>
-    {::options parse_block_html='false' /}
-
-    {::options parse_block_html='true' /}
-    <details>
-      <summary markdown='span'>Setting Configuration</summary>
-
-      ```yaml
-      ---
-      # For configuration options and examples, please see:
-      # https://gethomepage.dev/latest/configs/settings
-
-      title: Joker Wrld Homepage
-
-      background:
-        image: https://cdnb.artstation.com/p/assets/images/images/060/534/953/medium/julia-gorokhova-sci-fi-alley-fin2.jpg?1678790506
-        blur: sm # sm, md, xl... see https://tailwindcss.com/docs/backdrop-blur
-        saturate: 100 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
-        brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
-        opacity: 100 # 0-100
-
-      theme: dark
-      color: slate
-
-      # useEqualHeights: true
-
-      layout:
-        Hypervisors:
-          header: true
-          style: row
-          columns: 4
-        Containers:
-          header: true
-          style: row
-          columns: 4
-        DNS:
-          header: true
-          style: row
-          columns: 4
-        Network:
-          header: true
-          style: row
-          columns: 4
-        Storage:
-          header: true
-          style: row
-          columns: 4
-        Media:
-          header: true
-          style: row
-          columns: 4
-        Other:
-          header: true
-          style: row
-          columns: 4
-
-      providers:
-        openweathermap: openweathermapapikey
-        weatherapi: weatherapiapikey
-      ```
-
-    </details>
-    {::options parse_block_html='false' /}
-
-    {::options parse_block_html='true' /}
-    <details>
-      <summary markdown='span'>Widgets Configuration</summary>
-
-      ```yaml
-      ---
-      # For configuration options and examples, please see:
-      # https://gethomepage.dev/latest/configs/service-widgets
-
-      - resources:
-          cpu: true
-          memory: true
-          disk: /
-
-      - datetime:
-          text_size: xl
-          format:
-            timeStyle: short
-      ```
-
-    </details>
-    {::options parse_block_html='false' /}
-
-
-    ```bash
-    cp -R ./config/* ~/homelab-containers/homepage/config/
-    ```
 4. **Update `.env` file:**
 
     ```vim
