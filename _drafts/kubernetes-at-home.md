@@ -133,8 +133,6 @@ Check the Vagrant version:
 vagrant -v
 ```
 
-### Architecture
-
 ## **k3s Architecture**
 
 ![k3s Architecture](/assets/img/2024/posts/k3s-on-prem-k3s-architecture.webp)
@@ -164,6 +162,33 @@ With High Availability with etcd end users will connect to load balancer that wi
 ![k3s HA /W External DB](/assets/img/2024/posts/k3s-on-prem-k3s-ha-with-external-db.webp)
 
 High availability with an external database works pretty similarly to how high availability works with an embedded database, but this instead of just having an external database.
+
+## Manual k3s Installation
+
+**Run Latest k3s Server**
+
+```bash
+server_node_ip=10.10.10.51
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --cluster-init --node-ip $server_node_ip --node-external-ip $server_node_ip" sh -s -
+```
+
+You will need the token again so you can pull this from the server:
+
+```bash
+sudo cat /var/lib/rancher/k3s/server/node-token
+```
+
+**Run Latest k3s Agent**
+
+```bash
+server_node_ip=10.10.10.51
+agent_node_ip=10.10.10.61
+k3s_token='K10a8820d401dfd037c827b915e31cd13bcbe535ad50031012a8d587885f6147d67::server:9df441f9a142eb6b795a9131aa23f4f2'
+agent_node_name=$(hostname -s)
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="agent --server https://$server_node_ip:6443 --node-ip $agent_node_ip --node-external-ip $agent_node_ip" K3S_TOKEN=$k3s_token K3S_NODE_NAME=$agent_node_name sh -
+```
+
+## Terraform
 
 ## Ansible
 
