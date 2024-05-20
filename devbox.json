@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.10.7/.schema/devbox.schema.json",
+  "packages": [
+    "ruby_3_1@latest",
+    "bundler@latest"
+  ],
+  "env": {
+  },
+  "shell": {
+    "init_hook": [
+      "echo 'Installing gem dependencies...'",
+      "bundle install >/dev/null",
+      "echo 'Serving your site...'",
+      "bundle exec jekyll s --drafts >/dev/null 2>&1 &",
+      "alias draft='bundle exec jekyll draft'",
+      "alias publish='bash ./tools/publish_draft.sh'",
+      "alias post='bash ./tools/new_post.sh'"
+    ],
+    "scripts": {
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
+    }
+  }
+}
