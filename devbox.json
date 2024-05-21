@@ -13,8 +13,9 @@
       "echo 'Serving your site...'",
       "bundle exec jekyll s --drafts >/dev/null 2>&1 &",
       "alias draft='bundle exec jekyll draft'",
-      "alias publish='bash ./tools/publish_draft.sh'",
-      "alias post='bash ./tools/new_post.sh'"
+      "alias publish='./publish_post.sh draft'",
+      "alias post='bash ./tools/publish_post.sh new'"
+      // "alias post='bash ./tools/new_post.sh'"
     ],
     "scripts": {
       "test": [
