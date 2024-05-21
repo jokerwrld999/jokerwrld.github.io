@@ -15,7 +15,6 @@
       "alias draft='bundle exec jekyll draft'",
       "alias publish='./publish_post.sh draft'",
       "alias post='bash ./tools/publish_post.sh new'"
-      // "alias post='bash ./tools/new_post.sh'"
     ],
     "scripts": {
       "test": [
