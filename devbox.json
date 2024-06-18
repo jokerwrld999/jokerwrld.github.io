@@ -11,7 +11,7 @@
       "echo 'Installing gem dependencies...'",
       "bundle install >/dev/null",
       "echo 'Serving your site...'",
-      "bundle exec jekyll s --drafts >/dev/null 2>&1 &",
+      "bundle exec jekyll s --host 0.0.0.0 --drafts >/dev/null 2>&1 &",
       "alias draft='bundle exec jekyll draft'",
       "alias publish='./publish_post.sh draft'",
       "alias post='bash ./tools/publish_post.sh new'"
